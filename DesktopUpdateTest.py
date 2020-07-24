@@ -1,0 +1,2 @@
+for i in range(10,200,35):
+    print("import java.util.*")

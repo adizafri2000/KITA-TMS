@@ -29,9 +29,9 @@ import java.util.logging.Logger;
 public class DBConnection {
     
     private final String username = "root";
-    private String password;
+    private String password = "Pizz@1181101286";
     private final String DBNAME = "KITATMS";
-    Connection con;
+    private Connection con;
     private final String saveFile = "password.txt";
     
     /**
@@ -56,58 +56,32 @@ public class DBConnection {
      *      False: Program setups the database schema KITATMS in the user's MySQL local instance. Rechecks to ensure 'true' 
      *             case is reached.
      */
-    public DBConnection(){
-        while(true){
+    /*public DBConnection(){
+        while (true){
             try{
-                File file = new File(saveFile);
-                Scanner input = new Scanner(file);
-                setPassword(input.nextLine());
+                File readPW = new File(saveFile);
+                Scanner fInput = new Scanner(readPW);
+                password = fInput.nextLine();
                 if(isConnectedMySQL()){
-                    if (isConnectedDB()){
-                        System.out.println("Successful connection to KITATMS database.");
-                        break;
+                    if(isConnectedDB()){
+                        System.out.println("Database ready to use for program");
                     }
-                    else
-                        setupDB();
+                    else{
+                        //setupDB()
+                    }
                 }
                 else{
-                    try {
-                        FileWriter fw = new FileWriter(saveFile);
-                        System.out.println("");
-                    } catch (IOException ex) {
-                        Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    
                 }
-            } catch (FileNotFoundException e){
-                System.out.println("No save file found.");
+            }catch (FileNotFoundException e){
+                
+            }catch (IOException e){
+                
             }
         }
+    }*/
+    public DBConnection(){
         
-        /*
-        public class ReadFile {
-            static int[][] testData = new int[8][7];
-          public static void main(String[] args) {
-            try {
-              File myObj = new File("dataText.txt");
-              Scanner myReader = new Scanner(myObj);
-              int i = 0;
-              int j = 0;
-              while (myReader.hasNextLine()) {
-
-                String data = myReader.nextLine();
-                String[] gg = myReader.nextLine().split("\n");
-                String[] kk = new String[7];
-                for (String s:gg)
-                System.out.println(gg);
-              }
-              myReader.close();
-            } catch (FileNotFoundException e) {
-              System.out.println("An error occurred.");
-              //e.printStackTrace();
-            }
-          }
-        }
-        */
     }
     
     public void setPassword(String p){
@@ -140,26 +114,30 @@ public class DBConnection {
         }
     }
     
+    /**
+     * This method checks if user is currently connected to KITA-TMS official database
+     * DB/Schema name: "KITATMS"
+     * @return true is successful connection, false otherwise
+     */
     public boolean isConnectedDB(){
-        if (isConnectedMySQL()){
-            try {
-                System.out.println("Establishing connecetion to official program database...");
-                con  = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/KITATMS?serverTimezone=UTC", //URL
-                    username,password);
-                return true;
+        try {
+            System.out.println("Establishing connecetion to official program database...");
+            con  = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/KITATMS?serverTimezone=UTC", //URL
+                username,password);
+            return true;
 
-            }
-            catch (SQLException ex) {
-                return false;
-            }
         }
-        else{
-            System.out.println("Official program database does not exist.");
+        catch (SQLException ex) {
             return false;
         }
     }
     
+    /**
+     * This method setups KITA-TMS official database for its overall program in
+     * implementing a database as a data storage.
+     * @throws SQLException 
+     */
     public void setupDB() throws SQLException{
         con  = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/?serverTimezone=UTC", //URL
@@ -175,4 +153,134 @@ public class DBConnection {
             Logger.getLogger(DB2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    /**
+     * This method, in conjunction with setupDB(), creates all the tables involved in
+     * KITA-TMS's database implementation.
+     * A total of 10 tables are created after invoking this method:
+     * Account, Trainer, Trainee, Course, Enrollment, Report, LearningMaterial,
+     * Assessment, View, Attempt, Report
+     */
+    public void setupTables(){
+        try (Statement stat = con.createStatement()) {
+                String account = "create table account(\n" +
+"	accountID varchar(10) primary key not null unique,\n" +
+"    accountType int not null\n" +
+");";
+                
+                String trainer = "create table trainer(\n" +
+"	trainerName varchar(50) not null,\n" +
+"    accountID varchar(10) not null unique references account(accountID)\n" +
+");";
+                
+                String trainee = "create table trainee(\n" +
+"	traineeName varchar(50) not null,\n" +
+"    accountID varchar(10) not null unique references account(accountID)\n" +
+");";
+                
+                String course = "create table course(\n" +
+"	courseID varchar(7) primary key not null unique,\n" +
+"    courseName varchar(50) not null,\n" +
+"    courseStart Date not null,\n" +
+"    courseEnd Date not null,\n" +
+"    accountID varchar(10) not null unique references account(accountID)\n" +
+");";
+                
+                String enrollment = "CREATE TABLE `kitatms`.`enrollment` (\n" +
+"  `accountID` VARCHAR(10) NOT NULL,\n" +
+"  `courseID` VARCHAR(7) NOT NULL,\n" +
+"  PRIMARY KEY (`accountID`, `courseID`),\n" +
+"  UNIQUE INDEX `accountID_UNIQUE` (`accountID` ASC) VISIBLE,\n" +
+"  UNIQUE INDEX `courseID_UNIQUE` (`courseID` ASC) VISIBLE,\n" +
+"  CONSTRAINT `accountID`\n" +
+"    FOREIGN KEY (`accountID`)\n" +
+"    REFERENCES `kitatms`.`account` (`accountID`)\n" +
+"    ON DELETE NO ACTION\n" +
+"    ON UPDATE NO ACTION,\n" +
+"  CONSTRAINT `courseID`\n" +
+"    FOREIGN KEY (`courseID`)\n" +
+"    REFERENCES `kitatms`.`course` (`courseID`)\n" +
+"    ON DELETE NO ACTION\n" +
+"    ON UPDATE NO ACTION);";
+                
+                String report = "create table report(\n" +
+"	reportID varchar(13) primary key not null unique,\n" +
+"	courseID varchar(7) not null unique references course(courseID)\n" +
+");";
+                
+                String learningmaterial = "create table learningmaterial(\n" +
+"	learningmaterialID varchar(10) primary key not null unique,\n" +
+"    learningmaterialName varchar(50) not null,\n" +
+"    courseID varchar(7) not null unique references course(courseID)\n" +
+");";
+                
+                String assessment = "create table assessment(\n" +
+"	assessmentID varchar(8) primary key not null unique,\n" +
+"    assessmentQuestions mediumtext not null,\n" +
+"    assessmentAnswers varchar(5) not null,\n" +
+"    courseID varchar(7) not null unique references course(courseID)\n" +
+");";
+                
+                String view = "CREATE TABLE `kitatms`.`view` (\n" +
+"  `learningmaterialID` VARCHAR(10) NOT NULL,\n" +
+"  `accountID` VARCHAR(10) NOT NULL,\n" +
+"  `viewstatus` VARCHAR(1) NULL,\n" +
+"  UNIQUE INDEX `learningmaterialID_UNIQUE` (`learningmaterialID` ASC) VISIBLE,\n" +
+"  UNIQUE INDEX `accountID_UNIQUE` (`accountID` ASC) VISIBLE,\n" +
+"    FOREIGN KEY (`learningmaterialID`)\n" +
+"    REFERENCES `kitatms`.`learningmaterial` (`learningmaterialID`)\n" +
+"    ON DELETE NO ACTION\n" +
+"    ON UPDATE NO ACTION,\n" +
+"    FOREIGN KEY (`accountID`)\n" +
+"    REFERENCES `kitatms`.`account` (`accountID`)\n" +
+"    ON DELETE NO ACTION\n" +
+"    ON UPDATE NO ACTION);";
+                
+                String attempt = "CREATE TABLE `kitatms`.`attempt` (\n" +
+"  `accountID` VARCHAR(10) NOT NULL,\n" +
+"  `assessmentID` VARCHAR(8) NOT NULL,\n" +
+"  `attemptMarks` INT NOT NULL,\n" +
+"  `attemptDate` DATE NOT NULL,\n" +
+"  PRIMARY KEY (`accountID`, `assessmentID`),\n" +
+"  INDEX `assessmentID_idx` (`assessmentID` ASC) VISIBLE,\n" +
+"    FOREIGN KEY (`accountID`)\n" +
+"    REFERENCES `kitatms`.`trainee` (`accountID`)\n" +
+"    ON DELETE NO ACTION\n" +
+"    ON UPDATE NO ACTION,\n" +
+"    FOREIGN KEY (`assessmentID`)\n" +
+"    REFERENCES `kitatms`.`assessment` (`assessmentID`)\n" +
+"    ON DELETE NO ACTION\n" +
+"    ON UPDATE NO ACTION);";
+                
+                
+                stat.executeUpdate(account);
+                stat.executeUpdate(trainer);
+                stat.executeUpdate(trainee);
+                stat.executeUpdate(course);
+                stat.executeUpdate(enrollment);
+                stat.executeUpdate(report);
+                stat.executeUpdate(learningmaterial);
+                stat.executeUpdate(assessment);
+                stat.executeUpdate(view);
+                stat.executeUpdate(attempt);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DB2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void setupEverything(){
+        try {
+            setupDB();
+            setupTables();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
+     * This method inserts dummy data into KITA-TMS database for testing purposes.
+     */
+    //public void dummyData(){}
 }
+

@@ -20,9 +20,12 @@ public class KITATMS {
     public static void main(String[] args) throws SQLException {
         // TODO code application logic here
         System.out.println("Adi was here");
-        DBConnection tester = new DBConnection("root","Pizz@1181101286");
+        DBConnection tester = new DBConnection();
+        System.out.println(tester.isConnectedMySQL());
         System.out.println(tester.isConnectedDB());
-        tester.DBSetup();
+        tester.setupDB();
+        System.out.println(tester.isConnectedDB());
+        tester.setupTables();
     }
     
 }

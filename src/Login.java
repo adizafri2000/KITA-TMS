@@ -3,7 +3,7 @@ import java.util.*;
 import java.io.File;  // Import the File class
 
 
-public class VerifyLogin{
+public class Login{
 	
 	private static Scanner x;
 

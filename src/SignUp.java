@@ -7,7 +7,7 @@ import java.io.Writer;
 import java.io.BufferedWriter;
 
 
-public class RegisterUser{
+public class SignUp{
 	
 	private static Scanner x;
 

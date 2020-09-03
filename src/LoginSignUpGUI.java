@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.Font;
 import javax.swing.JFrame;
 
-public class LoginGUI implements ActionListener{
+public class LoginSignUpGUI implements ActionListener{
 	private static JFrame frame;
 	private static JTextField usernameText;
 	private static JLabel passwordLabel;
@@ -65,13 +65,13 @@ public class LoginGUI implements ActionListener{
 		
 		loginButton = new JButton("Login");
 		loginButton.setBounds(10,280,80,25);
-		loginButton.addActionListener(new LoginGUI());
+		loginButton.addActionListener(new LoginSignUpGUI());
 		panel.add(loginButton);
 		//loginButton.setBackground(Color.GRAY);
 		
 		buttonRegister = new JButton("Register");
 		buttonRegister.setBounds(193,280,90,25);
-		buttonRegister.addActionListener(new LoginGUI());
+		buttonRegister.addActionListener(new LoginSignUpGUI());
 		panel.add(buttonRegister);
 		
 		message = new JLabel("");
@@ -96,7 +96,7 @@ public class LoginGUI implements ActionListener{
 		
 		logoutButton = new JButton("Logout");
 		logoutButton.setBounds(100,80,100,25);
-		logoutButton.addActionListener(new LoginGUI());
+		logoutButton.addActionListener(new LoginSignUpGUI());
 		panel2.add(logoutButton);
 		
 		
@@ -111,7 +111,7 @@ public class LoginGUI implements ActionListener{
 		
 		
 		if(e.getSource()==loginButton){
-            VerifyLogin verifyUser = new VerifyLogin();
+            Login verifyUser = new Login();
             System.out.println("VerifyLogin created");
 			boolean flag = verifyUser.verifyLogin(username,password,"members.txt");	
 
@@ -135,7 +135,7 @@ public class LoginGUI implements ActionListener{
 			
 		
 		if(e.getSource()==buttonRegister){
-			RegisterUser newUser = new RegisterUser();
+			SignUp newUser = new SignUp();
 			boolean flag = false;
 			if(username.equals("")|| username.equals(null) || password.equals("")|| password.equals(null)){
 				message.setText("Please fill  in username and password");

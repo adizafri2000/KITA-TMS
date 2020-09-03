@@ -32,7 +32,7 @@ public class DBConnection {
     private String password = "Pizz@1181101286";
     private final String DBNAME = "KITATMS";
     private Connection con;
-    private final String saveFile = "password.txt";
+    private final String saveFile = "dbrootpassword.txt";
     
     /**
      * DBConnection constructor only ensures that the program successfully connects to KITATMS database schema in 
@@ -103,8 +103,37 @@ public class DBConnection {
      */
     public boolean fileExists(){
         File pwFile = new File(saveFile);
-        return (pwFile.exists() && !pwFile.isDirectory());
+        return (pwFile.exists());
     }
+    
+    public void createPWFile(){
+        try {
+            FileWriter myWriter = new FileWriter(saveFile);
+            //getPassword()
+            //writePassword()
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+        }
+    }
+    
+    /*
+    try {
+            FileWriter myWriter = new FileWriter("dataText.txt");
+            for (int i=0;i<8;i++){
+                for (int j=0;j<7;j++){
+                    myWriter.write(data[i][j]);
+                    myWriter.write("\t");
+                }
+                myWriter.write("\n");
+            }
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    */
     
     public boolean readPassword(){
         try{

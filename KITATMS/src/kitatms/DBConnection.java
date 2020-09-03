@@ -167,7 +167,7 @@ public class DBConnection {
                 System.out.println("Database KITATMS successfully created.");
             
         } catch (SQLException ex) {
-            Logger.getLogger(DB2.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -283,7 +283,7 @@ public class DBConnection {
                 stat.executeUpdate(attempt);
             
         } catch (SQLException ex) {
-            Logger.getLogger(DB2.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -307,7 +307,7 @@ public class DBConnection {
                 System.out.println("Program database successfully cleared.");
             
         } catch (SQLException ex) {
-            Logger.getLogger(DB2.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     /**

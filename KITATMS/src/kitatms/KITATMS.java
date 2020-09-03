@@ -23,9 +23,12 @@ public class KITATMS {
         DBConnection tester = new DBConnection();
         System.out.println(tester.isConnectedMySQL());
         System.out.println(tester.isConnectedDB());
-        tester.setupDB();
-        System.out.println(tester.isConnectedDB());
-        tester.setupTables();
+        if(!tester.isConnectedDB()){
+            tester.setupDB();
+            System.out.println(tester.isConnectedDB());
+            tester.setupTables();
+        }
+        System.out.println("Program ended. View KITATMS schema in MySQL for re-checking.");
     }
-    
+
 }

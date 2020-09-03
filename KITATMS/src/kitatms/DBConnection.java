@@ -80,8 +80,30 @@ public class DBConnection {
             }
         }
     }*/
+    /*
+    1. check file exist
+        T: proceed 2.
+        F: create new file. getPassword() and writePassword(). to 3.
+    2. check file contains password
+        T: proceed 3
+        F: getPassword and writePassword(). to 3
+    3. check connection using password
+        T: passed all. ready for use
+        F: getPassword() and writePassword(). retry 3.
+    
+    
+    */
     public DBConnection(){
         
+    }
+    
+    /**
+     * Checks existence of db root password file
+     * @return true if password save file exists
+     */
+    public boolean fileExists(){
+        File pwFile = new File(saveFile);
+        return (pwFile.exists() && !pwFile.isDirectory());
     }
     
     public boolean readPassword(){

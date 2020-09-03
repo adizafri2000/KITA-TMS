@@ -8,29 +8,50 @@ package kitatms;
 import java.sql.SQLException;
 
 /**
- *
+ * !!!!!!! PLEASE BACA NI DULU !!!!!!!!!!!!!
+ * Ni akan jadi the real main class, so every other file should be a class file. Whatever lah.\
+ * So in main class, benda ni akan ada apa2 necessary objects created from classes kita, and also windows (GUI) yang kita buat.
+ * untuk senangkan testing kat sini, since kita 4 orang, each of us ada fx sendiri in this main class.
+ * So nak test apa2, just edit in your own functions specified below, and comment out if ada nama fx orang lain in the 
+ * main(). Check example.
+ * 
  * @author adiza
  */
 public class KITATMS {
+    DBConnection con;
 
     /**^
      * @param args the command line arguments
      * @throws java.sql.SQLException
      */
     public static void main(String[] args) throws SQLException {
+        KITATMS program = new KITATMS();
+        program.adiTest();
+        //program.zamTest();
+        //program.hadyaTest();
+        //program.wahaTest();
+    }
+    
+    public void adiTest(){
+        
         // TODO code application logic here
         System.out.println("Adi was here");
-        DBConnection tester = new DBConnection();
-        System.out.println(tester.readPassword());
-        /*System.out.println(tester.isConnectedMySQL());
-        System.out.println(tester.isConnectedDB());
-        if(!tester.isConnectedDB()){
-            tester.setupDB();
-            System.out.println(tester.isConnectedDB());
-            tester.setupTables();
-        }
-        System.out.println("Program ended. View KITATMS schema in MySQL for re-checking.");*/
-        //tester.clearData();
+        
+        DBSetupWindow terriermon = new DBSetupWindow();
+        System.out.println(terriermon.passwordInput);
+        
+        
     }
 
+    public void zamTest(){
+        
+    }
+    
+    public void hadyaTest(){
+        
+    }
+    
+    public void wahaTest(){
+        
+    }
 }

@@ -32,7 +32,7 @@ public class DBConnection {
     private String password = "Pizz@1181101286";
     private final String DBNAME = "KITATMS";
     private Connection con;
-    private final String saveFile = "password.txt";
+    private final String saveFile = "dbrootpassword.txt";
     
     /**
      * DBConnection constructor only ensures that the program successfully connects to KITATMS database schema in 
@@ -80,9 +80,60 @@ public class DBConnection {
             }
         }
     }*/
+    /*
+    1. check file exist
+        T: proceed 2.
+        F: create new file. getPassword() and writePassword(). to 3.
+    2. check file contains password
+        T: proceed 3
+        F: getPassword and writePassword(). to 3
+    3. check connection using password
+        T: passed all. ready for use
+        F: getPassword() and writePassword(). retry 3.
+    
+    
+    */
     public DBConnection(){
         
     }
+    
+    /**
+     * Checks existence of db root password file
+     * @return true if password save file exists
+     */
+    public boolean fileExists(){
+        File pwFile = new File(saveFile);
+        return (pwFile.exists());
+    }
+    
+    public void createPWFile(){
+        try {
+            FileWriter myWriter = new FileWriter(saveFile);
+            //getPassword()
+            //writePassword()
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+        }
+    }
+    
+    /*
+    try {
+            FileWriter myWriter = new FileWriter("dataText.txt");
+            for (int i=0;i<8;i++){
+                for (int j=0;j<7;j++){
+                    myWriter.write(data[i][j]);
+                    myWriter.write("\t");
+                }
+                myWriter.write("\n");
+            }
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    */
     
     public boolean readPassword(){
         try{
@@ -155,7 +206,7 @@ public class DBConnection {
      * implementing a database as a data storage.
      * @throws SQLException 
      */
-    public void setupDB() throws SQLException{
+    public void setupDB() throws SQLException{//zxrdctfvgbjh
         con  = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/?serverTimezone=UTC", //URL
                 username,password);

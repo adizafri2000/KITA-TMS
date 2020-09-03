@@ -8,7 +8,6 @@ import java.io.BufferedWriter;
 
 
 public class SignUp{
-	
 	private static Scanner x;
 
 	public boolean registerNewUser(String username, String password, String password2, String filepath){

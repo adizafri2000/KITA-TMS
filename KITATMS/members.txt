@@ -3,14 +3,6 @@ zam,123
 abu,123
 azman,123
 zamzo,12345
-azmana,123
-zamzurina,123
-azmanik,qw
-arif,1234
-as,a
-aa,gg
-zamzoi,123
-zama,12
-w,w
-zam2,123
-zam4,123
+zamqw,123
+zam22,222
+zam333,333

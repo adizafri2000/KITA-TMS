@@ -7,10 +7,10 @@ import java.io.Writer;
 import java.io.BufferedWriter;
 
 
-public class SignUp{
+public class SignIn{
 	private static Scanner x;
 
-	public boolean registerNewUser(String username, String password, String password2, String filepath){
+	public boolean register(String username, String password, String password2, String filepath){
 		boolean success = false;
 		String tempUsername = "";
 		try{

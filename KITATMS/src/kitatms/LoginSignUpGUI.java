@@ -10,41 +10,26 @@ import javax.swing.*;
 import java.awt.Font;
 import javax.swing.JFrame;
 
-public class LoginSignUpGUI implements ActionListener{
-	private static JFrame frame;
-	private static JTextField usernameText;
-	private static JLabel passwordLabel;
-	private static JPasswordField passwordText;
-	private static JButton loginButton;
-	private static JButton buttonRegister;
-	private static JLabel label;
-	private static JLabel message;
-	private static JLabel title;
+public class LoginSignUpGUI extends JFrame implements ActionListener{
+        public static boolean access = false;
+	private  JTextField usernameText;
+	private  JLabel passwordLabel;
+	private  JPasswordField passwordText;
+	private  JButton loginButton;
+	private  JButton buttonRegisterTrainer;
+        private  JButton buttonRegisterTrainee;
+	private  JLabel label;
+	private  JLabel message;
+	private  JLabel title;
 	
 	
-	private static JFrame frameMenu;
-	private static JPanel panel2;
-	private static JLabel success;
-	private static JButton logoutButton;
-	
-	
-	public static void main(String[] args){
+	public LoginSignUpGUI(){
 		
-		frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(340,500);
-		frame.getContentPane().setBackground(Color.BLUE);
+
 		
-		
-		//JFrame frame = new JFrame();
-                //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                //frame.setPreferredSize(new Dimension(340,500));
-                //frame.getContentPane().setBackground(Color.BLUE);
-                //frame.pack();
-                //frame.setVisible(true);
-				
+		this.setSize(340,500);
+                
 		JPanel panel = new JPanel();
-		frame.add(panel);
 		panel.setLayout(null);
 		
 		title = new JLabel("KITA TRAINING SYSTEM");
@@ -70,102 +55,95 @@ public class LoginSignUpGUI implements ActionListener{
 		
 		loginButton = new JButton("Login");
 		loginButton.setBounds(10,280,80,25);
-		loginButton.addActionListener(new LoginSignUpGUI());
+		loginButton.addActionListener(this);
 		panel.add(loginButton);
 		//loginButton.setBackground(Color.GRAY);
 		
-		buttonRegister = new JButton("Register");
-		buttonRegister.setBounds(193,280,90,25);
-		buttonRegister.addActionListener(new LoginSignUpGUI());
-		panel.add(buttonRegister);
+		buttonRegisterTrainer = new JButton("Register Trainer");
+		buttonRegisterTrainer.setBounds(153,280,130,25);
+		buttonRegisterTrainer.addActionListener(this);
+		panel.add(buttonRegisterTrainer);
+                
+                buttonRegisterTrainee = new JButton("Register Trainee");
+		buttonRegisterTrainee.setBounds(153,310,130,25);
+		buttonRegisterTrainee.addActionListener(this);
+		panel.add(buttonRegisterTrainee);
 		
 		message = new JLabel("");
-		message.setBounds(10,310,300,25);
-		//message.setFont(new Font("Verdana", Font.PLAIN, 15));
+		message.setBounds(10,400,300,25);
 		panel.add(message);
+                
+		this.add(panel);
+		this.setVisible(false);
+                this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		frame.setVisible(true);
-		
-		///////////////////////////////////////////////////////////////
-		frameMenu = new JFrame();
-		frameMenu.setSize(350,180);
-		frameMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		panel2 = new JPanel();
-		frameMenu.add(panel2);
-		panel2.setLayout(null);
-		
-		success = new JLabel("");
-		success.setBounds(100,20,165,25);
-		panel2.add(success);
-		
-		logoutButton = new JButton("Logout");
-		logoutButton.setBounds(100,80,100,25);
-		logoutButton.addActionListener(new LoginSignUpGUI());
-		panel2.add(logoutButton);
-		
-		
-		frameMenu.setVisible(false);
 	}
 	
 	
 	@Override
 	public void actionPerformed(ActionEvent e){
-		String username = usernameText.getText();
-		String password = String.valueOf(passwordText.getPassword());
+            String username = usernameText.getText();
+            String password = String.valueOf(passwordText.getPassword());
 		
 		
-		if(e.getSource()==loginButton){
-            Login verifyUser = new Login();
-            System.out.println("VerifyLogin created");
-			boolean flag = verifyUser.verifyLogin(username,password,"members.txt");	
+            if(e.getSource()==loginButton){
+                    Login login = new Login();
+                    boolean flag = login.verifyUser(username,password,"members.txt");	
 
-			if(username.equals("")|| username.equals(null) || password.equals("")|| password.equals(null)){
-				message.setText("Please fill  in username and password");
-			}	
-			else{
-				if(flag==true){
-				
-					success.setText("Main Menu");
-					frameMenu.setVisible(true);
-					frame.setVisible(false);	
-				}
-				else{
-					message.setText("Wrong username or password");
-				}
-			}
-				
-				
-		}
-			
-		
-		if(e.getSource()==buttonRegister){
-			SignUp newUser = new SignUp();
-			boolean flag = false;
-			if(username.equals("")|| username.equals(null) || password.equals("")|| password.equals(null)){
-				message.setText("Please fill in username and password");
+		    if(username.equals("")|| username.equals(null) || password.equals("")|| password.equals(null)){
+			message.setText("Please fill in username and password");
+		    }	
+		    else{
+			if(flag==true){
+				this.setVisible(false);
+                                usernameText.setText("");
+                                passwordText.setText("");
+                                message.setText("");
+                                access = true;
 			}
 			else{
-				flag = newUser.registerNewUser(username, password, password,"members.txt");	
-				if(flag==true){
-					message.setText("You are now registered!");
-				}
-				else{
-					message.setText("Username is taken");
-				}
+				message.setText("Wrong username or password");
 			}
-			
-			
+		}		
+            }
+
+	    if(e.getSource()==buttonRegisterTrainer){
+		SignIn signIn = new SignIn();
+		boolean flag = false;
+		if(username.equals("")|| username.equals(null) || password.equals("")|| password.equals(null)){
+			message.setText("Please fill in username and password");
 		}
-		
-		if(e.getSource()==logoutButton){
-			frameMenu.setVisible(false);
-			frame.setVisible(true);
-			usernameText.setText("");
-			passwordText.setText("");
-		}	
-	
+		else{
+			flag = signIn.register(username, password, password,"members.txt");	
+			if(flag==true){
+				message.setText("You are now registered as a trainer!");
+			}
+			else{
+				message.setText("Username is taken");
+			}
+		}			
+            }
+            if(e.getSource()==buttonRegisterTrainee){
+		SignIn signIn = new SignIn();
+		boolean flag = false;
+		if(username.equals("")|| username.equals(null) || password.equals("")|| password.equals(null)){
+			message.setText("Please fill in username and password");
+		}
+		else{
+			flag = signIn.register(username, password, password,"members.txt");	
+			if(flag==true){
+				message.setText("You are now registered as a trainee!");
+			}
+			else{
+				message.setText("Username is taken");
+			}
+		}			
+            }
 	}
+    public static void main(String[] args){
+        new LoginSignUpGUI();
+    }
+        
 }
 	
 	

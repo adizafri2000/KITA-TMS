@@ -6,43 +6,76 @@
 package kitatms;
 
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class MainMenu extends JFrame{
-
+public class MainMenu extends JFrame implements ActionListener{
+    public static LoginSignUpGUI loginSignUpGUI = new LoginSignUpGUI();
+    public static MainMenu mainMenu = new MainMenu();
+    public static boolean logout = false; 
     
-    
-    static JFrame frame2;
-    static JPanel panel2;
-    static JLabel success;
-    static JButton buttonClick;
-    static JLabel countLabel;
+    private static JPanel panel2;
+    private static JLabel success;
+    private static JButton logoutButton;
     
     public MainMenu(){
-        frame2 = new JFrame();
-        frame2.setSize(350,180);
-        frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(340,500);
+	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+	panel2 = new JPanel();
+	this.add(panel2);
+	panel2.setLayout(null);
+		
+	success = new JLabel("");
+	success.setBounds(100,20,165,25);
+	panel2.add(success);
+		
+	logoutButton = new JButton("Logout");
+	logoutButton.setBounds(100,400,100,25);
+	logoutButton.addActionListener(this);
+	panel2.add(logoutButton);
+		
+		
+	this.setVisible(false);
+    }
+    @Override
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource()==logoutButton){
+			this.setVisible(false);
+                        logout = true;
+                        loginSignUpGUI.access=false;
+			
+        }
+    }
+    public static void main(String[] args){
         
-        panel2 = new JPanel();
-        frame2.add(panel2);
-        panel2.setLayout(null);
+        while(true){
+            while(loginSignUpGUI.access==false){
+                mainMenu.setVisible(false);
+                loginSignUpGUI.setVisible(true);
+                if(loginSignUpGUI.access==true){
+                    loginSignUpGUI.setVisible(false);
+                    break;
+                }
+            }
+            logout=false;
+            while(logout==false){
+                
+                mainMenu.setVisible(true);
+                if(logout==true){
+                    break;
+                }
+            }
+            
+        }
         
-        success = new JLabel("");
-        success.setBounds(100,20,165,25);
-        panel2.add(success);
-        
-        buttonClick = new JButton("Logout");
-        buttonClick.setBounds(100,80,100,25);
-        buttonClick.addActionListener(new LoginSignUpGUI());
-        panel2.add(buttonClick);
-        
-        countLabel = new JLabel("");
-        countLabel.setBounds(100,50,165,25);
-        panel2.add(countLabel);
+
+       
         
         
-        frame2.setVisible(false);
-      }
+    }
+    
 }
 
 	

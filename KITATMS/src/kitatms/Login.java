@@ -12,7 +12,7 @@ public class Login{
 	
 	private static Scanner x;
 
-	public boolean verifyLogin(String username, String password, String filepath){
+	public boolean verifyUser(String username, String password, String filepath){
 		String tempUsername = username;
 		String tempPassword = password;
 		boolean found = false;

@@ -1,6 +1,7 @@
 create table account(
 	accountID varchar(10) primary key not null unique,
-    accountType int not null
+    accountType int not null,
+	accountPassword varchar(15) not null
 );
 
 create table trainer(

@@ -21,14 +21,16 @@ public class KITATMS {
         // TODO code application logic here
         System.out.println("Adi was here");
         DBConnection tester = new DBConnection();
-        System.out.println(tester.isConnectedMySQL());
+        System.out.println(tester.readPassword());
+        /*System.out.println(tester.isConnectedMySQL());
         System.out.println(tester.isConnectedDB());
         if(!tester.isConnectedDB()){
             tester.setupDB();
             System.out.println(tester.isConnectedDB());
             tester.setupTables();
         }
-        System.out.println("Program ended. View KITATMS schema in MySQL for re-checking.");
+        System.out.println("Program ended. View KITATMS schema in MySQL for re-checking.");*/
+        //tester.clearData();
     }
 
 }

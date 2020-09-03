@@ -1,4 +1,4 @@
-package kitatms;
+package src.dbstudies;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -73,8 +73,6 @@ public class DBstudies {
         catch (SQLException ex) {
             Logger.getLogger(DBstudies.class.getName()).log(Level.SEVERE, null, ex);
         }
-        /*url format:
-        connector:database_software://connection_loaction:DBport/DBname
         /*url format:
         connector:database_software://connection_loaction:DBport/DBname
         */

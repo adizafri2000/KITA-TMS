@@ -84,7 +84,24 @@ public class DBConnection {
         
     }
     
-    public void setPassword(String p){
+    public boolean readPassword(){
+        try{
+        File pwFile = new File(saveFile);
+        Scanner input = new Scanner(pwFile);
+        if(input.hasNext())
+            return true;
+        else
+            return false;
+        } catch (FileNotFoundException e){
+            return false;
+        }
+    }
+    
+    public void writePassword(String p){
+        setPassword(p);
+    }
+    
+    private void setPassword(String p){
         this.password = p;
     }
     
@@ -165,7 +182,8 @@ public class DBConnection {
         try (Statement stat = con.createStatement()) {
                 String account = "create table account(\n" +
 "	accountID varchar(10) primary key not null unique,\n" +
-"    accountType int not null\n" +
+"    accountType int not null,\n" +
+"	accountPassword varchar(15) not null\n" +
 ");";
                 
                 String trainer = "create table trainer(\n" +
@@ -278,6 +296,20 @@ public class DBConnection {
         }
     }
     
+    /**
+     * Clears all data and tables in program database
+     */
+    public void clearData(){
+        try (Statement stat = con.createStatement()) {
+                //SQL Insert query
+                String dbop = "DROP SCHEMA KITATMS;";
+                stat.executeUpdate(dbop);
+                System.out.println("Program database successfully cleared.");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DB2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     /**
      * This method inserts dummy data into KITA-TMS database for testing purposes.
      */

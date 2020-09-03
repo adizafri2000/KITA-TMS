@@ -1,4 +1,4 @@
-package kitatms;
+package src.dbstudies;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

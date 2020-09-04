@@ -59,12 +59,12 @@ public class LoginSignUpGUI extends JFrame implements ActionListener{
 		panel.add(loginButton);
 		//loginButton.setBackground(Color.GRAY);
 		
-		buttonRegisterTrainer = new JButton("Register Trainer");
+		buttonRegisterTrainer = new JButton("Sign Up Trainer");
 		buttonRegisterTrainer.setBounds(153,280,130,25);
 		buttonRegisterTrainer.addActionListener(this);
 		panel.add(buttonRegisterTrainer);
                 
-                buttonRegisterTrainee = new JButton("Register Trainee");
+                buttonRegisterTrainee = new JButton("Sign Up Trainee");
 		buttonRegisterTrainee.setBounds(153,310,130,25);
 		buttonRegisterTrainee.addActionListener(this);
 		panel.add(buttonRegisterTrainee);
@@ -114,7 +114,7 @@ public class LoginSignUpGUI extends JFrame implements ActionListener{
 			message.setText("Please fill in username and password");
 		}
 		else{
-			flag = signIn.register(username, password, password,"members.txt");	
+			flag = signIn.register(username, password, password,"members.txt","1");	
 			if(flag==true){
 				message.setText("You are now registered as a trainer!");
 			}
@@ -130,7 +130,8 @@ public class LoginSignUpGUI extends JFrame implements ActionListener{
 			message.setText("Please fill in username and password");
 		}
 		else{
-			flag = signIn.register(username, password, password,"members.txt");	
+                        
+			flag = signIn.register(username, password, password,"members.txt","2");
 			if(flag==true){
 				message.setText("You are now registered as a trainee!");
 			}

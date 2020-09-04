@@ -10,9 +10,16 @@ import java.io.BufferedWriter;
 public class SignIn{
 	private static Scanner x;
 
-	public boolean register(String username, String password, String password2, String filepath){
+	public boolean register(String username, String password, String password2, String filepath, String accType){
 		boolean success = false;
 		String tempUsername = "";
+                if(accType=="1"){
+                    Account tempAcc = new Trainer(username,  password,  accType, username );
+                }
+                if(accType=="2"){
+                    Account tempAcc = new Trainer(username,  password,  accType, username );
+                }
+                
 		try{
 			Writer output;
 			x = new Scanner(new File(filepath));
@@ -32,7 +39,7 @@ public class SignIn{
 			}
 			else{
 				output = new BufferedWriter(new FileWriter(filepath, true));
-				output.append("\n"+username+","+password);
+				output.append("\n"+username+","+password+","+accType);
 				output.close();
 				/*
 				fileWrite.write(username+","+password);

@@ -1,8 +1,5 @@
-ali,123
-zam,123
-abu,123
-azman,123
-zamzo,12345
-zamqw,123
-zam22,222
-zam333,333
+zam,123,2
+zamfirdaus,123,2
+zamfirdaus2,123,2
+zam2,1234,1
+ZAM,123,1

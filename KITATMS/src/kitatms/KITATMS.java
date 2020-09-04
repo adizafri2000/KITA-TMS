@@ -44,7 +44,7 @@ public class KITATMS {
     }
 
     public void zamTest(){
-        
+        LoginSignUpGUI loginSignUpGUI = new LoginSignUpGUI();
     }
     
     public void hadyaTest(){

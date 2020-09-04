@@ -15,6 +15,7 @@ public class Login{
 	public boolean verifyUser(String username, String password, String filepath){
 		String tempUsername = username;
 		String tempPassword = password;
+                String accType="";
 		boolean found = false;
 		
 		try{
@@ -24,7 +25,8 @@ public class Login{
 			while(x.hasNext() && !found){
 				tempUsername = x.next();
 				tempPassword = x.next();
-				
+                                accType = x.next();
+                                System.out.println("username: "+tempUsername+" password: "+tempPassword+" acc type: "+accType);
 				if(tempUsername.trim().equals(username) && tempPassword.trim().equals(password)){
 					found = true;
 				}

@@ -114,7 +114,7 @@ public class LoginSignUpGUI extends JFrame implements ActionListener{
 			message.setText("Please fill in username and password");
 		}
 		else{
-			flag = signIn.register(username, password, password,"members.txt");	
+			flag = signIn.register(username, password, password,"members.txt","1");	
 			if(flag==true){
 				message.setText("You are now registered as a trainer!");
 			}
@@ -130,7 +130,8 @@ public class LoginSignUpGUI extends JFrame implements ActionListener{
 			message.setText("Please fill in username and password");
 		}
 		else{
-			flag = signIn.register(username, password, password,"members.txt");	
+                        
+			flag = signIn.register(username, password, password,"members.txt","2");
 			if(flag==true){
 				message.setText("You are now registered as a trainee!");
 			}

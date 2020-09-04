@@ -26,8 +26,8 @@ public class KITATMS {
      */
     public static void main(String[] args) throws SQLException {
         KITATMS program = new KITATMS();
-        //program.adiTest();
-        program.zamTest();
+        program.adiTest();
+        //program.zamTest();
         //program.hadyaTest();
         //program.wahaTest();
     }
@@ -39,7 +39,7 @@ public class KITATMS {
         
         //DBSetupWindow terriermon = new DBSetupWindow();
         //System.out.println(terriermon.passwordInput);
-        con = new DBConnection();
+        /*con = new DBConnection();
         if(con.isConnectedMySQL())
             System.out.println("Program is connected to MySQL server.");
         if(!con.isConnectedDB()){
@@ -48,7 +48,8 @@ public class KITATMS {
             con.isConnectedDB();
             con.setupTables();
         }
-        System.out.println("Program database successfully setup.");
+        System.out.println("Program database successfully setup.");*/
+        DBWindow dbwindow = new DBWindow(con);
         
         
         

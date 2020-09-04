@@ -29,58 +29,13 @@ import java.util.logging.Logger;
 public class DBConnection {
     
     private final String username = "root";
-    private String password = "Pizz@1181101286";
+    //private String password = "Pizz@1181101286";
+    private String password;
     //private String password = "";         //password kau tukar sini pastu comment atas
     private final String DBNAME = "KITATMS";
     private Connection con;
     private final String saveFile = "dbrootpassword.txt";
     
-    /**
-     * DBConnection constructor only ensures that the program successfully connects to KITATMS database schema in 
-     * the user's MySQL local instance.
-     * 
-     * DBConnection algorithm:
-     *  1. Program checks existence of password.txt to retrieve password.
-     *      True : Proceeds to step 2.
-     *      False: Program requests db password from user. Repeat until 'true' case reached. CARRY FLAG 1.
-     * 
-     *  2. Program checks if MySQL can be connected to local instance (root db) with the password.
-     *      True : 
-     *          CARRY FLAG 1: Program saves the password in a .txt file so users do not need to re-enter password.
-     *          ELSE        : Proceeds to step 3.
-     *      False: Program asks for another password from the user until 'true' case is reached.
-     * 
-     *     *** NO MORE SAVE FILE password.txt CONFIGURATION/ACCESS FROM HERE ***
-     * 
-     *  3. Program checks if the program's official database, KITATMS, is present in the MySQL local instance.
-     *      True : OVERALL CONNECTIVITY SUCCESSFUL.
-     *      False: Program setups the database schema KITATMS in the user's MySQL local instance. Rechecks to ensure 'true' 
-     *             case is reached.
-     */
-    /*public DBConnection(){
-        while (true){
-            try{
-                File readPW = new File(saveFile);
-                Scanner fInput = new Scanner(readPW);
-                password = fInput.nextLine();
-                if(isConnectedMySQL()){
-                    if(isConnectedDB()){
-                        System.out.println("Database ready to use for program");
-                    }
-                    else{
-                        //setupDB()
-                    }
-                }
-                else{
-                    
-                }
-            }catch (FileNotFoundException e){
-                
-            }catch (IOException e){
-                
-            }
-        }
-    }*/
     /*
     1. check file exist
         T: proceed 2.
@@ -95,7 +50,7 @@ public class DBConnection {
     
     */
     public DBConnection(){
-        
+        this.password = " ";
     }
     
     /**
@@ -361,7 +316,7 @@ public class DBConnection {
      */
     //public void dummyData(){}
     
-    public static void main(String[] args) throws SQLException{
+    /*public static void main(String[] args) throws SQLException{
         DBConnection con = new DBConnection();
         Scanner input = new Scanner(System.in);
         while(true){
@@ -377,6 +332,6 @@ public class DBConnection {
         }
         System.out.println("Program end.");
         
-    }
+    }*/
 }
 

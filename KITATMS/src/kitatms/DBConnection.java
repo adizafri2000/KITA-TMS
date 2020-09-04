@@ -30,6 +30,7 @@ public class DBConnection {
     
     private final String username = "root";
     private String password = "Pizz@1181101286";
+    //private String password = "";         //password kau tukar sini pastu comment atas
     private final String DBNAME = "KITATMS";
     private Connection con;
     private final String saveFile = "dbrootpassword.txt";
@@ -182,6 +183,7 @@ public class DBConnection {
         }
     }
     
+    
     /**
      * This method checks if user is currently connected to KITA-TMS official database
      * DB/Schema name: "KITATMS"
@@ -193,6 +195,7 @@ public class DBConnection {
             con  = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/KITATMS?serverTimezone=UTC", //URL
                 username,password);
+            setConnection(con);
             return true;
 
         }
@@ -201,15 +204,16 @@ public class DBConnection {
         }
     }
     
+    private void setConnection(Connection k){
+        this.con = k;
+    }
+    
     /**
      * This method setups KITA-TMS official database for its overall program in
      * implementing a database as a data storage.
      * @throws SQLException 
      */
-    public void setupDB() throws SQLException{//zxrdctfvgbjh
-        con  = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/?serverTimezone=UTC", //URL
-                username,password);
+    public void setupDB() throws SQLException{
         
         try (Statement stat = con.createStatement()) {
                 //SQL Insert query
@@ -218,18 +222,19 @@ public class DBConnection {
                 System.out.println("Database KITATMS successfully created.");
             
         } catch (SQLException ex) {
-            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);\
+            System.out.println("Database creation failed.");
         }
     }
     
     /**
      * This method, in conjunction with setupDB(), creates all the tables involved in
-     * KITA-TMS's database implementation.
-     * A total of 10 tables are created after invoking this method:
-     * Account, Trainer, Trainee, Course, Enrollment, Report, LearningMaterial,
-     * Assessment, View, Attempt, Report
+     * KITA-TMS's database implementation.A total of 10 tables are created after invoking this method:
+ Account, Trainer, Trainee, Course, Enrollment, Report, LearningMaterial,
+ Assessment, View, Attempt, Report
+     * @throws java.sql.SQLException
      */
-    public void setupTables(){
+    public void setupTables() throws SQLException{
         try (Statement stat = con.createStatement()) {
                 String account = "create table account(\n" +
 "	accountID varchar(10) primary key not null unique,\n" +
@@ -334,18 +339,11 @@ public class DBConnection {
                 stat.executeUpdate(attempt);
             
         } catch (SQLException ex) {
-            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Database tables' setup failed.");
         }
     }
-    
-    public void setupEverything(){
-        try {
-            setupDB();
-            setupTables();
-        } catch (SQLException ex) {
-            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+
     
     /**
      * Clears all data and tables in program database
@@ -365,5 +363,19 @@ public class DBConnection {
      * This method inserts dummy data into KITA-TMS database for testing purposes.
      */
     //public void dummyData(){}
+    
+    public static void main(String[] args) throws SQLException{
+        DBConnection con = new DBConnection();
+        if(con.isConnectedMySQL())
+            System.out.println("Program connected to MySQL server.");
+        if(!con.isConnectedDB()){
+            System.out.println("Program default database not found. Creating new database...");
+            con.setupDB();
+            con.isConnectedDB();
+            con.setupTables();
+        }
+        System.out.println("Program end.");
+        
+    }
 }
 

@@ -21,17 +21,18 @@ public class DBWindow extends javax.swing.JFrame {
      * Creates new form DBWindow
      */
     public DBWindow(DBConnection con) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new DBWindow().setVisible(true);
+            }
+        });
         this.con = con;
         initComponents();
         jLabel2.setVisible(false);
-        this.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        
     }
+    
     public DBWindow() {
         initComponents();
-        jLabel2.setVisible(false);
     }
 
 
@@ -195,19 +196,6 @@ public class DBWindow extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DBWindow().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

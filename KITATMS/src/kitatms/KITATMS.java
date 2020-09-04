@@ -26,8 +26,8 @@ public class KITATMS {
      */
     public static void main(String[] args) throws SQLException {
         KITATMS program = new KITATMS();
-        program.adiTest();
-        //program.zamTest();
+        //program.adiTest();
+        program.zamTest();
         //program.hadyaTest();
         //program.wahaTest();
     }

@@ -22,8 +22,8 @@ import java.util.logging.Logger;
  * Class serves the following:
  *  1. Establish/Check connectivity of user to MySQL service.
  *  2. Establish/Check connectivity to program's specified database.
- *  3. Create program's specified database should end-users do not have it in their devices.
- *  4. Create and execute MySQL query statements.
+ *  3. Create program's specified database should end-users do not have it in their devices. 
+*  4. Create and execute MySQL query statements.
  * @author adiza
  */
 public class DBConnection {
@@ -153,7 +153,7 @@ public class DBConnection {
         setPassword(p);
     }
     
-    private void setPassword(String p){
+    public void setPassword(String p){
         this.password = p;
     }
     
@@ -195,17 +195,12 @@ public class DBConnection {
             con  = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/KITATMS?serverTimezone=UTC", //URL
                 username,password);
-            setConnection(con);
             return true;
 
         }
         catch (SQLException ex) {
             return false;
         }
-    }
-    
-    private void setConnection(Connection k){
-        this.con = k;
     }
     
     /**
@@ -220,6 +215,8 @@ public class DBConnection {
                 String dbop = "CREATE DATABASE KITATMS;";
                 stat.executeUpdate(dbop);
                 System.out.println("Database KITATMS successfully created.");
+                if(isConnectedDB())
+                    setupTables();
             
         } catch (SQLException ex) {
             //Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);\
@@ -366,13 +363,17 @@ public class DBConnection {
     
     public static void main(String[] args) throws SQLException{
         DBConnection con = new DBConnection();
-        if(con.isConnectedMySQL())
-            System.out.println("Program connected to MySQL server.");
-        if(!con.isConnectedDB()){
-            System.out.println("Program default database not found. Creating new database...");
-            con.setupDB();
-            con.isConnectedDB();
-            con.setupTables();
+        Scanner input = new Scanner(System.in);
+        while(true){
+            System.out.print("Enter password: ");
+            String password = input.next();
+            con.setPassword(password);
+            if(con.isConnectedMySQL()){
+                System.out.println("Program connected to MySQL server.");
+                break;
+            }
+            else
+                System.out.println("Program not connected to MySQL server.");
         }
         System.out.println("Program end.");
         

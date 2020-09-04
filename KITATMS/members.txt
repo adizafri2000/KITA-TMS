@@ -3,3 +3,6 @@ zamfirdaus,123,2
 zamfirdaus2,123,2
 zam2,1234,1
 ZAM,123,1
+haluu,1233,1
+abu,123,1
+ali,1234,1

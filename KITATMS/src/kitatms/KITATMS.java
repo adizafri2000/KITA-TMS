@@ -18,7 +18,7 @@ import java.sql.SQLException;
  * @author adiza
  */
 public class KITATMS {
-    DBConnection con;
+    DBConnection con = new DBConnection();
 
     /**^
      * @param args the command line arguments
@@ -36,23 +36,7 @@ public class KITATMS {
         
         // TODO code application logic here
         System.out.println("Adi was here");
-        
-        //DBSetupWindow terriermon = new DBSetupWindow();
-        //System.out.println(terriermon.passwordInput);
-        /*con = new DBConnection();
-        if(con.isConnectedMySQL())
-            System.out.println("Program is connected to MySQL server.");
-        if(!con.isConnectedDB()){
-            System.out.println("Program default database does not exist.");
-            con.setupDB();
-            con.isConnectedDB();
-            con.setupTables();
-        }
-        System.out.println("Program database successfully setup.");*/
         DBWindow dbwindow = new DBWindow(con);
-        
-        
-        
     }
 
     public void zamTest(){

@@ -8,6 +8,7 @@ package kitatms;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 
 /**
  *
@@ -15,13 +16,17 @@ import java.util.logging.Logger;
  */
 public class DBWindow extends javax.swing.JFrame {
 
-    DBConnection con = new DBConnection();
+    static DBConnection con;
     /**
      * Creates new form DBWindow
      */
     public DBWindow(DBConnection con) {
+        this.con = con;
         initComponents();
         jLabel2.setVisible(false);
+        this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
         
     }
     public DBWindow() {
@@ -166,24 +171,27 @@ public class DBWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        jLabel2.setText("Validating password ...");
+        jLabel2.setVisible(true);
         String password = String.valueOf(jPasswordField1.getPassword());
+        jPasswordField1.setText("");
         System.out.printf("Password entered: %s.\n",password);
         con.setPassword(password);
         System.out.println("New password set.");
         if(!con.isConnectedMySQL()){
             System.out.println("Not connected.");
-            jLabel2.setVisible(true);
+            jLabel2.setText("INCORRECT PASSWORD");
         }
         else{
             System.out.println("Connected.");
             jLabel2.setText("Database successfully connected.");
-            if(!con.isConnectedDB())
+            if(!con.isConnectedDB()){
                 try {
                     con.setupDB();
-            } catch (SQLException ex) {
-                Logger.getLogger(DBWindow.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(DBWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-            jLabel2.setVisible(true);
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed

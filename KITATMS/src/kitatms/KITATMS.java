@@ -40,7 +40,7 @@ public class KITATMS {
 
         // TODO code application logic here
         System.out.println("Adi was here");
-        //DBWindow dbwindow = new DBWindow(con);
+        DBWindow dbwindow = new DBWindow(con);
         
     }
 

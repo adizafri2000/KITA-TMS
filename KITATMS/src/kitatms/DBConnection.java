@@ -324,9 +324,9 @@ public class DBConnection {
      * @throws java.io.FileNotFoundException
      */
     public void insertDummyData() throws FileNotFoundException{
-        /*try (Statement stat = con.createStatement()) {
+        try (Statement stat = con.createStatement()) {
                 //SQL Insert query
-                Scanner reader = new Scanner(dummyDataFile);
+                Scanner reader = new Scanner(new File(dummyDataFileName));
                 while(reader.hasNext()){
                     stat.execute(reader.nextLine());
                 }
@@ -335,22 +335,6 @@ public class DBConnection {
         } catch (SQLException ex) {
             //Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);\
             System.out.println("Database creation failed.");
-        }*/
-        Scanner reader = new Scanner(dummyDataFile);
-        if(reader.hasNext()){
-            System.out.println(reader.nextLine());
         }
-    }
-    
-    public static void main(String[] args) throws FileNotFoundException{
-        DBConnection con = new DBConnection();
-        con.isConnectedDB();
-        con.dataFileExists();
-        System.out.printf("Data file exists: %s\n",con.dataFileExists());
-        con.insertDummyData();
-        
-        System.out.println("End");
-        
-        
     }
 }    

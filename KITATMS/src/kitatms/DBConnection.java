@@ -29,9 +29,7 @@ import java.util.logging.Logger;
 public class DBConnection {
     
     private final String username = "root";
-    //private String password = "Pizz@1181101286";
     private String password;
-    //private String password = "";         //password kau tukar sini pastu comment atas
     private final String DBNAME = "KITATMS";
     private Connection con;
     private File saveFile;
@@ -58,6 +56,8 @@ public class DBConnection {
     
     /**
      * Checks existence of one of the files
+     * @param f
+     * @param name
      * @return true if password save file exists
      */
     public boolean fileExists(File f,String name){
@@ -321,9 +321,10 @@ public class DBConnection {
     
     /**
      * This method inserts dummy data into KITA-TMS database for testing purposes.
+     * @throws java.io.FileNotFoundException
      */
     public void insertDummyData() throws FileNotFoundException{
-        try (Statement stat = con.createStatement()) {
+        /*try (Statement stat = con.createStatement()) {
                 //SQL Insert query
                 Scanner reader = new Scanner(dummyDataFile);
                 while(reader.hasNext()){
@@ -334,6 +335,22 @@ public class DBConnection {
         } catch (SQLException ex) {
             //Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);\
             System.out.println("Database creation failed.");
+        }*/
+        Scanner reader = new Scanner(dummyDataFile);
+        if(reader.hasNext()){
+            System.out.println(reader.nextLine());
         }
+    }
+    
+    public static void main(String[] args) throws FileNotFoundException{
+        DBConnection con = new DBConnection();
+        con.isConnectedDB();
+        con.dataFileExists();
+        System.out.printf("Data file exists: %s\n",con.dataFileExists());
+        con.insertDummyData();
+        
+        System.out.println("End");
+        
+        
     }
 }    

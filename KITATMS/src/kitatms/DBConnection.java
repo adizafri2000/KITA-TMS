@@ -289,6 +289,7 @@ public class DBConnection {
                 stat.executeUpdate(assessment);
                 stat.executeUpdate(view);
                 stat.executeUpdate(attempt);
+                System.out.println("10 program database tables succesfully created.");
             
         } catch (SQLException ex) {
             //Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
@@ -314,24 +315,17 @@ public class DBConnection {
     /**
      * This method inserts dummy data into KITA-TMS database for testing purposes.
      */
-    //public void dummyData(){}
-    
-    /*public static void main(String[] args) throws SQLException{
-        DBConnection con = new DBConnection();
-        Scanner input = new Scanner(System.in);
-        while(true){
-            System.out.print("Enter password: ");
-            String password = input.next();
-            con.setPassword(password);
-            if(con.isConnectedMySQL()){
-                System.out.println("Program connected to MySQL server.");
-                break;
-            }
-            else
-                System.out.println("Program not connected to MySQL server.");
+    public void insertDummyData(){
+        try (Statement stat = con.createStatement()) {
+                //SQL Insert query
+                String dbop = "INSERT INTO `kitatms`.`account` (`accountID`, `accountType`, `accountPassword`) VALUES ('0123456789', '1', 'dummytrainer1');";
+                stat.execute(dbop);
+                System.out.println("Dummy data successfully inserted into program database.");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("Program end.");
-        
-    }*/
+    }
+    
 }
 

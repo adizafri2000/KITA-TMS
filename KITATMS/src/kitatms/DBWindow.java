@@ -5,10 +5,13 @@
  */
 package kitatms;
 
+import java.awt.Color;
 import java.sql.SQLException;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -19,20 +22,26 @@ public class DBWindow extends javax.swing.JFrame {
     static DBConnection con;
     /**
      * Creates new form DBWindow
+     * @param con
      */
     public DBWindow(DBConnection con) {
+        this.con = con;
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new DBWindow().setVisible(true);
             }
         });
-        this.con = con;
-        initComponents();
-        jLabel2.setVisible(false);
     }
     
     public DBWindow() {
         initComponents();
+        jLabel2.setHorizontalAlignment(SwingConstants.CENTER);
+        jLabel2.setVisible(false);
+        jButton2.setVisible(false);
+        jButton2.setEnabled(false);
+        jButton3.setVisible(false);
+        jButton3.setEnabled(false);
     }
 
 
@@ -52,6 +61,8 @@ public class DBWindow extends javax.swing.JFrame {
         jPasswordField1 = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MySQL Setup Window");
@@ -86,39 +97,67 @@ public class DBWindow extends javax.swing.JFrame {
         jLabel2.setText("INCORRECT PASSWORD");
         jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel2.setName(""); // NOI18N
+
+        jButton2.setBackground(new java.awt.Color(204, 255, 255));
+        jButton2.setForeground(new java.awt.Color(0, 0, 0));
+        jButton2.setText("Clear Database");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setBackground(new java.awt.Color(204, 255, 255));
+        jButton3.setForeground(new java.awt.Color(0, 0, 0));
+        jButton3.setText("Insert Testing Data");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(51, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGap(69, 69, 69)
+                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(36, 36, 36)
+                            .addComponent(jButton1)
+                            .addGap(15, 15, 15))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                            .addGap(51, 51, 51)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(36, 36, 36)
-                                .addComponent(jButton1)))
-                        .addGap(28, 28, 28))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(174, 174, 174))))
+                            .addGap(28, 28, 28)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(jButton2)
+                        .addGap(39, 39, 39)
+                        .addComponent(jButton3)))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(56, 56, 56)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                .addGap(112, 112, 112)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addGap(58, 58, 58))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -172,33 +211,79 @@ public class DBWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        jLabel2.setText("Validating password ...");
         jLabel2.setVisible(true);
+        jLabel2.setText(" ");
+        
+        /*
+        
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+        }
+        */
+        
         String password = String.valueOf(jPasswordField1.getPassword());
         jPasswordField1.setText("");
         System.out.printf("Password entered: %s.\n",password);
         con.setPassword(password);
         System.out.println("New password set.");
+        jLabel2.setText("Validating password ...");
         if(!con.isConnectedMySQL()){
             System.out.println("Not connected.");
+            jLabel2.setForeground(Color.RED);
             jLabel2.setText("INCORRECT PASSWORD");
         }
         else{
             System.out.println("Connected.");
+            jLabel2.setForeground(Color.GREEN);
             jLabel2.setText("Database successfully connected.");
             if(!con.isConnectedDB()){
                 try {
+                    jLabel2.setText("Program database not found. Establishing program database...");
                     con.setupDB();
                 } catch (SQLException ex) {
                     Logger.getLogger(DBWindow.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            
+            jPasswordField1.setEnabled(false);
+            jPasswordField1.setVisible(false);
+            jButton1.setVisible(false);
+            jButton1.setEnabled(false);
+            jButton2.setVisible(true);
+            jButton2.setEnabled(true);
+            jButton3.setVisible(true);
+            jButton3.setEnabled(true);
+            jLabel2.setText("Program database created and successfully connected.");
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        con.clearData();
+        jLabel2.setText("Program database successfully cleared.");
+        jButton2.setVisible(false);
+        jButton2.setEnabled(false);
+        jButton3.setVisible(false);
+        jButton3.setEnabled(false);
+        jButton1.setVisible(true);
+        jButton1.setEnabled(true);
+        jPasswordField1.setEnabled(true);
+        jPasswordField1.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        con.insertDummyData();
+        jLabel2.setText("Dummy data successfully inserted into database.");
+        jButton3.setVisible(false);
+        jButton3.setEnabled(false);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

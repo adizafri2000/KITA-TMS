@@ -1,7 +1,6 @@
 create table account(
 	accountID varchar(10) primary key not null unique,
-    accountType int not null,
-	accountPassword varchar(15) not null
+    accountType int not null
 );
 
 create table trainer(
@@ -19,21 +18,17 @@ create table course(
     courseName varchar(50) not null,
     courseStart Date not null,
     courseEnd Date not null,
-    accountID varchar(10) not null unique references account(accountID)
+    accountID varchar(10) not null references account(accountID)
 );
 
 CREATE TABLE `kitatms`.`enrollment` (
   `accountID` VARCHAR(10) NOT NULL,
   `courseID` VARCHAR(7) NOT NULL,
   PRIMARY KEY (`accountID`, `courseID`),
-  UNIQUE INDEX `accountID_UNIQUE` (`accountID` ASC) VISIBLE,
-  UNIQUE INDEX `courseID_UNIQUE` (`courseID` ASC) VISIBLE,
-  CONSTRAINT `accountID`
     FOREIGN KEY (`accountID`)
     REFERENCES `kitatms`.`account` (`accountID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `courseID`
     FOREIGN KEY (`courseID`)
     REFERENCES `kitatms`.`course` (`courseID`)
     ON DELETE NO ACTION
@@ -41,13 +36,13 @@ CREATE TABLE `kitatms`.`enrollment` (
     
 create table report(
 	reportID varchar(13) primary key not null unique,
-	courseID varchar(7) not null unique references course(courseID)
+	courseID varchar(7) not null references course(courseID)
 );
 
 create table learningmaterial(
 	learningmaterialID varchar(10) primary key not null unique,
     learningmaterialName varchar(50) not null,
-    courseID varchar(7) not null unique references course(courseID)
+    courseID varchar(7) not null references course(courseID)
 );
 
 create table assessment(
@@ -62,7 +57,6 @@ CREATE TABLE `kitatms`.`view` (
   `accountID` VARCHAR(10) NOT NULL,
   `viewstatus` VARCHAR(1) NULL,
   UNIQUE INDEX `learningmaterialID_UNIQUE` (`learningmaterialID` ASC) VISIBLE,
-  UNIQUE INDEX `accountID_UNIQUE` (`accountID` ASC) VISIBLE,
     FOREIGN KEY (`learningmaterialID`)
     REFERENCES `kitatms`.`learningmaterial` (`learningmaterialID`)
     ON DELETE NO ACTION
@@ -87,8 +81,3 @@ CREATE TABLE `kitatms`.`attempt` (
     REFERENCES `kitatms`.`assessment` (`assessmentID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
-
-
-
-
-

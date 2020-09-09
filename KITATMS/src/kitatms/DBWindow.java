@@ -6,6 +6,7 @@
 package kitatms;
 
 import java.awt.Color;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -274,8 +275,19 @@ public class DBWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        con.insertDummyData();
-        jLabel2.setText("Dummy data successfully inserted into database.");
+        if(con.dataFileExists()){
+            try {
+                con.insertDummyData();
+                jLabel2.setText("Dummy data successfully inserted into database.");
+            } catch (FileNotFoundException ex) {
+                System.out.println("Data insertion unsuccessful");
+                jLabel2.setText("Dummy data insertion failed.");
+            }
+        }
+        else{
+            jLabel2.setText("Dummy data not found in device.");
+        }
+        
         jButton3.setVisible(false);
         jButton3.setEnabled(false);
     }//GEN-LAST:event_jButton3ActionPerformed

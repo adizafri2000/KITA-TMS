@@ -308,6 +308,7 @@ public class DBWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        /*
         ArrayList<String> data = new ArrayList<>();
         try {
             data = con.retrieve("Select * from trainee;","traineename");
@@ -316,6 +317,12 @@ public class DBWindow extends javax.swing.JFrame {
         }
         for (String s: data){
             System.out.println(s);
+        }*/
+        String query = "insert into account values('999',1,'jdbcdbupdate');";
+        try {
+            con.update(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(DBWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 

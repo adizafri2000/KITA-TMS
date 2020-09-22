@@ -61,4 +61,48 @@ public class KITATMS {
     public void wahaTest() {
 
     }
+    
+    public void validateDatabase(){
+        DBWindow dbvalidation = new DBWindow();
+    }
+    
+    public void signUp(){
+        
+    }
+    
+    public void logIn(){
+        
+    }
+    
+    public void addCourse(){
+        
+    }
+    
+    public void uploadLearningMaterials(){
+        
+    }
+    
+    public void setAssessment(){
+        
+    }
+    
+    public void enrollTrainees(){
+        
+    }
+    
+    public void generateCourseReport(){
+        
+    }
+    
+    public void viewCourseSchedule(){
+        
+    }
+    
+    public void viewLearningMaterial(){
+        
+    }
+    
+    public void attemptCourseAssessment(){
+        
+    }
 }

@@ -11,8 +11,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -157,6 +159,47 @@ public class DBConnection {
 
         }
         catch (SQLException ex) {
+            return false;
+        }
+    }
+    
+    /**
+     * Retrieves data from the database.
+     * @param query The SQL query line to be executed
+     * @param column The column name of the table holding the data
+     * @return an ArrayList of Strings containing the desired data to be retrieved
+     * @throws SQLException 
+     */
+    public ArrayList<String> retrieve(String query,String column) throws SQLException{
+        ArrayList<String> dataList = new ArrayList<>();
+        try(Statement stat = con.createStatement()){
+            ResultSet rs = stat.executeQuery(query);
+            while(rs.next()){
+                String data = rs.getString(column);         
+                dataList.add(data);
+            }
+        }catch(SQLException e){
+            System.out.println("Data retrieval failed, returning empty ArrayList.");
+        }
+        
+        System.out.println("No errors during retrieval.");
+        return dataList;
+    }
+    
+    /**
+     * Updates the database with given query line
+     * @param query
+     * @return true if update action is successful
+     * @throws SQLException 
+     */
+    public boolean update(String query) throws SQLException{
+        try (Statement stat = con.createStatement()) {
+                stat.execute(query);
+                System.out.println("Database successfully updated.");
+                return true;
+            
+        } catch (SQLException ex) {
+            System.out.println("Database update failed.");
             return false;
         }
     }

@@ -26,7 +26,7 @@ public class Account {
     public String getPassword(){
         return password;
     }
-    public void Setusername(String name){
+    public void setUsername(String name){
         this.username = name;
     }
     public String getAccountType(String name){

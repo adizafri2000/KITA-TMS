@@ -10,5 +10,7 @@ package kitatms;
  * @author adiza
  */
 public class Assessment {
+    private String assessmentID;
+    private String assessmentName;
     
 }

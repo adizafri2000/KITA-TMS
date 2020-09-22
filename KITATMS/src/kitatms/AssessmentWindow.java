@@ -91,25 +91,6 @@ public class AssessmentWindow extends javax.swing.JFrame {
 
         assessmentListTable.setBackground(new java.awt.Color(255, 255, 255));
         assessmentListTable.setForeground(new java.awt.Color(0, 0, 0));
-        assessmentListTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"adst", "4356", "345", "ewrtyu", null},
-                {"sadf", "wret", "65", null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Course Name", "Course ID", "Result", "Attempt Date", "Assessment"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
         assessmentListTable.setToolTipText("");
         assessmentListTable.setFocusable(false);
         assessmentListTable.setGridColor(new java.awt.Color(255, 255, 255));
@@ -118,13 +99,6 @@ public class AssessmentWindow extends javax.swing.JFrame {
         assessmentListTable.setSelectionBackground(new java.awt.Color(255, 255, 255));
         assessmentListTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(assessmentListTable);
-        if (assessmentListTable.getColumnModel().getColumnCount() > 0) {
-            assessmentListTable.getColumnModel().getColumn(0).setHeaderValue("Course Name");
-            assessmentListTable.getColumnModel().getColumn(1).setHeaderValue("Course ID");
-            assessmentListTable.getColumnModel().getColumn(2).setHeaderValue("Result");
-            assessmentListTable.getColumnModel().getColumn(3).setHeaderValue("Attempt Date");
-            assessmentListTable.getColumnModel().getColumn(4).setHeaderValue("Assessment");
-        }
         assessmentListTable.getAccessibleContext().setAccessibleName("");
         assessmentListTable.getAccessibleContext().setAccessibleDescription("");
 

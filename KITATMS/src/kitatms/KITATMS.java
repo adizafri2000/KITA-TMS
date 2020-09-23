@@ -46,12 +46,13 @@ public class KITATMS {
 
     public void zamTest() throws SQLException {
         con.setPassword("z@mFirdaus00");
+        con.setPassword("Pizz@1181101286");
         con.isConnectedDB();
         con.isConnectedMySQL();
-        LoginSignUpGUI loginSignUpGUI = new LoginSignUpGUI(con);
+        //LoginSignUpGUI loginSignUpGUI = new LoginSignUpGUI(con);
         
-        //boolean flag;
-        //flag = con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('1ntala',1,'hmm');");
+        boolean flag;
+        flag = con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('1ntala',1,'hmm');");
         
     }
 

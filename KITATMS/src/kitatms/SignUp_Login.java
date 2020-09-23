@@ -6,6 +6,8 @@
 
 package kitatms;
 
+import java.awt.event.ActionEvent;
+
 /**
  *
  * @author User
@@ -74,11 +76,6 @@ public class SignUp_Login extends javax.swing.JFrame {
         jPasswordField1.setForeground(new java.awt.Color(102, 102, 102));
         jPasswordField1.setText("Password");
         jPasswordField1.setBorder(null);
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
-            }
-        });
         jPanel3.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 200, 30));
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
@@ -89,58 +86,28 @@ public class SignUp_Login extends javax.swing.JFrame {
         jPanel3.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 200, -1));
 
         jButton1.setText("Sign up as Trainee");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
         jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, 200, -1));
 
         jButton2.setText("Login");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
         jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 200, -1));
 
         jButton3.setText("Sign up as Trainer");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
         jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, 200, -1));
 
         jTextField2.setForeground(new java.awt.Color(102, 102, 102));
         jTextField2.setText("Username");
         jTextField2.setBorder(null);
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
         jPanel3.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 200, 31));
 
         jTextField3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextField3.setForeground(new java.awt.Color(51, 51, 51));
         jTextField3.setText("Please login :");
         jTextField3.setBorder(null);
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
         jPanel3.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 160, 20));
 
         jTextField4.setForeground(new java.awt.Color(51, 51, 51));
         jTextField4.setText("You have successfully created a trainer/trainee account ! ");
         jTextField4.setBorder(null);
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
-            }
-        });
         jPanel3.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 330, 31));
 
         jPanel4.setBackground(new java.awt.Color(0, 204, 204));
@@ -192,18 +159,6 @@ public class SignUp_Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
-
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
 
     /**
      * @param args the command line arguments

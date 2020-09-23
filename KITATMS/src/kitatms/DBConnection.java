@@ -126,7 +126,7 @@ public class DBConnection {
     }
     
     /**
-     * Checks whether user can connect to a MySQL service
+     * Creates and connects users to a MySQL service
      * @return true is successful connection, false otherwise
      */
     public boolean isConnectedMySQL(){
@@ -143,9 +143,8 @@ public class DBConnection {
         }
     }
     
-    
     /**
-     * This method checks if user is currently connected to KITA-TMS official database
+     * This method creates and checks if user is currently connected to KITA-TMS official database
      * DB/Schema name: "KITATMS"
      * @return true is successful connection, false otherwise
      */

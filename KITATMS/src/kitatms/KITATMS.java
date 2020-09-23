@@ -31,8 +31,8 @@ public class KITATMS {
      */
     public static void main(String[] args) throws SQLException {
         KITATMS program = new KITATMS();
-        program.adiTest();
-        //program.zamTest();
+        //program.adiTest();
+        program.zamTest();
         //program.hadyaTest();
         //program.wahaTest();
     }
@@ -50,8 +50,15 @@ public class KITATMS {
         
     }
 
-    public void zamTest() {
+    public void zamTest() throws SQLException {
+        con.setPassword("z@mFirdaus00");
+        con.isConnectedDB();
+        con.isConnectedMySQL();
         LoginSignUpGUI loginSignUpGUI = new LoginSignUpGUI();
+        
+        //boolean flag;
+        //flag = con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('1ntala',1,'hmm');");
+        
     }
 
     public void hadyaTest() {

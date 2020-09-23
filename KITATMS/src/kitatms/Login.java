@@ -17,7 +17,7 @@ public class Login{
 		String tempPassword = password;
                 String accType="";
 		boolean found = false;
-		
+		/*
 		try{
 			x = new Scanner(new File(filepath));
 			x.useDelimiter("[,\n]");
@@ -35,7 +35,7 @@ public class Login{
 			return found;
 		}
 		catch(Exception e){
-		}
+		}*/
 		return found;
 	} 
 	public void doVerify(){

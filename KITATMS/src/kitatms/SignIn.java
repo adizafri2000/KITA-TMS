@@ -5,52 +5,28 @@ import java.io.File;  // Import the File class
 import java.io.FileWriter;
 import java.io.Writer;
 import java.io.BufferedWriter;
+import java.sql.SQLException;
 
 
 public class SignIn{
+        DBConnection con = new DBConnection();
 	private static Scanner x;
 
-	public boolean register(String username, String password, String password2, String filepath, String accType){
-		boolean success = false;
-		String tempUsername = "";
-                if(accType=="1"){
-                    Account tempAcc = new Trainer(username,  password,  accType, username );
-                }
-                if(accType=="2"){
-                    Account tempAcc = new Trainer(username,  password,  accType, username );
-                }
+	public boolean register(String username, String password, String password2, String accType) throws SQLException{
                 
-		try{
-			Writer output;
-			x = new Scanner(new File(filepath));
-			x.useDelimiter("[,\n]");	
-			while(x.hasNext()){
-				tempUsername = x.next();
-				
-				if(tempUsername.trim().equals(username)){
-					return false;
-				}					
-			}
-			if(password != password2){
-				return false;
-			}
-			if(username == "" || password=="" || username == null || password==null){
-				return false;
-			}
-			else{
-				output = new BufferedWriter(new FileWriter(filepath, true));
-				output.append("\n"+username+","+password+","+accType);
-				output.close();
-				/*
-				fileWrite.write(username+","+password);
-				fileWrite.close();
-				*/
-				success=true;
-			}
-		}
-		catch(Exception e){
-			
-		}
+		boolean success = true;
+		String tempUsername = "";
+                //Account tempAcc;
+                if("1".equals(accType)){
+                    //tempAcc = new Trainer(username,  password,  accType, username );
+                    success = con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('11111111',1,'hello2');");
+                }
+                if("2".equals(accType)){
+                    
+                    //tempAcc = new Trainer(username,  password,  accType, username );
+                    success = con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('zamencem',1,'hello2');");
+                }             
+                
 		return success;
 	} 
 }

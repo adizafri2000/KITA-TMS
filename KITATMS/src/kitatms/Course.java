@@ -79,10 +79,18 @@ public class Course {
         return courseParticipants;
     }
     
+    /**
+     * Returns the starting date of this course in the format YYYY-MM-DD
+     * @return course starting date
+     */
     public Calendar getCourseStart(){
         return courseStart;
     }
     
+    /**
+     * Returns the end date of this course in the format YYYY-MM-DD
+     * @return course end date
+     */
     public Calendar getCourseEnd(){
         return courseEnd;
     }
@@ -103,10 +111,22 @@ public class Course {
         this.courseParticipants = courseParticipants;
     }
     
+    /**
+     * Sets the course start date. <p>
+     * HINT: USE GREGORIAN CALENDAR TO CREATE A CALENDAR (DATE) OBJECT <p>
+     * e.g course.setCourseStart(new GregorianCalendar(2010,2,15));
+     * @param courseStart 
+     */
     public void setCourseStart(Calendar courseStart){
         this.courseStart = courseStart;
     }
     
+    /**
+     * Sets the course start date. <p>
+     * HINT: USE GREGORIAN CALENDAR TO CREATE A CALENDAR (DATE) OBJECT <p>
+     * e.g course.setCourseEnd(new GregorianCalendar(2010,2,15));
+     * @param courseEnd 
+     */
     public void setCourseEnd(Calendar courseEnd){
         this.courseEnd = courseEnd;  
     }
@@ -118,10 +138,5 @@ public class Course {
         //System.out.println(real);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println(sdf.format(courseStart.getTime()));
-    }
-    
-    public static void main(String[] args){
-        Course c = new Course();
-        c.printCourseStart();
     }
 }

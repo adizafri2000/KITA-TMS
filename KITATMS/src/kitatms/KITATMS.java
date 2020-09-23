@@ -48,7 +48,7 @@ public class KITATMS {
         con.setPassword("z@mFirdaus00");
         con.isConnectedDB();
         con.isConnectedMySQL();
-        LoginSignUpGUI loginSignUpGUI = new LoginSignUpGUI();
+        LoginSignUpGUI loginSignUpGUI = new LoginSignUpGUI(con);
         
         //boolean flag;
         //flag = con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('1ntala',1,'hmm');");

@@ -11,10 +11,21 @@ package kitatms;
  */
 public class TraineeHomeWindow extends javax.swing.JFrame {
 
+    static DBConnection con;
+    
+    public TraineeHomeWindow(DBConnection con){
+        this.con = con;
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new TraineeHomeWindow().setVisible(true);
+            }
+        });
+    }
+    
     /**
      * Creates new form TraineeHomeWindow
      */
-    public TraineeHomeWindow() {
+    private TraineeHomeWindow() {
         initComponents();
     }
 
@@ -28,7 +39,7 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        welcomingTextField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
@@ -53,135 +64,87 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(0, 204, 204));
         jPanel1.setPreferredSize(new java.awt.Dimension(318, 259));
 
-        jTextField1.setBackground(new java.awt.Color(0, 204, 204));
-        jTextField1.setFont(new java.awt.Font("Lucida Bright", 1, 18)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField1.setText("Hello username");
-        jTextField1.setBorder(null);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
+        welcomingTextField.setEditable(false);
+        welcomingTextField.setBackground(new java.awt.Color(0, 204, 204));
+        welcomingTextField.setFont(new java.awt.Font("Lucida Bright", 1, 18)); // NOI18N
+        welcomingTextField.setForeground(new java.awt.Color(51, 51, 51));
+        welcomingTextField.setText("Hello username");
+        welcomingTextField.setBorder(null);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kitatms/icons8_user_50px.png"))); // NOI18N
 
+        jTextField4.setEditable(false);
         jTextField4.setBackground(new java.awt.Color(0, 204, 204));
         jTextField4.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jTextField4.setForeground(new java.awt.Color(51, 51, 51));
         jTextField4.setText("- To view the schedule of the enrolled courses."); // NOI18N
         jTextField4.setBorder(null);
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
-            }
-        });
 
+        jTextField5.setEditable(false);
         jTextField5.setBackground(new java.awt.Color(0, 204, 204));
         jTextField5.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jTextField5.setForeground(new java.awt.Color(51, 51, 51));
         jTextField5.setText("View Schedule:"); // NOI18N
         jTextField5.setBorder(null);
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
-            }
-        });
 
+        jTextField7.setEditable(false);
         jTextField7.setBackground(new java.awt.Color(0, 204, 204));
         jTextField7.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jTextField7.setForeground(new java.awt.Color(51, 51, 51));
         jTextField7.setText("View learning material:"); // NOI18N
         jTextField7.setBorder(null);
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
-            }
-        });
 
+        jTextField8.setEditable(false);
         jTextField8.setBackground(new java.awt.Color(0, 204, 204));
         jTextField8.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jTextField8.setForeground(new java.awt.Color(51, 51, 51));
         jTextField8.setText("- To view learning materials for enrolled courses."); // NOI18N
         jTextField8.setBorder(null);
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
-            }
-        });
 
+        jTextField9.setEditable(false);
         jTextField9.setBackground(new java.awt.Color(0, 204, 204));
         jTextField9.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jTextField9.setForeground(new java.awt.Color(51, 51, 51));
         jTextField9.setText("Assessment:"); // NOI18N
         jTextField9.setBorder(null);
-        jTextField9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField9ActionPerformed(evt);
-            }
-        });
 
+        jTextField10.setEditable(false);
         jTextField10.setBackground(new java.awt.Color(0, 204, 204));
         jTextField10.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jTextField10.setForeground(new java.awt.Color(51, 51, 51));
         jTextField10.setText("- To attempt assessments after going through "); // NOI18N
         jTextField10.setBorder(null);
-        jTextField10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField10ActionPerformed(evt);
-            }
-        });
 
+        jTextField12.setEditable(false);
         jTextField12.setBackground(new java.awt.Color(0, 204, 204));
         jTextField12.setForeground(new java.awt.Color(51, 51, 51));
         jTextField12.setText("Key Industrial Training Assistance (KITA) is a ");
         jTextField12.setBorder(null);
-        jTextField12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField12ActionPerformed(evt);
-            }
-        });
 
+        jTextField3.setEditable(false);
         jTextField3.setBackground(new java.awt.Color(0, 204, 204));
         jTextField3.setForeground(new java.awt.Color(51, 51, 51));
         jTextField3.setText("The trainees are assign to :");
         jTextField3.setBorder(null);
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
 
+        jTextField14.setEditable(false);
         jTextField14.setBackground(new java.awt.Color(0, 204, 204));
         jTextField14.setForeground(new java.awt.Color(51, 51, 51));
         jTextField14.setText("to attempt course enrolled by trainers");
         jTextField14.setBorder(null);
-        jTextField14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField14ActionPerformed(evt);
-            }
-        });
 
+        jTextField13.setEditable(false);
         jTextField13.setBackground(new java.awt.Color(0, 204, 204));
         jTextField13.setForeground(new java.awt.Color(51, 51, 51));
         jTextField13.setText("training management system that allow trainees");
         jTextField13.setBorder(null);
-        jTextField13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField13ActionPerformed(evt);
-            }
-        });
 
+        jTextField15.setEditable(false);
         jTextField15.setBackground(new java.awt.Color(0, 204, 204));
         jTextField15.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jTextField15.setForeground(new java.awt.Color(51, 51, 51));
         jTextField15.setText("learning materials"); // NOI18N
         jTextField15.setBorder(null);
-        jTextField15.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField15ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -193,7 +156,7 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
                         .addGap(13, 13, 13)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(welcomingTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -242,7 +205,7 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(welcomingTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(21, 21, 21)
                 .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
@@ -293,15 +256,11 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
         jPanel3.add(assessmentButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 200, -1));
         jPanel3.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 240, -1));
 
+        jTextField11.setEditable(false);
         jTextField11.setForeground(new java.awt.Color(51, 51, 51));
         jTextField11.setText("COURSE LEARNING MANAGEMENT");
         jTextField11.setBorder(null);
-        jTextField11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField11ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 200, 40));
+        jPanel3.add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 210, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -321,65 +280,13 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
-
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
-
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
-
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
-
-    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField10ActionPerformed
-
-    private void jTextField12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField12ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField12ActionPerformed
-
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
-
-    private void jTextField14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField14ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField14ActionPerformed
-
-    private void jTextField13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField13ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField13ActionPerformed
-
     private void viewScheduleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewScheduleButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_viewScheduleButtonActionPerformed
 
-    private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField11ActionPerformed
-
     private void viewLearningMaterialsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewLearningMaterialsButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_viewLearningMaterialsButtonActionPerformed
-
-    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField9ActionPerformed
-
-    private void jTextField15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField15ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField15ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -422,7 +329,6 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
@@ -437,5 +343,6 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField9;
     private javax.swing.JButton viewLearningMaterialsButton;
     private javax.swing.JButton viewScheduleButton;
+    private javax.swing.JTextField welcomingTextField;
     // End of variables declaration//GEN-END:variables
 }

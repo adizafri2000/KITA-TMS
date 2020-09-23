@@ -42,12 +42,6 @@ public class KITATMS {
         // TODO code application logic here
         System.out.println("Adi was here");
         DBWindow dbwindow = new DBWindow(con);
-        ArrayList<String> data = con.retrieve("Select * from trainee;","traineename");
-        //data = con.retrieve("Select * from trainee;","traineename");
-        for (String s: data){
-            System.out.println(s);
-        }
-        
     }
 
     public void zamTest() {

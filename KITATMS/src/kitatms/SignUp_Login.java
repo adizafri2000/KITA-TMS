@@ -17,6 +17,9 @@ public class SignUp_Login extends javax.swing.JFrame {
     /** Creates new form Login_Form */
     public SignUp_Login() {
         initComponents();
+        jTextField1.setEditable(false);
+        jTextField3.setEditable(false);
+        jTextField4.setEditable(false);
     }
 
     /** This method is called from within the constructor to
@@ -32,13 +35,13 @@ public class SignUp_Login extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        accountpasswordPasswordField = new javax.swing.JPasswordField();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
+        traineeSignupButton = new javax.swing.JButton();
+        loginButton = new javax.swing.JButton();
+        trainerSignupButton = new javax.swing.JButton();
+        usernameTextField = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
@@ -64,19 +67,14 @@ public class SignUp_Login extends javax.swing.JFrame {
         jTextField1.setForeground(new java.awt.Color(51, 51, 51));
         jTextField1.setText("Fill in your username and password :");
         jTextField1.setBorder(null);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
         jPanel3.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 61, 230, 20));
 
-        jPasswordField1.setEditable(false);
-        jPasswordField1.setBackground(new java.awt.Color(255, 255, 255));
-        jPasswordField1.setForeground(new java.awt.Color(102, 102, 102));
-        jPasswordField1.setText("Password");
-        jPasswordField1.setBorder(null);
-        jPanel3.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 200, 30));
+        accountpasswordPasswordField.setEditable(false);
+        accountpasswordPasswordField.setBackground(new java.awt.Color(255, 255, 255));
+        accountpasswordPasswordField.setForeground(new java.awt.Color(102, 102, 102));
+        accountpasswordPasswordField.setText("Password");
+        accountpasswordPasswordField.setBorder(null);
+        jPanel3.add(accountpasswordPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 200, 30));
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
@@ -85,19 +83,34 @@ public class SignUp_Login extends javax.swing.JFrame {
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         jPanel3.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 200, -1));
 
-        jButton1.setText("Sign up as Trainee");
-        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, 200, -1));
+        traineeSignupButton.setText("Sign up as Trainee");
+        traineeSignupButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                traineeSignupButtonActionPerformed(evt);
+            }
+        });
+        jPanel3.add(traineeSignupButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, 200, -1));
 
-        jButton2.setText("Login");
-        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 200, -1));
+        loginButton.setText("Login");
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonActionPerformed(evt);
+            }
+        });
+        jPanel3.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 200, -1));
 
-        jButton3.setText("Sign up as Trainer");
-        jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, 200, -1));
+        trainerSignupButton.setText("Sign up as Trainer");
+        trainerSignupButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                trainerSignupButtonActionPerformed(evt);
+            }
+        });
+        jPanel3.add(trainerSignupButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, 200, -1));
 
-        jTextField2.setForeground(new java.awt.Color(102, 102, 102));
-        jTextField2.setText("Username");
-        jTextField2.setBorder(null);
-        jPanel3.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 200, 31));
+        usernameTextField.setForeground(new java.awt.Color(102, 102, 102));
+        usernameTextField.setText("Username");
+        usernameTextField.setBorder(null);
+        jPanel3.add(usernameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 200, 31));
 
         jTextField3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextField3.setForeground(new java.awt.Color(51, 51, 51));
@@ -160,6 +173,18 @@ public class SignUp_Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginButtonActionPerformed
+
+    private void trainerSignupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trainerSignupButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_trainerSignupButtonActionPerformed
+
+    private void traineeSignupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_traineeSignupButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_traineeSignupButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -197,21 +222,21 @@ public class SignUp_Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JPasswordField accountpasswordPasswordField;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JButton loginButton;
+    private javax.swing.JButton traineeSignupButton;
+    private javax.swing.JButton trainerSignupButton;
+    private javax.swing.JTextField usernameTextField;
     // End of variables declaration//GEN-END:variables
 
 }

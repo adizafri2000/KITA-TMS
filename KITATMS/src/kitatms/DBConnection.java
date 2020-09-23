@@ -21,11 +21,14 @@ import java.util.logging.Logger;
 
 /**
  * DBConnection class synchronizes team members' connection to a MySQL database.
- * Class serves the following:
- *  1. Establish/Check connectivity of user to MySQL service.
- *  2. Establish/Check connectivity to program's specified database.
- *  3. Create program's specified database should end-users do not have it in their devices. 
-*  4. Create and execute MySQL query statements.
+ * Class serves the following: 
+ * <ol>
+ *  <li>Establish/Check connectivity of user to MySQL service.</li>
+ *  <li>Establish/Check connectivity to program's specified database.</li>
+ *  <li>Create program's specified database should end-users do not have it in their devices.</li>
+ *  <li>Insert dummy data for testing purposes.</li>
+*   <li>Create and execute MySQL query statements.</li>
+* </ol>
  * @author adiza
  */
 public class DBConnection {

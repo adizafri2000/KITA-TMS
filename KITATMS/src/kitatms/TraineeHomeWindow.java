@@ -42,9 +42,9 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
         jTextField13 = new javax.swing.JTextField();
         jTextField15 = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        viewScheduleButton = new javax.swing.JButton();
+        viewLearningMaterialsButton = new javax.swing.JButton();
+        assessmentButton = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jTextField11 = new javax.swing.JTextField();
 
@@ -64,7 +64,7 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TrainerHomeWindow/icons8_user_50px.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kitatms/icons8_user_50px.png"))); // NOI18N
 
         jTextField4.setBackground(new java.awt.Color(0, 204, 204));
         jTextField4.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
@@ -202,7 +202,7 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 2, Short.MAX_VALUE)
+                        .addGap(0, 20, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -273,24 +273,24 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
         jPanel3.setMinimumSize(new java.awt.Dimension(280, 275));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton3.setText("View Schedule");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        viewScheduleButton.setText("View Schedule");
+        viewScheduleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                viewScheduleButtonActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 200, -1));
+        jPanel3.add(viewScheduleButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 200, -1));
 
-        jButton4.setText("View Learning Materials");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        viewLearningMaterialsButton.setText("View Learning Materials");
+        viewLearningMaterialsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                viewLearningMaterialsButtonActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 200, -1));
+        jPanel3.add(viewLearningMaterialsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 200, -1));
 
-        jButton5.setText("Assesment");
-        jPanel3.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 200, -1));
+        assessmentButton.setText("Assesment");
+        jPanel3.add(assessmentButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 200, -1));
         jPanel3.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 240, -1));
 
         jTextField11.setForeground(new java.awt.Color(51, 51, 51));
@@ -361,17 +361,17 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField13ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void viewScheduleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewScheduleButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_viewScheduleButtonActionPerformed
 
     private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField11ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void viewLearningMaterialsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewLearningMaterialsButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_viewLearningMaterialsButtonActionPerformed
 
     private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
         // TODO add your handling code here:
@@ -417,9 +417,7 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton assessmentButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
@@ -437,5 +435,7 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JButton viewLearningMaterialsButton;
+    private javax.swing.JButton viewScheduleButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -81,7 +81,6 @@ public class SignUp_Login extends javax.swing.JFrame {
         jTextField1.setBorder(null);
         jPanel3.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 61, 230, 20));
 
-        accountpasswordPasswordField.setEditable(false);
         accountpasswordPasswordField.setBackground(new java.awt.Color(255, 255, 255));
         accountpasswordPasswordField.setForeground(new java.awt.Color(102, 102, 102));
         accountpasswordPasswordField.setText("Password");

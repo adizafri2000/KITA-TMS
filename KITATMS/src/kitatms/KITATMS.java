@@ -7,6 +7,7 @@ package kitatms;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import static kitatms.SignUp_LoginWindow.con;
 
 /**
  * !!!!!!! PLEASE BACA NI DULU !!!!!!!!!!!!! Ni akan jadi the real main class,
@@ -53,7 +54,7 @@ public class KITATMS {
         //LoginSignUpGUI loginSignUpGUI = new LoginSignUpGUI(con);
         
         boolean flag;
-        flag = con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('woof',1,'meow');");
+        flag = con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('testcat',1,'halu2');");
         
     }
 

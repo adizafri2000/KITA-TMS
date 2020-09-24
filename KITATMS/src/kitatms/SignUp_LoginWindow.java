@@ -192,7 +192,7 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
 
     */                    
         try {
-                con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('testcat',1,'halu2');");
+                con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('bologna',1,'cr7');");
                 
                 
                 dispose();

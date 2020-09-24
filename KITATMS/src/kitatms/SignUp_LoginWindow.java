@@ -183,24 +183,22 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
         String username = usernameTextField.getText();
         String password = String.valueOf(accountpasswordPasswordField.getPassword());
         boolean flag = true;
-
+/*
         try {
             flag = con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('"+username+"',1,'"+password+"');");
         } catch (SQLException ex) {
             //Logger.getLogger(SignUp_LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-<<<<<<< HEAD
-=======
-                        
-            try {
-                con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('zampaduuuuuu',1,'heheh');");
+    */                    
+        try {
+                con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('testcat',1,'halu2');");
                 
                 
                 dispose();
                 new TrainerHomeWindow(con);
             } catch (SQLException ex) {
-                Logger.getLogger(SignUp_LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(SignUp_LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
 			if(flag==true){
 				jLabel2.setText("You are now registered as a trainee!");
@@ -208,7 +206,6 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
 			else{
 				jLabel2.setText("Username is taken");
 			}
->>>>>>> 29b0116586686d592af0dc274d4843b234fd203a
 		
     }//GEN-LAST:event_trainerSignupButtonActionPerformed
 

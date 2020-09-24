@@ -248,7 +248,7 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username = usernameTextField.getText();
         String password = String.valueOf(accountpasswordPasswordField.getPassword());
-        boolean flag = true;
+        boolean flag = false;
         if(username.equals("")|| username.equals(null) || password.equals("")|| password.equals(null)){
 			jLabel2.setText("Please fill in username and password");
 		}
@@ -275,7 +275,7 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username = usernameTextField.getText();
         String password = String.valueOf(accountpasswordPasswordField.getPassword());
-        boolean flag = true;
+        boolean flag = false;
         SignIn sign = new SignIn(con);
         
         if(username.equals("")|| username.equals(null) || password.equals("")|| password.equals(null)){
@@ -283,7 +283,7 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
 	}
         else{
             try {
-                sign.register(username, password,"2");
+                flag = con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('"+username+"',2,'"+password+"');");
             } catch (SQLException ex) {
                 //Logger.getLogger(SignUp_LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
             }

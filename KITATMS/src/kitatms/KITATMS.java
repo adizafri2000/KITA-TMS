@@ -31,8 +31,8 @@ public class KITATMS {
      */
     public static void main(String[] args) throws SQLException {
         KITATMS program = new KITATMS();
-        //program.adiTest();
-        program.zamTest();
+        program.adiTest();
+        //program.zamTest();
         //program.hadyaTest();
         //program.wahaTest();
     }
@@ -42,6 +42,7 @@ public class KITATMS {
         // TODO code application logic here
         System.out.println("Adi was here");
         DBWindow dbwindow = new DBWindow(con);
+        //con.s
     }
 
     public void zamTest() throws SQLException {

@@ -253,6 +253,11 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
         jPanel3.add(viewLearningMaterialsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 200, -1));
 
         assessmentButton.setText("Assesment");
+        assessmentButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                assessmentButtonActionPerformed(evt);
+            }
+        });
         jPanel3.add(assessmentButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 200, -1));
         jPanel3.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 240, -1));
 
@@ -281,12 +286,16 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void viewScheduleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewScheduleButtonActionPerformed
-        // TODO add your handling code here:
+        //close this window, channel to viewschedule window
     }//GEN-LAST:event_viewScheduleButtonActionPerformed
 
     private void viewLearningMaterialsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewLearningMaterialsButtonActionPerformed
-        // TODO add your handling code here:
+        //close this window, channel to View learning materials window
     }//GEN-LAST:event_viewLearningMaterialsButtonActionPerformed
+
+    private void assessmentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assessmentButtonActionPerformed
+        //close this window, channel to AssessmentWindow
+    }//GEN-LAST:event_assessmentButtonActionPerformed
 
     /**
      * @param args the command line arguments

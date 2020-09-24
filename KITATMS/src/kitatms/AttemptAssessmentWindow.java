@@ -1,5 +1,9 @@
 package kitatms;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.ButtonGroup;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,6 +17,9 @@ package kitatms;
 public class AttemptAssessmentWindow extends javax.swing.JFrame {
     
     static DBConnection con;
+    private Course course;
+    private ButtonGroup[] answerChoice;
+    
     
     public AttemptAssessmentWindow(DBConnection con){
         this.con = con;
@@ -28,6 +35,38 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
      */
     private AttemptAssessmentWindow() {
         initComponents();
+        unfinishedWarningLabel.setVisible(false);
+        answerChoice = new ButtonGroup[5];
+        answerChoice[0].add(q1True);
+        answerChoice[0].add(q1False);
+        answerChoice[1].add(q2True);
+        answerChoice[1].add(q2False);
+        answerChoice[2].add(q3True);
+        answerChoice[2].add(q3False);
+        answerChoice[3].add(q4True);
+        answerChoice[3].add(q4False);
+        answerChoice[4].add(q5True);
+        answerChoice[4].add(q5False);
+    }
+    
+    public void setCourse(Course c){
+        course = c;
+    }
+    
+    private void setupQuestions() throws SQLException{
+        //question retrieval
+        //format: select * from assessment where courseID='courseID';
+        String courseID = course.getCourseID();
+        
+        String questionQuery = "select * from assessment where courseID='"+courseID+"';";
+        String packedQuestions = con.retrieve(questionQuery, "assessmentQuestions").get(0);
+        
+        String[] questions = packedQuestions.split("$");
+        question1Text.setText(questions[0]);
+        question2Text.setText(questions[1]);
+        question3Text.setText(questions[2]);
+        question4Text.setText(questions[3]);
+        question5Text.setText(questions[4]);
     }
 
     /**
@@ -45,27 +84,28 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         submitButton = new javax.swing.JToggleButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jTextField3 = new javax.swing.JTextField();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jRadioButton6 = new javax.swing.JRadioButton();
-        jTextField4 = new javax.swing.JTextField();
-        jRadioButton7 = new javax.swing.JRadioButton();
-        jRadioButton8 = new javax.swing.JRadioButton();
-        jTextField5 = new javax.swing.JTextField();
-        jRadioButton9 = new javax.swing.JRadioButton();
-        jRadioButton10 = new javax.swing.JRadioButton();
+        q1True = new javax.swing.JRadioButton();
+        q1False = new javax.swing.JRadioButton();
+        question1Text = new javax.swing.JTextField();
+        question2Text = new javax.swing.JTextField();
+        q2True = new javax.swing.JRadioButton();
+        q2False = new javax.swing.JRadioButton();
+        question3Text = new javax.swing.JTextField();
+        q3True = new javax.swing.JRadioButton();
+        q3False = new javax.swing.JRadioButton();
+        question4Text = new javax.swing.JTextField();
+        q4True = new javax.swing.JRadioButton();
+        q4False = new javax.swing.JRadioButton();
+        question5Text = new javax.swing.JTextField();
+        q5True = new javax.swing.JRadioButton();
+        q5False = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        unfinishedWarningLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -105,65 +145,75 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
             }
         });
 
-        jRadioButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jRadioButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRadioButton1.setText("True");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
-            }
-        });
+        q1True.setBackground(new java.awt.Color(255, 255, 255));
+        q1True.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        q1True.setText("True");
+        q1True.setName("T"); // NOI18N
 
-        jRadioButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jRadioButton2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRadioButton2.setText("False");
+        q1False.setBackground(new java.awt.Color(255, 255, 255));
+        q1False.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        q1False.setText("False");
+        q1False.setName("F"); // NOI18N
 
-        jTextField1.setText("Work is tiring ");
-        jTextField1.setBorder(null);
+        question1Text.setEditable(false);
+        question1Text.setText("Work is tiring ");
+        question1Text.setBorder(null);
 
-        jTextField2.setText("Work ethics is important");
-        jTextField2.setBorder(null);
+        question2Text.setEditable(false);
+        question2Text.setText("Work ethics is important");
+        question2Text.setBorder(null);
 
-        jRadioButton3.setBackground(new java.awt.Color(255, 255, 255));
-        jRadioButton3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRadioButton3.setText("True");
+        q2True.setBackground(new java.awt.Color(255, 255, 255));
+        q2True.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        q2True.setText("True");
+        q2True.setName("T"); // NOI18N
 
-        jRadioButton4.setBackground(new java.awt.Color(255, 255, 255));
-        jRadioButton4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRadioButton4.setText("False");
+        q2False.setBackground(new java.awt.Color(255, 255, 255));
+        q2False.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        q2False.setText("False");
+        q2False.setName("F"); // NOI18N
 
-        jTextField3.setText("Respect each other is a good ethic");
-        jTextField3.setBorder(null);
+        question3Text.setEditable(false);
+        question3Text.setText("Respect each other is a good ethic");
+        question3Text.setBorder(null);
 
-        jRadioButton5.setBackground(new java.awt.Color(255, 255, 255));
-        jRadioButton5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRadioButton5.setText("True");
+        q3True.setBackground(new java.awt.Color(255, 255, 255));
+        q3True.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        q3True.setText("True");
+        q3True.setName("T"); // NOI18N
 
-        jRadioButton6.setBackground(new java.awt.Color(255, 255, 255));
-        jRadioButton6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRadioButton6.setText("False");
+        q3False.setBackground(new java.awt.Color(255, 255, 255));
+        q3False.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        q3False.setText("False");
+        q3False.setName("F"); // NOI18N
 
-        jTextField4.setText("Work ethic varies by companies");
-        jTextField4.setBorder(null);
+        question4Text.setEditable(false);
+        question4Text.setText("Work ethic varies by companies");
+        question4Text.setBorder(null);
 
-        jRadioButton7.setBackground(new java.awt.Color(255, 255, 255));
-        jRadioButton7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRadioButton7.setText("True");
+        q4True.setBackground(new java.awt.Color(255, 255, 255));
+        q4True.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        q4True.setText("True");
+        q4True.setName("T"); // NOI18N
 
-        jRadioButton8.setBackground(new java.awt.Color(255, 255, 255));
-        jRadioButton8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRadioButton8.setText("False");
+        q4False.setBackground(new java.awt.Color(255, 255, 255));
+        q4False.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        q4False.setText("False");
+        q4False.setName("F"); // NOI18N
 
-        jTextField5.setText("Ethic come first");
-        jTextField5.setBorder(null);
+        question5Text.setEditable(false);
+        question5Text.setText("Ethic come first");
+        question5Text.setBorder(null);
 
-        jRadioButton9.setBackground(new java.awt.Color(255, 255, 255));
-        jRadioButton9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRadioButton9.setText("True");
+        q5True.setBackground(new java.awt.Color(255, 255, 255));
+        q5True.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        q5True.setText("True");
+        q5True.setName("T"); // NOI18N
 
-        jRadioButton10.setBackground(new java.awt.Color(255, 255, 255));
-        jRadioButton10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRadioButton10.setText("False");
+        q5False.setBackground(new java.awt.Color(255, 255, 255));
+        q5False.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        q5False.setText("False");
+        q5False.setName("F"); // NOI18N
 
         jLabel3.setText("1.");
 
@@ -178,6 +228,10 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(204, 0, 0));
         jLabel9.setText("*please answer all questions");
 
+        unfinishedWarningLabel.setForeground(new java.awt.Color(204, 0, 0));
+        unfinishedWarningLabel.setText("You have not finished answering all questions");
+        unfinishedWarningLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -186,6 +240,13 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9)
+                        .addGap(29, 29, 29)
+                        .addComponent(submitButton)
+                        .addGap(22, 22, 22))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
@@ -193,49 +254,46 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(question2Text, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                                 .addComponent(jLabel8))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(question1Text, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel6))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(question3Text, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jRadioButton5)
+                                        .addComponent(q3True)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jRadioButton6))
+                                        .addComponent(q3False))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jRadioButton3)
+                                        .addComponent(q2True)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jRadioButton4))
+                                        .addComponent(q2False))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jRadioButton1)
+                                        .addComponent(q1True)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jRadioButton2)))
+                                        .addComponent(q1False)))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(question5Text, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jRadioButton9)
+                                .addComponent(q5True)
                                 .addGap(18, 18, 18)
-                                .addComponent(jRadioButton10))
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(q5False))
+                            .addComponent(question4Text, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jRadioButton7)
+                                .addComponent(q4True)
                                 .addGap(18, 18, 18)
-                                .addComponent(jRadioButton8)))
-                        .addGap(50, 50, 50))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel9)
-                        .addGap(29, 29, 29)
-                        .addComponent(submitButton)
-                        .addGap(22, 22, 22))))
+                                .addComponent(q4False)))
+                        .addGap(50, 50, 50))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(unfinishedWarningLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(183, 183, 183))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,45 +308,47 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(question1Text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton2))
+                            .addComponent(q1True)
+                            .addComponent(q1False))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(question2Text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton3)
-                            .addComponent(jRadioButton4))
+                            .addComponent(q2True)
+                            .addComponent(q2False))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(question3Text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton5)
-                            .addComponent(jRadioButton6)))
+                            .addComponent(q3True)
+                            .addComponent(q3False)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(question4Text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton7)
-                            .addComponent(jRadioButton8))
+                            .addComponent(q4True)
+                            .addComponent(q4False))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(question5Text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton9)
-                            .addComponent(jRadioButton10))))
-                .addContainerGap(78, Short.MAX_VALUE))
+                            .addComponent(q5True)
+                            .addComponent(q5False))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addComponent(unfinishedWarningLabel)
+                .addGap(14, 14, 14))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -311,13 +371,30 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
-        dispose();
-        new AssessmentWindow(con);
+        boolean completed = false;
+        String[] submittedAnswers = new String[5];
+        for(int i=0;i<5;i++){
+            if (answerChoice[i].getSelection()==null){
+                completed = false;
+                break;
+            }
+            else{
+                submittedAnswers[i] = answerChoice[i].getSelection().getActionCommand();
+            }
+        }
+        
+        if (completed){
+            dispose();
+            new AssessmentWindow(con);
+        }
+        else{
+            unfinishedWarningLabel.setVisible(true);
+        }
+        
+        
+        
+        
     }//GEN-LAST:event_submitButtonActionPerformed
-
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -366,21 +443,22 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton10;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
-    private javax.swing.JRadioButton jRadioButton7;
-    private javax.swing.JRadioButton jRadioButton8;
-    private javax.swing.JRadioButton jRadioButton9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JRadioButton q1False;
+    private javax.swing.JRadioButton q1True;
+    private javax.swing.JRadioButton q2False;
+    private javax.swing.JRadioButton q2True;
+    private javax.swing.JRadioButton q3False;
+    private javax.swing.JRadioButton q3True;
+    private javax.swing.JRadioButton q4False;
+    private javax.swing.JRadioButton q4True;
+    private javax.swing.JRadioButton q5False;
+    private javax.swing.JRadioButton q5True;
+    private javax.swing.JTextField question1Text;
+    private javax.swing.JTextField question2Text;
+    private javax.swing.JTextField question3Text;
+    private javax.swing.JTextField question4Text;
+    private javax.swing.JTextField question5Text;
     private javax.swing.JToggleButton submitButton;
+    private javax.swing.JLabel unfinishedWarningLabel;
     // End of variables declaration//GEN-END:variables
 }

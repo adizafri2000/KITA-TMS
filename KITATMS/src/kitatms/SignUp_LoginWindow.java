@@ -182,20 +182,14 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username = usernameTextField.getText();
         String password = String.valueOf(accountpasswordPasswordField.getPassword());
-        boolean flag = false;
+        boolean flag = true;
 
-                        
-            try {
-                con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('zampaduuuuuu',1,'heheh');");
-            } catch (SQLException ex) {
-                Logger.getLogger(SignUp_LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
-            }
-			if(flag==true){
-				jLabel2.setText("You are now registered as a trainee!");
-			}
-			else{
-				jLabel2.setText("Username is taken");
-			}
+        try {
+            flag = con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('"+username+"',1,'"+password+"');");
+        } catch (SQLException ex) {
+            //Logger.getLogger(SignUp_LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
 		
     }//GEN-LAST:event_trainerSignupButtonActionPerformed
 

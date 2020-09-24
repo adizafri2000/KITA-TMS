@@ -55,6 +55,10 @@ public class Course {
     
     /**
      * Empty constructor for course object
+     * @param courseID
+     * @param courseName
+     * @param coureStart
+     * @param courseEnd
      */
     public Course(String courseID, String courseName,String coureStart, String courseEnd){
         this.courseID = courseID;

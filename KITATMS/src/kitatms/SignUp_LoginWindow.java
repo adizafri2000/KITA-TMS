@@ -211,6 +211,7 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
         String password = String.valueOf(accountpasswordPasswordField.getPassword());
         boolean flag = false;
         String accType = "";
+        Account acc = new Account();
         ArrayList<String> usernameList = new ArrayList<String>();
         ArrayList<String> passwordList = new ArrayList<String>();
         ArrayList<String> accTypeList = new ArrayList<String>();
@@ -231,16 +232,18 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
                 if(usernameList.get(i).equals(username) && passwordList.get(i).equals(password)){
                     flag = true;
                     accType = accTypeList.get(i);
+                    acc = new Account(usernameList.get(i), passwordList.get(i), accTypeList.get(i));
                 }
             }  
             if(flag==true){
                 if(accType.equals("1")){
+                    System.out.println(acc.username);
                     dispose();
-                    new TrainerHomeWindow(con);
+                    new TrainerHomeWindow(con,acc);
                 }
                 if(accType.equals("2")){
                     dispose();
-                    new TraineeHomeWindow(con);
+                    new TraineeHomeWindow(con,acc);
                 }
             }
             else{
@@ -272,7 +275,7 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
                 }
                         
 	    		    if(flag==true){
-	    		    	   jLabel2.setText("You are now registered as a trainee!");
+	    		    	   jLabel2.setText("You are now registered as a trainer!");
 			    }
 			    else{
 			    	     jLabel2.setText("Username is taken");

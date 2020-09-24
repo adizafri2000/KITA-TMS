@@ -20,6 +20,9 @@ public class Account {
         this.password = password;
         this.accountType = accountType;
     } 
+
+    Account() {
+    }
     public String getUsername(){
         return username;
     }

@@ -162,6 +162,7 @@ public class SetAssessmentWindow extends javax.swing.JFrame {
 
         jLabel8.setText("5.");
 
+        nextButton.setBackground(new java.awt.Color(204, 204, 204));
         nextButton.setText("Next");
         nextButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -169,6 +170,7 @@ public class SetAssessmentWindow extends javax.swing.JFrame {
             }
         });
 
+        saveButton.setBackground(new java.awt.Color(204, 204, 204));
         saveButton.setText("Save");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

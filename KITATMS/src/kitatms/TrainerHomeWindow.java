@@ -12,7 +12,18 @@ package kitatms;
 public class TrainerHomeWindow extends javax.swing.JFrame {
     
     static DBConnection con;
+    Account acc = new Account();
     
+    public TrainerHomeWindow(DBConnection con, Account acc){
+        this.con = con;
+        this.acc = acc;
+        System.out.println(acc.username);
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new TrainerHomeWindow().setVisible(true);
+            }
+        });
+    }
     public TrainerHomeWindow(DBConnection con){
         this.con = con;
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -27,6 +38,7 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
      */
     private TrainerHomeWindow() {
         initComponents();
+        //jLabel3.setText("Hello "+acc.username);
     }
 
     /**
@@ -39,7 +51,6 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        welcomingTextField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
@@ -52,6 +63,7 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         jTextField14 = new javax.swing.JTextField();
         jTextField13 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         newCourseButton = new javax.swing.JButton();
         viewCourseDetailsButton = new javax.swing.JButton();
@@ -64,13 +76,6 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 204, 204));
         jPanel1.setPreferredSize(new java.awt.Dimension(318, 259));
-
-        welcomingTextField.setEditable(false);
-        welcomingTextField.setBackground(new java.awt.Color(0, 204, 204));
-        welcomingTextField.setFont(new java.awt.Font("Lucida Bright", 1, 18)); // NOI18N
-        welcomingTextField.setForeground(new java.awt.Color(51, 51, 51));
-        welcomingTextField.setText("Hello username");
-        welcomingTextField.setBorder(null);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kitatms/icons8_user_50px.png"))); // NOI18N
 
@@ -147,6 +152,9 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
         jTextField13.setText("training management system that allow trainer");
         jTextField13.setBorder(null);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setText("Hello user");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -154,8 +162,8 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(13, 13, 13)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(welcomingTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(22, Short.MAX_VALUE)
@@ -189,12 +197,10 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(welcomingTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(21, 21, 21)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
                 .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -216,7 +222,7 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
                 .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -290,6 +296,7 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
 
     private void viewCourseDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCourseDetailsButtonActionPerformed
         //View Course Details Window
+        
         dispose();
         new ViewCourseDetailsWindow(con);
     }//GEN-LAST:event_viewCourseDetailsButtonActionPerformed
@@ -347,6 +354,7 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator2;
@@ -363,6 +371,5 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField9;
     private javax.swing.JButton newCourseButton;
     private javax.swing.JButton viewCourseDetailsButton;
-    private javax.swing.JTextField welcomingTextField;
     // End of variables declaration//GEN-END:variables
 }

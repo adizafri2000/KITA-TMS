@@ -22,7 +22,6 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
                 new TrainerHomeWindow().setVisible(true);
             }
         });
-        jLabel3.setText("hacummmm");
     }
     public TrainerHomeWindow(DBConnection con){
         this.con = con;
@@ -38,6 +37,7 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
      */
     private TrainerHomeWindow() {
         initComponents();
+        jLabel3.setText("hacummmm");
     }
 
     /**

@@ -187,6 +187,10 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
                         
             try {
                 con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('zampaduuuuuu',1,'heheh');");
+                
+                
+                dispose();
+                new TrainerHomeWindow(con);
             } catch (SQLException ex) {
                 Logger.getLogger(SignUp_LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -201,6 +205,9 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
 
     private void traineeSignupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_traineeSignupButtonActionPerformed
         // TODO add your handling code here:
+        
+        dispose();
+        new TraineeHomeWindow(con);
     }//GEN-LAST:event_traineeSignupButtonActionPerformed
 
     public static void main(String[] args){

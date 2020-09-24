@@ -287,14 +287,20 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
 
     private void viewScheduleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewScheduleButtonActionPerformed
         //close this window, channel to viewschedule window
+        dispose();
+        new ViewScheduleWindow(con).setVisible(true);
     }//GEN-LAST:event_viewScheduleButtonActionPerformed
 
     private void viewLearningMaterialsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewLearningMaterialsButtonActionPerformed
         //close this window, channel to View learning materials window
+        dispose();
+        new ViewLearningMaterialWindow(con).setVisible(true);
     }//GEN-LAST:event_viewLearningMaterialsButtonActionPerformed
 
     private void assessmentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assessmentButtonActionPerformed
         //close this window, channel to AssessmentWindow
+        dispose();
+        new AssessmentWindow(con).setVisible(true);
     }//GEN-LAST:event_assessmentButtonActionPerformed
 
     /**

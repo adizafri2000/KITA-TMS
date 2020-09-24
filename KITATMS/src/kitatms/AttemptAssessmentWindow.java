@@ -97,6 +97,7 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
 
         jLabel2.setText("Please answer the following questions: ");
 
+        submitButton.setBackground(new java.awt.Color(204, 204, 204));
         submitButton.setText("Submit");
         submitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -137,6 +137,7 @@ public class ViewCourseDetailsWindow extends javax.swing.JFrame {
 
         jLabel21.setText("lecture1_WorkEthic.pdf");
 
+        homeButton.setBackground(new java.awt.Color(204, 204, 204));
         homeButton.setText("Back to home");
         homeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

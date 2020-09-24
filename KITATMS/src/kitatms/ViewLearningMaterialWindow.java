@@ -159,6 +159,7 @@ public class ViewLearningMaterialWindow extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable2);
 
+        jLabel3.setBackground(new java.awt.Color(204, 204, 204));
         jLabel3.setForeground(new java.awt.Color(0, 51, 255));
         jLabel3.setText("Back to home");
 

@@ -127,6 +127,7 @@ public class AddCourseWindow extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 2, 13)); // NOI18N
         jLabel8.setText("Saved successfully ! ");
 
+        nextButton.setBackground(new java.awt.Color(204, 204, 204));
         nextButton.setText("Next");
         nextButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,6 +135,7 @@ public class AddCourseWindow extends javax.swing.JFrame {
             }
         });
 
+        saveButton.setBackground(new java.awt.Color(204, 204, 204));
         saveButton.setText("Save");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -228,7 +230,7 @@ public class AddCourseWindow extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(

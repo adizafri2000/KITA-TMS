@@ -324,6 +324,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="homeButton">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cc" green="cc" red="cc" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Back to home"/>
           </Properties>
           <Events>

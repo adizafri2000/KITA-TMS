@@ -5,6 +5,8 @@
  */
 package kitatms;
 
+import static kitatms.TrainerHomeWindow.con;
+
 /**
  *
  * @author User
@@ -57,7 +59,9 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
         viewLearningMaterialsButton = new javax.swing.JButton();
         assessmentButton = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
-        jTextField11 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        assessmentButton1 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -165,7 +169,7 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 20, Short.MAX_VALUE)
+                        .addGap(0, 2, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,36 +240,53 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
         jPanel3.setMinimumSize(new java.awt.Dimension(280, 275));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        viewScheduleButton.setBackground(new java.awt.Color(204, 204, 204));
         viewScheduleButton.setText("View Schedule");
         viewScheduleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 viewScheduleButtonActionPerformed(evt);
             }
         });
-        jPanel3.add(viewScheduleButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 200, -1));
+        jPanel3.add(viewScheduleButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 200, -1));
 
+        viewLearningMaterialsButton.setBackground(new java.awt.Color(204, 204, 204));
         viewLearningMaterialsButton.setText("View Learning Materials");
         viewLearningMaterialsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 viewLearningMaterialsButtonActionPerformed(evt);
             }
         });
-        jPanel3.add(viewLearningMaterialsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 200, -1));
+        jPanel3.add(viewLearningMaterialsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, 200, -1));
 
+        assessmentButton.setBackground(new java.awt.Color(204, 204, 204));
         assessmentButton.setText("Assesment");
         assessmentButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 assessmentButtonActionPerformed(evt);
             }
         });
-        jPanel3.add(assessmentButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 200, -1));
+        jPanel3.add(assessmentButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 200, -1));
         jPanel3.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 240, -1));
 
-        jTextField11.setEditable(false);
-        jTextField11.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField11.setText("COURSE LEARNING MANAGEMENT");
-        jTextField11.setBorder(null);
-        jPanel3.add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 210, 40));
+        jLabel2.setText("COURSE LEARNING MANAGEMENT");
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
+
+        assessmentButton1.setBackground(new java.awt.Color(204, 204, 204));
+        assessmentButton1.setText("Assesment");
+        assessmentButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                assessmentButton1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(assessmentButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 200, -1));
+
+        jButton1.setText("Log out");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -302,6 +323,16 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
         dispose();
         new AssessmentWindow(con).setVisible(true);
     }//GEN-LAST:event_assessmentButtonActionPerformed
+
+    private void assessmentButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assessmentButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_assessmentButton1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+        new SignUp_LoginWindow(con);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -340,12 +371,14 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton assessmentButton;
+    private javax.swing.JButton assessmentButton1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField14;

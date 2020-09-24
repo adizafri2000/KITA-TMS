@@ -52,12 +52,14 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         accountpasswordPasswordField = new javax.swing.JPasswordField();
         jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
         traineeSignupButton = new javax.swing.JButton();
         loginButton = new javax.swing.JButton();
         trainerSignupButton = new javax.swing.JButton();
         usernameTextField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -82,14 +84,16 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
         accountpasswordPasswordField.setForeground(new java.awt.Color(102, 102, 102));
         accountpasswordPasswordField.setToolTipText("");
         accountpasswordPasswordField.setBorder(null);
-        jPanel3.add(accountpasswordPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 200, 30));
+        accountpasswordPasswordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                accountpasswordPasswordFieldActionPerformed(evt);
+            }
+        });
+        jPanel3.add(accountpasswordPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 200, 30));
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel3.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 200, -1));
-
-        jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel3.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 200, -1));
+        jPanel3.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 190, -1));
 
         traineeSignupButton.setBackground(new java.awt.Color(204, 204, 204));
         traineeSignupButton.setText("Sign up as Trainee");
@@ -98,7 +102,7 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
                 traineeSignupButtonActionPerformed(evt);
             }
         });
-        jPanel3.add(traineeSignupButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, 200, -1));
+        jPanel3.add(traineeSignupButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 200, -1));
 
         loginButton.setBackground(new java.awt.Color(204, 204, 204));
         loginButton.setText("Login");
@@ -107,7 +111,7 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
                 loginButtonActionPerformed(evt);
             }
         });
-        jPanel3.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 200, -1));
+        jPanel3.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 200, -1));
 
         trainerSignupButton.setBackground(new java.awt.Color(204, 204, 204));
         trainerSignupButton.setText("Sign up as Trainer");
@@ -116,7 +120,7 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
                 trainerSignupButtonActionPerformed(evt);
             }
         });
-        jPanel3.add(trainerSignupButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, 200, -1));
+        jPanel3.add(trainerSignupButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 200, -1));
 
         usernameTextField.setForeground(new java.awt.Color(102, 102, 102));
         usernameTextField.setBorder(null);
@@ -125,18 +129,30 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
                 usernameTextFieldActionPerformed(evt);
             }
         });
-        jPanel3.add(usernameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 200, 31));
+        jPanel3.add(usernameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 200, 31));
 
-        jLabel2.setText("Fill in your username and password :");
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 230, 30));
+        jLabel2.setText("Fill in your username and password ");
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 230, 30));
+
+        jSeparator3.setBackground(new java.awt.Color(0, 0, 0));
+        jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel3.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 190, -1));
+
+        jLabel1.setFont(new java.awt.Font("Bahnschrift", 0, 13)); // NOI18N
+        jLabel1.setText("username:");
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, -1, 20));
+
+        jLabel5.setFont(new java.awt.Font("Bahnschrift", 0, 13)); // NOI18N
+        jLabel5.setText("password:");
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, 20));
 
         jPanel4.setBackground(new java.awt.Color(0, 204, 204));
         jPanel4.setPreferredSize(new java.awt.Dimension(318, 263));
 
-        jLabel3.setFont(new java.awt.Font("Franklin Gothic Medium", 1, 48)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Franklin Gothic Medium", 1, 90)); // NOI18N
         jLabel3.setText("KITA");
 
-        jLabel4.setFont(new java.awt.Font("Bahnschrift", 1, 10)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Bahnschrift", 1, 12)); // NOI18N
         jLabel4.setText("TRAINING MANAGEMENT SYSTEM");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -144,20 +160,17 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(49, 49, 49)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
-                        .addComponent(jLabel3))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(jLabel4)))
-                .addContainerGap(74, Short.MAX_VALUE))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(94, 94, 94)
-                .addComponent(jLabel3)
+                .addGap(88, 88, 88)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -289,6 +302,10 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_usernameTextFieldActionPerformed
 
+    private void accountpasswordPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accountpasswordPasswordFieldActionPerformed
+        // TODO add your handling code here: 
+    }//GEN-LAST:event_accountpasswordPasswordFieldActionPerformed
+
     public static void main(String[] args){
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -300,14 +317,16 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPasswordField accountpasswordPasswordField;
     private javax.swing.JFrame jFrame1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JButton loginButton;
     private javax.swing.JButton traineeSignupButton;
     private javax.swing.JButton trainerSignupButton;

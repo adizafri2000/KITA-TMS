@@ -7,6 +7,12 @@
 package kitatms;
 
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static kitatms.DBWindow.con;
 
 /**
  *
@@ -30,8 +36,8 @@ public class SignUp_Login extends javax.swing.JFrame {
     private SignUp_Login() {
         initComponents();
         jTextField1.setEditable(false);
-        jTextField3.setEditable(false);
-        jTextField4.setEditable(false);
+        //jTextField3.setEditable(false);
+        //jTextField4.setEditable(false);
     }
 
     /** This method is called from within the constructor to
@@ -54,8 +60,7 @@ public class SignUp_Login extends javax.swing.JFrame {
         loginButton = new javax.swing.JButton();
         trainerSignupButton = new javax.swing.JButton();
         usernameTextField = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -81,9 +86,7 @@ public class SignUp_Login extends javax.swing.JFrame {
         jTextField1.setBorder(null);
         jPanel3.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 61, 230, 20));
 
-        accountpasswordPasswordField.setBackground(new java.awt.Color(255, 255, 255));
         accountpasswordPasswordField.setForeground(new java.awt.Color(102, 102, 102));
-        accountpasswordPasswordField.setText("Password");
         accountpasswordPasswordField.setBorder(null);
         jPanel3.add(accountpasswordPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 200, 30));
 
@@ -119,20 +122,10 @@ public class SignUp_Login extends javax.swing.JFrame {
         jPanel3.add(trainerSignupButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, 200, -1));
 
         usernameTextField.setForeground(new java.awt.Color(102, 102, 102));
-        usernameTextField.setText("Username");
+        usernameTextField.setText("username");
         usernameTextField.setBorder(null);
         jPanel3.add(usernameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 200, 31));
-
-        jTextField3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField3.setText("Please login :");
-        jTextField3.setBorder(null);
-        jPanel3.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 160, 20));
-
-        jTextField4.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField4.setText("You have successfully created a trainer/trainee account ! ");
-        jTextField4.setBorder(null);
-        jPanel3.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 330, 31));
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 230, 30));
 
         jPanel4.setBackground(new java.awt.Color(0, 204, 204));
 
@@ -186,14 +179,54 @@ public class SignUp_Login extends javax.swing.JFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
+        String username = usernameTextField.getText();
+        String password = String.valueOf(accountpasswordPasswordField.getPassword());
+        ArrayList<String> usernameList = new ArrayList<String>();
+        try {
+            usernameList = con.retrieve("SELECT * FROM kitatms.account;","accountID");
+        } catch (SQLException ex) {
+            Logger.getLogger(SignUp_Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (String usernameList1 : usernameList) {
+            System.out.println(usernameList1);
+        }
+        
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void trainerSignupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trainerSignupButtonActionPerformed
         // TODO add your handling code here:
+                String username = usernameTextField.getText();
+                String password = String.valueOf(accountpasswordPasswordField.getPassword());
+                SignIn signIn = new SignIn();
+		boolean flag = false;
+		if(username.equals("")|| username == null || password.equals("")|| password.equals(null)){
+			jLabel2.setText("Please fill in username and password");
+		}
+		else{
+	
+
+                        try{
+                        //flag = signIn.register(username, password, password,"1"); //Logger.getLogger(LoginSignUpGUI.class.getName()).log(Level.SEVERE, null, ex);
+                        flag = con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('sayacuba',1,'33333');");
+                        }
+                        catch (SQLException ex) {
+                            //return false;
+                        }
+                        
+                        if(flag==true){
+                            jLabel2.setText("You are now registered as a trainer!");
+                        }
+                        else{
+                            jLabel2.setText("Username is taken");
+                        }
+                }
     }//GEN-LAST:event_trainerSignupButtonActionPerformed
 
     private void traineeSignupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_traineeSignupButtonActionPerformed
         // TODO add your handling code here:
+        if(usernameTextField.equals("username")|| usernameTextField == null || accountpasswordPasswordField.equals("")|| accountpasswordPasswordField.equals(null)){
+			jLabel2.setText("Please fill in username and password");
+		}
     }//GEN-LAST:event_traineeSignupButtonActionPerformed
 
 
@@ -201,14 +234,13 @@ public class SignUp_Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField accountpasswordPasswordField;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JButton loginButton;
     private javax.swing.JButton traineeSignupButton;
     private javax.swing.JButton trainerSignupButton;

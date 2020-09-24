@@ -19,7 +19,7 @@ public class SignIn{
                 //Account tempAcc;
                 if("1".equals(accType)){
                     //tempAcc = new Trainer(username,  password,  accType, username );
-                    success = con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('11111111',1,'hello2');");
+                    success = con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('11111111',1,'aumssssssssssss');");
                 }
                 if("2".equals(accType)){
                     

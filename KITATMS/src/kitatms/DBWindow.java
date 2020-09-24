@@ -5,6 +5,8 @@
  */
 package kitatms;
 
+import java.awt.*;
+import javax.swing.*;
 import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;

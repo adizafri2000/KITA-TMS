@@ -314,7 +314,7 @@ public class DBWindow extends javax.swing.JFrame {
 
     private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButtonActionPerformed
         dispose();
-        new SignUp_Login(con);
+        new SignUp_LoginWindow(con);
     }//GEN-LAST:event_continueButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

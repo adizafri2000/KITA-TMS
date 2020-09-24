@@ -12,22 +12,22 @@ import java.awt.event.ActionEvent;
  *
  * @author User
  */
-public class SignUp_Login extends javax.swing.JFrame {
+public class SignUp_LoginWindow extends javax.swing.JFrame {
     
     static DBConnection con;
     
-    public SignUp_Login(DBConnection con){
+    public SignUp_LoginWindow(DBConnection con){
         this.con = con;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SignUp_Login().setVisible(true);
+                new SignUp_LoginWindow().setVisible(true);
             }
         });
         
     }
 
     /** Creates new form Login_Form */
-    private SignUp_Login() {
+    private SignUp_LoginWindow() {
         initComponents();
         jTextField1.setEditable(false);
         jTextField3.setEditable(false);

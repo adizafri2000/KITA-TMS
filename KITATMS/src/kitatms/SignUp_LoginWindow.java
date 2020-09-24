@@ -215,30 +215,39 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
         ArrayList<String> passwordList = new ArrayList<String>();
         ArrayList<String> accTypeList = new ArrayList<String>();
         
-        try{
+        if(username.equals("")|| username.equals(null) || password.equals("")|| password.equals(null)){
+			jLabel2.setText("Please fill in username and password");
+	}
+        else{
+            try{
             usernameList = con.retrieve("SELECT * FROM kitatms.account;","accountID");
             passwordList = con.retrieve("SELECT * FROM kitatms.account;","accountPassword");
             accTypeList = con.retrieve("SELECT * FROM kitatms.account;","accountType");
-        } catch (SQLException ex) {
-                    //Logger.getLogger(SignUp_LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                        //Logger.getLogger(SignUp_LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            for(int i = 0; i < usernameList.size(); i++) {   
+                //System.out.print(houseAddress.get(i));
+                if(usernameList.get(i).equals(username) && passwordList.get(i).equals(password)){
+                    flag = true;
+                    accType = accTypeList.get(i);
+                }
+            }  
+            if(flag==true){
+                if(accType.equals("1")){
+                    dispose();
+                    new TrainerHomeWindow(con);
+                }
+                if(accType.equals("2")){
+                    dispose();
+                    new TraineeHomeWindow(con);
+                }
+            }
+            else{
+                jLabel2.setText("Wrong username or password");
+            }
         }
-        for(int i = 0; i < usernameList.size(); i++) {   
-            //System.out.print(houseAddress.get(i));
-            if(usernameList.get(i).equals(username) && passwordList.get(i).equals(password)){
-                flag = true;
-                accType = accTypeList.get(i);
-            }
-        }  
-        if(flag==true){
-            if(accType.equals("1")){
-                dispose();
-                new TrainerHomeWindow(con);
-            }
-            if(accType.equals("2")){
-                dispose();
-                new TraineeHomeWindow(con);
-            }
-        }
+        
         
         
         

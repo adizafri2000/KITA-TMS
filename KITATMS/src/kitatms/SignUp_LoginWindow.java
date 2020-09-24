@@ -190,11 +190,33 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
             //Logger.getLogger(SignUp_LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+<<<<<<< HEAD
+=======
+                        
+            try {
+                con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('zampaduuuuuu',1,'heheh');");
+                
+                
+                dispose();
+                new TrainerHomeWindow(con);
+            } catch (SQLException ex) {
+                Logger.getLogger(SignUp_LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+			if(flag==true){
+				jLabel2.setText("You are now registered as a trainee!");
+			}
+			else{
+				jLabel2.setText("Username is taken");
+			}
+>>>>>>> 29b0116586686d592af0dc274d4843b234fd203a
 		
     }//GEN-LAST:event_trainerSignupButtonActionPerformed
 
     private void traineeSignupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_traineeSignupButtonActionPerformed
         // TODO add your handling code here:
+        
+        dispose();
+        new TraineeHomeWindow(con);
     }//GEN-LAST:event_traineeSignupButtonActionPerformed
 
     public static void main(String[] args){

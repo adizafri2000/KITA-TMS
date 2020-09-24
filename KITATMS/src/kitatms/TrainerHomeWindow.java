@@ -53,9 +53,9 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
         jTextField14 = new javax.swing.JTextField();
         jTextField13 = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        newCourseButton = new javax.swing.JButton();
+        viewCourseDetailsButton = new javax.swing.JButton();
+        generateReportButton = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jTextField11 = new javax.swing.JTextField();
 
@@ -223,29 +223,29 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
         jPanel3.setMinimumSize(new java.awt.Dimension(280, 275));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton3.setText("New Course");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        newCourseButton.setText("New Course");
+        newCourseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                newCourseButtonActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 200, -1));
+        jPanel3.add(newCourseButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 200, -1));
 
-        jButton4.setText("View Course Details");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        viewCourseDetailsButton.setText("View Course Details");
+        viewCourseDetailsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                viewCourseDetailsButtonActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 200, -1));
+        jPanel3.add(viewCourseDetailsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 200, -1));
 
-        jButton5.setText("Generate Report");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        generateReportButton.setText("Generate Report");
+        generateReportButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                generateReportButtonActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 200, -1));
+        jPanel3.add(generateReportButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 200, -1));
         jPanel3.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 240, -1));
 
         jTextField11.setEditable(false);
@@ -272,17 +272,23 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void newCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newCourseButtonActionPerformed
         //New Course Window
-    }//GEN-LAST:event_jButton3ActionPerformed
+        dispose();
+        new AddCourseWindow(con);
+    }//GEN-LAST:event_newCourseButtonActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void viewCourseDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCourseDetailsButtonActionPerformed
         //View Course Details Window
-    }//GEN-LAST:event_jButton4ActionPerformed
+        dispose();
+        new ViewCourseDetailsWindow(con);
+    }//GEN-LAST:event_viewCourseDetailsButtonActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void generateReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateReportButtonActionPerformed
         //Generate Course Report Window
-    }//GEN-LAST:event_jButton5ActionPerformed
+        dispose();
+        new CourseReportWindow(con);
+    }//GEN-LAST:event_generateReportButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -321,9 +327,7 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton generateReportButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
@@ -340,6 +344,8 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JButton newCourseButton;
+    private javax.swing.JButton viewCourseDetailsButton;
     private javax.swing.JTextField welcomingTextField;
     // End of variables declaration//GEN-END:variables
 }

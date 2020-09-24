@@ -7,8 +7,7 @@ package kitatms;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -30,10 +29,10 @@ public class Course {
     private ArrayList<Trainee> courseParticipants;
     
     /**Starting date of this course*/
-    private Calendar courseStart;
+    private String courseStart;
     
     /**End date of this course*/
-    private Calendar courseEnd;
+    private String courseEnd;
     
     /**
      * Constructs a new Course object
@@ -45,7 +44,7 @@ public class Course {
      * @param courseEnd 
      */
     public Course(String courseID, String courseName, Trainer trainer,
-            ArrayList<Trainee> courseParticipants, Calendar coureStart, Calendar courseEnd){
+            ArrayList<Trainee> courseParticipants, String coureStart, String courseEnd){
         this.courseID = courseID;
         this.courseName = courseName;
         this.trainer = trainer;
@@ -57,6 +56,12 @@ public class Course {
     /**
      * Empty constructor for course object
      */
+    public Course(String courseID, String courseName,String coureStart, String courseEnd){
+        this.courseID = courseID;
+        this.courseName = courseName;     
+        this.courseStart = coureStart;
+        this.courseEnd = courseEnd;
+    }
     public Course(){}
     
     /**
@@ -83,7 +88,7 @@ public class Course {
      * Returns the starting date of this course in the format YYYY-MM-DD
      * @return course starting date
      */
-    public Calendar getCourseStart(){
+    public String getCourseStart(){
         return courseStart;
     }
     
@@ -91,7 +96,7 @@ public class Course {
      * Returns the end date of this course in the format YYYY-MM-DD
      * @return course end date
      */
-    public Calendar getCourseEnd(){
+    public String getCourseEnd(){
         return courseEnd;
     }
     
@@ -117,7 +122,7 @@ public class Course {
      * e.g course.setCourseStart(new GregorianCalendar(2010,2,15));
      * @param courseStart 
      */
-    public void setCourseStart(Calendar courseStart){
+    public void setCourseStart(String courseStart){
         this.courseStart = courseStart;
     }
     
@@ -127,7 +132,7 @@ public class Course {
      * e.g course.setCourseEnd(new GregorianCalendar(2010,2,15));
      * @param courseEnd 
      */
-    public void setCourseEnd(Calendar courseEnd){
+    public void setCourseEnd(String courseEnd){
         this.courseEnd = courseEnd;  
     }
     
@@ -137,7 +142,7 @@ public class Course {
      */
     public String printCourseStart(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.format(courseStart.getTime());
+        return sdf.format(courseStart);
     }
     
     /**
@@ -146,6 +151,6 @@ public class Course {
      */
     public String printCourseEnd(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.format(courseEnd.getTime());
+        return sdf.format(courseEnd);
     }
 }

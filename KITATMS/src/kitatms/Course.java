@@ -43,15 +43,15 @@ public class Course {
      * @param coureStart
      * @param courseEnd 
      */
-    public Course(String courseID, String courseName, Trainer trainer,
-            ArrayList<Trainee> courseParticipants, String coureStart, String courseEnd){
+   /* public Course(String courseID, String courseName, Trainer trainer,
+            ArrayList<Trainee> courseParticipants, String courseStart, String courseEnd){
         this.courseID = courseID;
         this.courseName = courseName;
         this.trainer = trainer;
         this.courseParticipants = courseParticipants;
-        this.courseStart = coureStart;
+        this.courseStart = courseStart;
         this.courseEnd = courseEnd;        
-    }
+    }*/
     
     /**
      * Empty constructor for course object
@@ -60,14 +60,14 @@ public class Course {
      * @param coureStart
      * @param courseEnd
      */
-    public Course(String courseID, String courseName,String coureStart, String courseEnd){
+    public Course(String courseID, String courseName,String courseStart, String courseEnd){
         this.courseID = courseID;
         this.courseName = courseName;     
-        this.courseStart = coureStart;
+        this.courseStart = courseStart;
         this.courseEnd = courseEnd;
     }
     public Course(){}
-    
+
     /**
      * Returns this course's ID
      * @return 
@@ -144,17 +144,19 @@ public class Course {
      * Returns a String representation of course start date
      * @return course start date in "YYYY-MM-DD"
      */
+    
     public String printCourseStart(){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.format(courseStart);
+        return courseStart;
     }
     
     /**
      * Returns a String representation of course end date
      * @return course start date in "YYYY-MM-DD"
      */
+    
     public String printCourseEnd(){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.format(courseEnd);
+        return courseEnd;
     }
-}
+    
+    
+}                                                                                                    

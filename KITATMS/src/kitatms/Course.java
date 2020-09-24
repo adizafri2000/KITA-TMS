@@ -131,12 +131,21 @@ public class Course {
         this.courseEnd = courseEnd;  
     }
     
-    
-    public void printCourseStart(){
-        //System.out.println(courseStart.toString());
-        //String real = courseStart.getDisplayName(Calendar.YEAR, Calendar.LONG, Locale.JAPAN);
-        //System.out.println(real);
+    /**
+     * Returns a String representation of course start date
+     * @return course start date in "YYYY-MM-DD"
+     */
+    public String printCourseStart(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        System.out.println(sdf.format(courseStart.getTime()));
+        return sdf.format(courseStart.getTime());
+    }
+    
+    /**
+     * Returns a String representation of course end date
+     * @return course start date in "YYYY-MM-DD"
+     */
+    public String printCourseEnd(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(courseEnd.getTime());
     }
 }

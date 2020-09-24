@@ -280,6 +280,7 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
         });
         jPanel3.add(assessmentButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 200, -1));
 
+        jButton1.setBackground(new java.awt.Color(204, 204, 204));
         jButton1.setText("Log out");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

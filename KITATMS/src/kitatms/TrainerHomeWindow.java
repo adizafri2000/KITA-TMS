@@ -255,6 +255,7 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
         jLabel2.setText("COURSE APPLICATION MANAGEMENT");
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, -1, -1));
 
+        jButton1.setBackground(new java.awt.Color(204, 204, 204));
         jButton1.setText("Log out");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.ArrayList;
 
 /**
  *
@@ -193,8 +194,41 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
-        dispose();
-        new TrainerHomeWindow(con);
+        String username = usernameTextField.getText();
+        String password = String.valueOf(accountpasswordPasswordField.getPassword());
+        boolean flag = false;
+        String accType = "";
+        ArrayList<String> usernameList = new ArrayList<String>();
+        ArrayList<String> passwordList = new ArrayList<String>();
+        ArrayList<String> accTypeList = new ArrayList<String>();
+        
+        try{
+            usernameList = con.retrieve("SELECT * FROM kitatms.account;","accountID");
+            passwordList = con.retrieve("SELECT * FROM kitatms.account;","accountPassword");
+            accTypeList = con.retrieve("SELECT * FROM kitatms.account;","accountType");
+        } catch (SQLException ex) {
+                    //Logger.getLogger(SignUp_LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for(int i = 0; i < usernameList.size(); i++) {   
+            //System.out.print(houseAddress.get(i));
+            if(usernameList.get(i).equals(username) && passwordList.get(i).equals(password)){
+                flag = true;
+                accType = accTypeList.get(i);
+            }
+        }  
+        if(flag==true){
+            if(accType.equals("1")){
+                dispose();
+                new TrainerHomeWindow(con);
+            }
+            if(accType.equals("2")){
+                dispose();
+                new TraineeHomeWindow(con);
+            }
+        }
+        
+        
+        
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void trainerSignupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trainerSignupButtonActionPerformed

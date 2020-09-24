@@ -6,25 +6,33 @@ import java.io.FileWriter;
 import java.io.Writer;
 import java.io.BufferedWriter;
 import java.sql.SQLException;
+import static kitatms.SignUp_LoginWindow.con;
 
 
 public class SignIn{
         DBConnection con = new DBConnection();
 	private static Scanner x;
+        
+        
+        public SignIn(DBConnection con){
+            this.con = con;
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    //new SignUp_LoginWindow().setVisible(true);
+                }
+            });
+        }
+        
 
-	public boolean register(String username, String password, String password2, String accType) throws SQLException{
+	public boolean register(String username,String accType, String password) throws SQLException{
                 
-		boolean success = true;
-		String tempUsername = "";
+		boolean success = false;
                 //Account tempAcc;
                 if("1".equals(accType)){
-                    //tempAcc = new Trainer(username,  password,  accType, username );
-                    success = con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('11111111',1,'aumssssssssssss');");
+                    success = con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('"+username+"',1,'"+password+"');");
                 }
-                if("2".equals(accType)){
-                    
-                    //tempAcc = new Trainer(username,  password,  accType, username );
-                    success = con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('zamencem',1,'hello2');");
+                if("2".equals(accType)){ 
+                    success = con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('"+username+"',2,'"+password+"');");
                 }             
                 
 		return success;

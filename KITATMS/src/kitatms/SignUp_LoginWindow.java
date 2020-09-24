@@ -237,6 +237,7 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
             }  
             if(flag==true){
                 if(accType.equals("1")){
+                    System.out.println(acc.username);
                     dispose();
                     new TrainerHomeWindow(con,acc);
                 }

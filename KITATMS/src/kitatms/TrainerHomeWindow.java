@@ -17,6 +17,7 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
     public TrainerHomeWindow(DBConnection con, Account acc){
         this.con = con;
         this.acc = acc;
+        System.out.println(acc.username);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TrainerHomeWindow().setVisible(true);
@@ -37,7 +38,7 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
      */
     private TrainerHomeWindow() {
         initComponents();
-        jLabel3.setText("Hello "+acc.username);
+        //jLabel3.setText("Hello "+acc.username);
     }
 
     /**
@@ -295,6 +296,7 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
 
     private void viewCourseDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCourseDetailsButtonActionPerformed
         //View Course Details Window
+        
         dispose();
         new ViewCourseDetailsWindow(con);
     }//GEN-LAST:event_viewCourseDetailsButtonActionPerformed

@@ -274,7 +274,7 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
                 }
                         
 	    		    if(flag==true){
-	    		    	   jLabel2.setText("You are now registered as a trainee!");
+	    		    	   jLabel2.setText("You are now registered as a trainer!");
 			    }
 			    else{
 			    	     jLabel2.setText("Username is taken");

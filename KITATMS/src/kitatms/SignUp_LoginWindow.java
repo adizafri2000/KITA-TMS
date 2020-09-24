@@ -176,6 +176,8 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
+        dispose();
+        new TrainerHomeWindow(con);
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void trainerSignupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trainerSignupButtonActionPerformed
@@ -192,11 +194,10 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
 
     */                    
         try {
-                con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('bologna',1,'cr7');");
+                //con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('real',1,'messi');");
+                con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('"+username+"',1,'"+password+"');");
                 
                 
-                dispose();
-                new TrainerHomeWindow(con);
             } catch (SQLException ex) {
                 //Logger.getLogger(SignUp_LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
             }

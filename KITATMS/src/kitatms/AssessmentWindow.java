@@ -33,6 +33,14 @@ public class AssessmentWindow extends javax.swing.JFrame {
             }
         });
     }
+    public AssessmentWindow(DBConnection con){
+        this.con = con;
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new AssessmentWindow().setVisible(true);
+            }
+        });
+    }
         
     /**
      * Creates new form Assessment

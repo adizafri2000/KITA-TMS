@@ -24,7 +24,7 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
     private Course course;
     private ButtonGroup[] answerChoice;
     private String[] correctAnswers;
-    private Trainee trainee;
+    private Account trainee;
     
     public AttemptAssessmentWindow(DBConnection con){
         this.con = con;
@@ -77,7 +77,7 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
         }
     }
     
-    public void setTrainee(Trainee t){
+    public void setTrainee(Account t){
         trainee = t;
     }
     
@@ -424,19 +424,6 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
                 submittedAnswers[i] = answerChoice[i].getSelection().getActionCommand();
             }
         }
-<<<<<<< Updated upstream
-        //String assessmentID = 
-        String query = "select * from assessment where courseID='"+course.getCourseID()+"';";
-        ArrayList<String> correctAnswers = new ArrayList<>();
-        ArrayList<String> questions = new ArrayList<>();
-        try {
-            questions = con.retrieve(query,"assessmentQuestions");
-            correctAnswers = con.retrieve(query,"assessmentAnswers");
-        } catch (SQLException ex) {
-            Logger.getLogger(AttemptAssessmentWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
-=======
->>>>>>> Stashed changes
         
         if (completed){
             Assessment assessment = new Assessment();

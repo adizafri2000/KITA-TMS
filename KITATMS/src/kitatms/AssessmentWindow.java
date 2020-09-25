@@ -4,6 +4,16 @@
  * and open the template in the editor.
  */
 package kitatms;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author User
@@ -11,6 +21,8 @@ package kitatms;
 public class AssessmentWindow extends javax.swing.JFrame {
 
     static DBConnection con;
+    private Account trainee;
+    private ArrayList<String> courseIDList;
     
     public AssessmentWindow(DBConnection con){
         this.con = con;
@@ -93,16 +105,31 @@ public class AssessmentWindow extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Course Name", "Course ID", "Result", "Attempt Date", "Assessment"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setHeaderValue("Course Name");
+            jTable1.getColumnModel().getColumn(1).setHeaderValue("Course ID");
+            jTable1.getColumnModel().getColumn(2).setHeaderValue("Result");
+            jTable1.getColumnModel().getColumn(3).setHeaderValue("Attempt Date");
+            jTable1.getColumnModel().getColumn(4).setHeaderValue("Assessment");
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -167,6 +194,85 @@ public class AssessmentWindow extends javax.swing.JFrame {
         new TraineeHomeWindow(con);
     }//GEN-LAST:event_homeButtonActionPerformed
 
+    private void setupTable(){
+        setupCourseIDList();
+        for(int i=0;i<courseIDList.size();i++){
+            addRow(courseIDList.get(i));
+        }
+        
+    }
+    
+    private void addRow(String courseID){
+        //column 1 = course Name
+        //column 2 = course ID
+        //column 3 = marks (IF ATTEMPTED PREVIOUSLY)
+        //column 4 = attempt date (IF ATTEMPTED PREVIOUSLY)
+        //column 5 = start button
+        String courseName, attemptDate, marks;
+        courseName = attemptDate = marks = " ";
+        
+        String courseNameQuery = "select * from course where courseID='"+courseID+"';";
+        try {
+            courseName = con.retrieve(courseNameQuery, "courseName").get(0);
+        } catch (SQLException ex) {
+            //Logger.getLogger(AssessmentWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        boolean hasAttempted = true;
+        try {
+            ArrayList<String> checker = con.retrieve("select * from attempt where accountID='"+trainee.accountID+"';","accountID");
+            if(checker.isEmpty())
+                hasAttempted = false;
+        } catch (SQLException ex) {
+            //Logger.getLogger(AssessmentWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(hasAttempted){
+            try {
+                marks = con.retrieve("select * from attempt where accountID='"+trainee.accountID+"';", "attemptMarks").get(0);
+                attemptDate = con.retrieve("select * from attempt where accountID='"+trainee.accountID+"';", "attemptDate").get(0);
+            } catch (SQLException ex) {
+                //Logger.getLogger(AssessmentWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            marks = "-";
+            attemptDate = "-";
+        }
+        
+        Course course = new Course();
+        course.setCourseID(courseID);
+        JButton startButton = new JButton("Start");
+        startButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                dispose();
+                AttemptAssessmentWindow AAW = new AttemptAssessmentWindow(con);
+                AAW.setCourse(course);
+                AAW.setTrainee(trainee);
+            }
+        });
+        
+        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+        model.addRow(new Object[]{courseName,courseID,marks,attemptDate,startButton});
+    }
+    
+    /**
+     * Retrieves all enrolled course's course ID for this trainee
+     */
+    private void setupCourseIDList(){
+        String traineeID = trainee.accountID;
+        
+        String query = "Select * from enrollment where accountID='"+traineeID+"';";
+        try {
+            courseIDList = con.retrieve(query, "courseID");
+        } catch (SQLException ex) {
+            //Logger.getLogger(AssessmentWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void setTrainee(Account t){
+        trainee = t;
+        setupTable();
+    }
     /**
      * @param args the command line arguments
      */

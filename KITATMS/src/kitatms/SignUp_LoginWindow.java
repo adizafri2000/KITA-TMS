@@ -245,7 +245,9 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
                 }
                 if(accType.equals("2")){
                     dispose();
-                    new TraineeHomeWindow(con,acc);
+                    //new TraineeHomeWindow(con,acc);
+                    TraineeHomeWindow twh = new TraineeHomeWindow(con);
+                    twh.setAccount(acc);
                 }
             }
             else{

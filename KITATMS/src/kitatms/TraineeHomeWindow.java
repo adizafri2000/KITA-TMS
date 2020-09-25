@@ -14,7 +14,7 @@ import static kitatms.TrainerHomeWindow.con;
 public class TraineeHomeWindow extends javax.swing.JFrame {
 
     static DBConnection con;
-    Account acc;
+    private Account acc = new Account();
     
     public TraineeHomeWindow(DBConnection con){
         this.con = con;
@@ -28,9 +28,11 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
     public TraineeHomeWindow(DBConnection con, Account acc){
         this.con = con;
         this.acc = acc;
+        System.out.println("THW Constructor, username: "+acc.username);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TraineeHomeWindow().setVisible(true);
+                //jLabel3.setText("Hello "+acc.username);
             }
         });
     }
@@ -42,11 +44,12 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
         initComponents();
     }
     
-    public void setAccount(Account account){
-        acc = account;
-        if(acc.username != null){
-            jLabel3.setText("Hello "+acc.username);
-        }
+    public void setWelcome(){
+        //acc = account;
+        //if(acc.username != null){
+            //jLabel3.setText("Hello "+acc.username);
+            System.out.println("Username: "+acc.username);
+        //}
     }
 
     /**
@@ -312,20 +315,20 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
     private void viewScheduleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewScheduleButtonActionPerformed
         //close this window, channel to viewschedule window
         dispose();
-        new ViewScheduleWindow(con).setVisible(true);
+        new ViewScheduleWindow(con);
     }//GEN-LAST:event_viewScheduleButtonActionPerformed
 
     private void viewLearningMaterialsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewLearningMaterialsButtonActionPerformed
         //close this window, channel to View learning materials window
         dispose();
-        new ViewLearningMaterialWindow(con).setVisible(true);
+        new ViewLearningMaterialWindow(con);
     }//GEN-LAST:event_viewLearningMaterialsButtonActionPerformed
 
     private void assessmentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assessmentButtonActionPerformed
         //close this window, channel to AssessmentWindow
         dispose();
-        AssessmentWindow AW = new AssessmentWindow(con);
-        AW.setTrainee(acc);
+        AssessmentWindow AW = new AssessmentWindow(con,acc);
+        //AW.setTrainee(getAccount());
     }//GEN-LAST:event_assessmentButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -334,6 +337,9 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
         new SignUp_LoginWindow(con);
     }//GEN-LAST:event_jButton1ActionPerformed
     
+    public Account getAccount(){
+        return acc;
+    }
     /**
      * @param args the command line arguments
      */

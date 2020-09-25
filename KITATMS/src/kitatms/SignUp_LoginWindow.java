@@ -235,6 +235,7 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
                     flag = true;
                     accType = accTypeList.get(i);
                     acc = new Account(usernameList.get(i), passwordList.get(i), accTypeList.get(i));
+                    acc.setAccountID();
                 }
             }  
             if(flag==true){
@@ -245,9 +246,9 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
                 }
                 if(accType.equals("2")){
                     dispose();
-                    //new TraineeHomeWindow(con,acc);
-                    TraineeHomeWindow twh = new TraineeHomeWindow(con);
-                    twh.setAccount(acc);
+                    TraineeHomeWindow twh = new TraineeHomeWindow(con,acc);
+                    //twh.setWelcome();
+                    //twh.setAccount(acc);
                 }
             }
             else{

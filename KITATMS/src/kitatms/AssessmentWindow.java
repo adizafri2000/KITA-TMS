@@ -21,11 +21,12 @@ import javax.swing.table.DefaultTableModel;
 public class AssessmentWindow extends javax.swing.JFrame {
 
     static DBConnection con;
-    private Account trainee;
-    private ArrayList<String> courseIDList;
+    private Account trainee = new Account();
+    private ArrayList<String> courseIDList = new ArrayList<>();
     
-    public AssessmentWindow(DBConnection con){
+    public AssessmentWindow(DBConnection con,Account acc){
         this.con = con;
+        this.trainee = acc;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new AssessmentWindow().setVisible(true);
@@ -57,8 +58,11 @@ public class AssessmentWindow extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         homeButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,7 +79,7 @@ public class AssessmentWindow extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 382, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addGap(26, 26, 26))
         );
@@ -103,33 +107,15 @@ public class AssessmentWindow extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Course Name", "Course ID", "Result", "Attempt Date", "Assessment"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
-            };
+        jLabel2.setText("jLabel2");
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setHeaderValue("Course Name");
-            jTable1.getColumnModel().getColumn(1).setHeaderValue("Course ID");
-            jTable1.getColumnModel().getColumn(2).setHeaderValue("Result");
-            jTable1.getColumnModel().getColumn(3).setHeaderValue("Attempt Date");
-            jTable1.getColumnModel().getColumn(4).setHeaderValue("Assessment");
-        }
+        jLabel5.setText("jLabel5");
+
+        jLabel6.setText("jLabel6");
+
+        jLabel8.setText("jLabel8");
+
+        jButton1.setText("Start");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -150,9 +136,17 @@ public class AssessmentWindow extends javax.swing.JFrame {
                                 .addGap(31, 31, 31)
                                 .addComponent(jLabel4))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(76, 76, 76)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)))
+                                .addGap(83, 83, 83)
+                                .addComponent(jLabel2)
+                                .addGap(57, 57, 57)
+                                .addComponent(jLabel5)
+                                .addGap(60, 60, 60)
+                                .addComponent(jLabel6)
+                                .addGap(57, 57, 57)
+                                .addComponent(jLabel8)
+                                .addGap(72, 72, 72)
+                                .addComponent(jButton1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jScrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -163,9 +157,14 @@ public class AssessmentWindow extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
+                .addGap(43, 43, 43)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel8)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 179, Short.MAX_VALUE)
                 .addComponent(homeButton)
                 .addContainerGap())
         );
@@ -196,7 +195,7 @@ public class AssessmentWindow extends javax.swing.JFrame {
 
     private void setupTable(){
         setupCourseIDList();
-        for(int i=0;i<courseIDList.size();i++){
+        for(int i=0;i<1;i++){
             addRow(courseIDList.get(i));
         }
         
@@ -238,6 +237,10 @@ public class AssessmentWindow extends javax.swing.JFrame {
             marks = "-";
             attemptDate = "-";
         }
+        jLabel2.setText(courseName);
+        jLabel5.setText(courseID);
+        jLabel6.setText(marks);
+        jLabel8.setText(attemptDate);
         
         Course course = new Course();
         course.setCourseID(courseID);
@@ -250,16 +253,17 @@ public class AssessmentWindow extends javax.swing.JFrame {
                 AAW.setTrainee(trainee);
             }
         });
+        jButton1 = startButton;
         
-        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
-        model.addRow(new Object[]{courseName,courseID,marks,attemptDate,startButton});
+        //DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+       // model.addRow(new Object[]{courseName,courseID,marks,attemptDate,startButton});
     }
     
     /**
      * Retrieves all enrolled course's course ID for this trainee
      */
     private void setupCourseIDList(){
-        String traineeID = trainee.accountID;
+        String traineeID = trainee.username;
         
         String query = "Select * from enrollment where accountID='"+traineeID+"';";
         try {
@@ -269,9 +273,11 @@ public class AssessmentWindow extends javax.swing.JFrame {
         }
     }
     
-    public void setTrainee(Account t){
-        trainee = t;
-        setupTable();
+    public void setTrainee(){
+        //trainee = t;
+        System.out.println("Usename: "+trainee.username);
+        setupCourseIDList();
+        addRow(courseIDList.get(0));
     }
     /**
      * @param args the command line arguments
@@ -310,14 +316,17 @@ public class AssessmentWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton homeButton;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollBar jScrollBar1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

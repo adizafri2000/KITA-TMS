@@ -36,5 +36,13 @@ public class Account {
         return accountType;
     }
     
+    public void setAccountID(){
+        this.accountID = username;
+    }
+    
+    public String getAccountID(){
+        return accountID;
+    }
+    
     
 }

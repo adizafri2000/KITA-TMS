@@ -2,6 +2,8 @@ package kitatms;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 
 /*
@@ -397,8 +399,15 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
             }
         }
         //String assessmentID = 
-        String query = "select * from assessment where assessmentID='";
-        String correctAnswers = con.retrieve(query, column)
+        String query = "select * from assessment where courseID='"+course.getCourseID()+"';";
+        ArrayList<String> correctAnswers = new ArrayList<>();
+        ArrayList<String> questions = new ArrayList<>();
+        try {
+            questions = con.retrieve(query,"assessmentQuestions");
+            correctAnswers = con.retrieve(query,"assessmentAnswers");
+        } catch (SQLException ex) {
+            Logger.getLogger(AttemptAssessmentWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         if (completed){
             dispose();

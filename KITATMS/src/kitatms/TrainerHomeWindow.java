@@ -38,7 +38,10 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
      */
     private TrainerHomeWindow() {
         initComponents();
-        //jLabel3.setText("Hello "+acc.username);
+        if(acc.username != null){
+            jLabel3.setText("Hello "+acc.username);
+        }
+       
     }
 
     /**

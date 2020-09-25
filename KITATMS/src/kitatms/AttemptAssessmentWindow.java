@@ -1,6 +1,8 @@
 package kitatms;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +23,8 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
     static DBConnection con;
     private Course course;
     private ButtonGroup[] answerChoice;
-    
+    private String[] correctAnswers;
+    private Trainee trainee;
     
     public AttemptAssessmentWindow(DBConnection con){
         this.con = con;
@@ -67,8 +70,22 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
     
     public void setCourse(Course c){
         course = c;
+        try {
+            setupQuestions();
+        } catch (SQLException ex) {
+            //Logger.getLogger(AttemptAssessmentWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
+    public void setTrainee(Trainee t){
+        trainee = t;
+    }
+    
+    /**
+     * Retreives the course's coressponding assessment questions and answers.
+     * Questions are then displayed in the window.
+     * @throws SQLException 
+     */
     private void setupQuestions() throws SQLException{
         //question retrieval
         //format: select * from assessment where courseID='courseID';
@@ -83,6 +100,15 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
         question3Text.setText(questions[2]);
         question4Text.setText(questions[3]);
         question5Text.setText(questions[4]);
+        
+        String answerQuery = "select * from assessment where courseID='"+courseID+"';";
+        String retrievedAnswers = con.retrieve(answerQuery, "assessmentAnswers").get(0);
+        
+        correctAnswers[0] = Character.toString(retrievedAnswers.charAt(0));
+        correctAnswers[1] = Character.toString(retrievedAnswers.charAt(1));
+        correctAnswers[2] = Character.toString(retrievedAnswers.charAt(2));
+        correctAnswers[3] = Character.toString(retrievedAnswers.charAt(3));
+        correctAnswers[4] = Character.toString(retrievedAnswers.charAt(4));
     }
 
     /**
@@ -398,6 +424,7 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
                 submittedAnswers[i] = answerChoice[i].getSelection().getActionCommand();
             }
         }
+<<<<<<< Updated upstream
         //String assessmentID = 
         String query = "select * from assessment where courseID='"+course.getCourseID()+"';";
         ArrayList<String> correctAnswers = new ArrayList<>();
@@ -408,18 +435,35 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(AttemptAssessmentWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
+=======
+>>>>>>> Stashed changes
         
         if (completed){
+            Assessment assessment = new Assessment();
+            assessment.setAnswers(correctAnswers);
+            int marks = assessment.calculateMarks(submittedAnswers);
+            
+            String traineeID = trainee.accountID;
+            assessment.generateAssessmentID(course);
+            String assessmentID = assessment.getAssessmentID();
+            
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
+            LocalDateTime now = LocalDateTime.now();  
+            String dateNow = dtf.format(now);
+
+            //query format: insert into attempt values(accountID,assessmentID,marks,attempt date);
+            String updateAttemptQuery = "insert into attempt values('"+traineeID+"','"+assessmentID+"',"+marks+",'"+dateNow+"');";
+            try {
+                System.out.println("Attempt update status: "+con.update(updateAttemptQuery));
+            } catch (SQLException ex) {
+                //Logger.getLogger(AttemptAssessmentWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
             dispose();
             new AssessmentWindow(con);
         }
         else{
             unfinishedWarningLabel.setVisible(true);
         }
-        
-        
-        
-        
     }//GEN-LAST:event_submitButtonActionPerformed
 
     /**

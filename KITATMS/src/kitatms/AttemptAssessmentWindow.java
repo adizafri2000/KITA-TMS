@@ -35,6 +35,7 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
      */
     private AttemptAssessmentWindow() {
         initComponents();
+        setRadioButtonActionCommand();
         unfinishedWarningLabel.setVisible(false);
         answerChoice = new ButtonGroup[5];
         answerChoice[0].add(q1True);
@@ -47,6 +48,19 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
         answerChoice[3].add(q4False);
         answerChoice[4].add(q5True);
         answerChoice[4].add(q5False);
+    }
+    
+    private void setRadioButtonActionCommand(){
+        q1True.setActionCommand("T");
+        q1False.setActionCommand("F");
+        q2True.setActionCommand("T");
+        q2False.setActionCommand("F");
+        q3True.setActionCommand("T");
+        q3False.setActionCommand("F");
+        q4True.setActionCommand("T");
+        q4False.setActionCommand("F");
+        q5True.setActionCommand("T");
+        q5False.setActionCommand("F");
     }
     
     public void setCourse(Course c){
@@ -382,6 +396,9 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
                 submittedAnswers[i] = answerChoice[i].getSelection().getActionCommand();
             }
         }
+        //String assessmentID = 
+        String query = "select * from assessment where assessmentID='";
+        String correctAnswers = con.retrieve(query, column)
         
         if (completed){
             dispose();

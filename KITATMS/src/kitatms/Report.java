@@ -248,18 +248,35 @@ public class Report {
             
             //++++++++++++++++++++++++++++++++++++SECOND PAGE STARTS HERE+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
             
+            
+            font = new Font(Font.FontFamily.TIMES_ROMAN,18,Font.UNDERLINE);
+            paragraph = new Paragraph("List of Trainees and Dates of Passes (if Applicable)",font);
+            document.add(paragraph);
+            document.add(new Paragraph("\n\n"));
+            
+            font = new Font(Font.FontFamily.TIMES_ROMAN,18,Font.NORMAL);
+            
+            
             //creation of table with cells and headers
-            PdfPTable table = new PdfPTable(3);
+            PdfPTable table = new PdfPTable(4);
+            
+            String[] traineeID = new String[]{"1181101286","1181101148","1181101272","1181101256"};
+            String[] marks = new String[]{"5","5","3","-"};
+            String[] pass = new String[]{"2020-08-21","2020-10-01","-","-"};
             
             //Title of column header
-            PdfPCell c1 = new PdfPCell(new Phrase("Heading 1"));
+            PdfPCell c1 = new PdfPCell(new Phrase("No."));
             table.addCell(c1);
             
-            c1 = new PdfPCell(new Phrase("Heading 2"));
+            c1 = new PdfPCell(new Phrase("ID"));
             table.addCell(c1);
             
-            c1 = new PdfPCell(new Phrase("Heading 3"));
+            c1 = new PdfPCell(new Phrase("Latest Assessment Marks"));
             table.addCell(c1);
+            
+            c1 = new PdfPCell(new Phrase("Date of Pass"));
+            table.addCell(c1);
+            
             table.setHeaderRows(1);
             
             /*
@@ -269,12 +286,21 @@ public class Report {
             added cells will fill in each column of a row sequentially,
             before proceeding to the next row.
             */
+            for(int i=0;i<traineeID.length;i++){
+                table.addCell(Integer.toString(i+1));
+                table.addCell(traineeID[i]);
+                table.addCell(marks[i]);
+                table.addCell(pass[i]);
+            }
+            
+            /*
             table.addCell("Added 1st");
             table.addCell("Added 2nd");
             table.addCell("Added 3rd");
             table.addCell("Added 4th");
             table.addCell("Added 5th");
             table.addCell("Added 6th");
+            */
             
             document.add(table);
             

@@ -6,8 +6,6 @@
 package kitatms;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import static kitatms.SignUp_LoginWindow.con;
 
 /**
  * !!!!!!! PLEASE BACA NI DULU !!!!!!!!!!!!! Ni akan jadi the real main class,

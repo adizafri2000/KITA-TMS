@@ -242,6 +242,16 @@ public class DBConnection {
 "	accountPassword varchar(15) not null\n" +
 ");";
                 
+                String trainer = "create table trainer(\n" +
+"	trainerName varchar(50) not null,\n" +
+"    accountID varchar(10) not null unique references account(accountID)\n" +
+");";
+                
+                String trainee = "create table trainee(\n" +
+"	traineeName varchar(50) not null,\n" +
+"    accountID varchar(10) not null unique references account(accountID)\n" +
+");";
+                
                 String course = "create table course(\n" +
 "	courseID varchar(7) primary key not null unique,\n" +
 "    courseName varchar(50) not null,\n" +
@@ -302,7 +312,7 @@ public class DBConnection {
 "  PRIMARY KEY (`accountID`, `assessmentID`),\n" +
 "  INDEX `assessmentID_idx` (`assessmentID` ASC) VISIBLE,\n" +
 "    FOREIGN KEY (`accountID`)\n" +
-"    REFERENCES `kitatms`.`account` (`accountID`)\n" +
+"    REFERENCES `kitatms`.`trainee` (`accountID`)\n" +
 "    ON DELETE NO ACTION\n" +
 "    ON UPDATE NO ACTION,\n" +
 "    FOREIGN KEY (`assessmentID`)\n" +
@@ -312,6 +322,8 @@ public class DBConnection {
                 
                 
                 stat.executeUpdate(account);
+                stat.executeUpdate(trainer);
+                stat.executeUpdate(trainee);
                 stat.executeUpdate(course);
                 stat.executeUpdate(enrollment);
                 stat.executeUpdate(report);

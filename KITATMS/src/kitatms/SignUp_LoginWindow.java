@@ -6,10 +6,7 @@
 
 package kitatms;
 
-import java.awt.event.ActionEvent;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.ArrayList;
 
 /**

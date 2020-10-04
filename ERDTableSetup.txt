@@ -1,3 +1,5 @@
+INITIAL VERSION - 10 TABLES (WITH TRAINEE AND TRAINER TABLES)
+
 create schema kitatms;
 
 create table account(

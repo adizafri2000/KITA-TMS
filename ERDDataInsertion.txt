@@ -1,3 +1,5 @@
+INITIAL VERSION - 10 TABLES (WITH TRAINER AND TRAINEE TABLES)
+
 INSERT INTO `kitatms`.`account` (`accountID`, `accountType`, `accountPassword`) VALUES ('0123456789', '1', 'dummytrainer1');
 INSERT INTO `kitatms`.`account` (`accountID`, `accountType`, `accountPassword`) VALUES ('1234567890', '1', 'dummytrainer2');
 INSERT INTO `kitatms`.`account` (`accountID`, `accountType`, `accountPassword`) VALUES ('2345678901', '1', 'dummytrainer3');

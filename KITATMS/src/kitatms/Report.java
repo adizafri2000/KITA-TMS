@@ -83,8 +83,12 @@ public class Report {
         try {
             Document document = new Document();
             
-            //Set the pdfWriter to output on the created document
-            PdfWriter.getInstance(document, new FileOutputStream(fileName));
+            try {
+                //Set the pdfWriter to output on the created document
+                PdfWriter.getInstance(document, new FileOutputStream(fileName));
+            } catch (DocumentException ex) {
+                //Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
             document.open();
             createCoverPage(document);
@@ -222,25 +226,25 @@ public class Report {
             
             
             font = new Font(Font.FontFamily.TIMES_ROMAN,18,Font.NORMAL);
-            paragraph = new Paragraph("Course Name\t: "+courseName,font);
-            paragraph.setAlignment(Element.ALIGN_LEFT);
+            paragraph = new Paragraph("Course Name : "+courseName,font);
+            paragraph.setAlignment(Element.ALIGN_JUSTIFIED);
             document.add(paragraph);
             
             
-            paragraph = new Paragraph("Trainer\t\t: "+trainerName,font);
+            paragraph = new Paragraph("Trainer     : "+trainerName,font);
             document.add(paragraph);
             
             SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
             fmt.setCalendar(startDate);
             String dateFormatted = fmt.format(startDate.getTime());
             
-            paragraph = new Paragraph("Start Date\t: "+dateFormatted,font);
+            paragraph = new Paragraph("Start Date  : "+dateFormatted,font);
             document.add(paragraph);
             
             fmt.setCalendar(endDate);
             dateFormatted = fmt.format(endDate.getTime());
             
-            paragraph = new Paragraph("End Date\t: "+dateFormatted,font);
+            paragraph = new Paragraph("End Date    : "+dateFormatted,font);
             document.add(paragraph);
             
             //------------------------------------FIRST PAGE ENDS HERE-------------------------------------------------------------
@@ -260,6 +264,7 @@ public class Report {
             //creation of table with cells and headers
             PdfPTable table = new PdfPTable(4);
             
+            //testing data
             String[] traineeID = new String[]{"1181101286","1181101148","1181101272","1181101256"};
             String[] marks = new String[]{"5","5","3","-"};
             String[] pass = new String[]{"2020-08-21","2020-10-01","-","-"};

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -29,15 +30,7 @@ public class AssessmentWindow extends javax.swing.JFrame {
         this.trainee = acc;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AssessmentWindow().setVisible(true);
-            }
-        });
-    }
-    public AssessmentWindow(DBConnection con){
-        this.con = con;
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AssessmentWindow().setVisible(true);
+                new AssessmentWindow(acc).setVisible(true);
             }
         });
     }
@@ -45,8 +38,12 @@ public class AssessmentWindow extends javax.swing.JFrame {
     /**
      * Creates new form Assessment
      */
-    private AssessmentWindow() {
+    private AssessmentWindow(Account acc) {
+        trainee = acc;
+        System.out.println("Assessment Window, username: "+trainee.username);
+        this.setupCourseIDList();
         initComponents();
+        this.addRow(this.courseIDList.get(0));
     }
 
     /**
@@ -203,6 +200,7 @@ public class AssessmentWindow extends javax.swing.JFrame {
 
     private void setupTable(){
         setupCourseIDList();
+        JTable table = new JTable();
         for(int i=0;i<1;i++){
             addRow(courseIDList.get(i));
         }
@@ -276,6 +274,10 @@ public class AssessmentWindow extends javax.swing.JFrame {
         String query = "Select * from enrollment where accountID='"+traineeID+"';";
         try {
             courseIDList = con.retrieve(query, "courseID");
+            System.out.println("Enrolled courses:");
+            for(String s:courseIDList){
+                System.out.println(s);
+            }
         } catch (SQLException ex) {
             //Logger.getLogger(AssessmentWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -286,40 +288,6 @@ public class AssessmentWindow extends javax.swing.JFrame {
         System.out.println("Usename: "+trainee.username);
         setupCourseIDList();
         addRow(courseIDList.get(0));
-    }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            //java.util.logging.Logger.getLogger(Assessment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            //java.util.logging.Logger.getLogger(Assessment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-           // java.util.logging.Logger.getLogger(Assessment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            //java.util.logging.Logger.getLogger(Assessment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AssessmentWindow().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

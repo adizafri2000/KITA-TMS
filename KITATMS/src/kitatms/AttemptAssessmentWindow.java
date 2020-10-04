@@ -446,7 +446,7 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
                 //Logger.getLogger(AttemptAssessmentWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
             dispose();
-            new AssessmentWindow(con);
+            new AssessmentWindow(con,trainee);
         }
         else{
             unfinishedWarningLabel.setVisible(true);

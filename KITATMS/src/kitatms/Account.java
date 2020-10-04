@@ -10,7 +10,9 @@ package kitatms;
  * @author zamfirdaus
  */
 public class Account {
-    public String accountID;
+    
+    
+    /** The equivalent to 'accountID' field in the ACCOUNT TABLE*/
     public String username;
     public String password;
     public String accountType;
@@ -35,14 +37,4 @@ public class Account {
     public String getAccountType(String name){
         return accountType;
     }
-    
-    public void setAccountID(){
-        this.accountID = username;
-    }
-    
-    public String getAccountID(){
-        return accountID;
-    }
-    
-    
 }

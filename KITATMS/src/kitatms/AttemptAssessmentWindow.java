@@ -82,7 +82,7 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
     }
     
     /**
-     * Retreives the course's coressponding assessment questions and answers.
+     * Retrieves the course's corresponding assessment questions and answers.
      * Questions are then displayed in the window.
      * @throws SQLException 
      */
@@ -430,7 +430,7 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
             assessment.setAnswers(correctAnswers);
             int marks = assessment.calculateMarks(submittedAnswers);
             
-            String traineeID = trainee.accountID;
+            String traineeID = trainee.username;
             assessment.generateAssessmentID(course);
             String assessmentID = assessment.getAssessmentID();
             

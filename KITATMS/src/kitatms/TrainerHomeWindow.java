@@ -12,7 +12,7 @@ package kitatms;
 public class TrainerHomeWindow extends javax.swing.JFrame {
     
     static DBConnection con;
-    Account acc = new Account();
+    private Account acc;
     
     public TrainerHomeWindow(DBConnection con, Account acc){
         this.con = con;
@@ -20,7 +20,7 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
         System.out.println(acc.username);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TrainerHomeWindow().setVisible(true);
+                new TrainerHomeWindow(acc).setVisible(true);
             }
         });
     }
@@ -28,7 +28,7 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
         this.con = con;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TrainerHomeWindow().setVisible(true);
+                new TrainerHomeWindow(acc).setVisible(true);
             }
         });
     }
@@ -36,11 +36,10 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
     /**
      * Creates new form TrainerHW
      */
-    private TrainerHomeWindow() {
+    private TrainerHomeWindow(Account acc) {
+        this.acc = acc;
         initComponents();
-        if(acc.username != null){
-            jLabel3.setText("Hello "+acc.username);
-        }
+        welcomingLabel.setText("Hello "+acc.username);
        
     }
 
@@ -66,7 +65,7 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         jTextField14 = new javax.swing.JTextField();
         jTextField13 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        welcomingLabel = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         newCourseButton = new javax.swing.JButton();
         viewCourseDetailsButton = new javax.swing.JButton();
@@ -155,8 +154,8 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
         jTextField13.setText("training management system that allow trainer");
         jTextField13.setBorder(null);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel3.setText("Hello user");
+        welcomingLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        welcomingLabel.setText("Hello user");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -166,10 +165,10 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
                 .addGap(13, 13, 13)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel3)
+                .addComponent(welcomingLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(30, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,7 +201,7 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(welcomingLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
@@ -316,48 +315,12 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
         new SignUp_LoginWindow(con);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TrainerHomeWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TrainerHomeWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TrainerHomeWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TrainerHomeWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TrainerHomeWindow().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton generateReportButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator2;
@@ -374,5 +337,6 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField9;
     private javax.swing.JButton newCourseButton;
     private javax.swing.JButton viewCourseDetailsButton;
+    private javax.swing.JLabel welcomingLabel;
     // End of variables declaration//GEN-END:variables
 }

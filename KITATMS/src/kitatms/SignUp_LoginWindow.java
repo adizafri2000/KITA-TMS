@@ -232,7 +232,7 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
                     flag = true;
                     accType = accTypeList.get(i);
                     acc = new Account(usernameList.get(i), passwordList.get(i), accTypeList.get(i));
-                    acc.setAccountID();
+                    
                 }
             }  
             if(flag==true){

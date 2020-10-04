@@ -5,7 +5,7 @@
  */
 package kitatms;
 
-import static kitatms.TrainerHomeWindow.con;
+import javax.swing.JLabel;
 
 /**
  *
@@ -14,13 +14,13 @@ import static kitatms.TrainerHomeWindow.con;
 public class TraineeHomeWindow extends javax.swing.JFrame {
 
     static DBConnection con;
-    private Account acc = new Account();
+    private static Account acc;
     
     public TraineeHomeWindow(DBConnection con){
         this.con = con;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TraineeHomeWindow().setVisible(true);
+                new TraineeHomeWindow(acc).setVisible(true);
             }
         });
     }
@@ -28,28 +28,19 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
     public TraineeHomeWindow(DBConnection con, Account acc){
         this.con = con;
         this.acc = acc;
-        System.out.println("THW Constructor, username: "+acc.username);
+        System.out.println("Trainee HW Constructor, username: "+acc.username);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TraineeHomeWindow().setVisible(true);
-                //jLabel3.setText("Hello "+acc.username);
+                new TraineeHomeWindow(acc).setVisible(true);
             }
         });
     }
     
-    /**
-     * Creates new form TraineeHomeWindow
-     */
-    private TraineeHomeWindow() {
+    private TraineeHomeWindow(Account acc) {
+        this.acc = acc;
         initComponents();
-    }
-    
-    public void setWelcome(){
-        //acc = account;
-        //if(acc.username != null){
-            //jLabel3.setText("Hello "+acc.username);
-            System.out.println("Username: "+acc.username);
-        //}
+        String text = "Hello "+acc.username;
+        welcomingLabel.setText(text);
     }
 
     /**
@@ -74,7 +65,7 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
         jTextField14 = new javax.swing.JTextField();
         jTextField13 = new javax.swing.JTextField();
         jTextField15 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        welcomingLabel = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         viewScheduleButton = new javax.swing.JButton();
         viewLearningMaterialsButton = new javax.swing.JButton();
@@ -163,8 +154,7 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
         jTextField15.setText("learning materials"); // NOI18N
         jTextField15.setBorder(null);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel3.setText("Hello user");
+        welcomingLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -176,7 +166,7 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
                         .addGap(13, 13, 13)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel3))
+                        .addComponent(welcomingLabel))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -223,7 +213,7 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(welcomingLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
@@ -340,47 +330,12 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
     public Account getAccount(){
         return acc;
     }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TraineeHomeWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TraineeHomeWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TraineeHomeWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TraineeHomeWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TraineeHomeWindow().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton assessmentButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator2;
@@ -397,5 +352,6 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField9;
     private javax.swing.JButton viewLearningMaterialsButton;
     private javax.swing.JButton viewScheduleButton;
+    private javax.swing.JLabel welcomingLabel;
     // End of variables declaration//GEN-END:variables
 }

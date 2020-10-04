@@ -226,7 +226,7 @@ public class AssessmentWindow extends javax.swing.JFrame {
         }
         boolean hasAttempted = true;
         try {
-            ArrayList<String> checker = con.retrieve("select * from attempt where accountID='"+trainee.accountID+"';","accountID");
+            ArrayList<String> checker = con.retrieve("select * from attempt where accountID='"+trainee.username+"';","accountID");
             if(checker.isEmpty())
                 hasAttempted = false;
         } catch (SQLException ex) {
@@ -235,8 +235,8 @@ public class AssessmentWindow extends javax.swing.JFrame {
         
         if(hasAttempted){
             try {
-                marks = con.retrieve("select * from attempt where accountID='"+trainee.accountID+"';", "attemptMarks").get(0);
-                attemptDate = con.retrieve("select * from attempt where accountID='"+trainee.accountID+"';", "attemptDate").get(0);
+                marks = con.retrieve("select * from attempt where accountID='"+trainee.username+"';", "attemptMarks").get(0);
+                attemptDate = con.retrieve("select * from attempt where accountID='"+trainee.username+"';", "attemptDate").get(0);
             } catch (SQLException ex) {
                 //Logger.getLogger(AssessmentWindow.class.getName()).log(Level.SEVERE, null, ex);
             }

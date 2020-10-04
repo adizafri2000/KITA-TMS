@@ -17,6 +17,8 @@ import javax.swing.SwingConstants;
  * @author adiza
  */
 public class DBWindow extends javax.swing.JFrame {
+    
+    private String ADIPASSWORD = "Pizz@1181101286";
 
     static DBConnection con;
     /**
@@ -228,16 +230,8 @@ public class DBWindow extends javax.swing.JFrame {
         messageLabel.setVisible(true);
         messageLabel.setText(" ");
         
-        /*
-        
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException ie) {
-            Thread.currentThread().interrupt();
-        }
-        */
-        
         String password = String.valueOf(jPasswordField1.getPassword());
+        password = ADIPASSWORD;
         jPasswordField1.setText("");
         System.out.printf("Password entered: %s.\n",password);
         con.setPassword(password);

@@ -1,5 +1,7 @@
 package kitatms;
 
+import java.util.ArrayList;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -28,6 +30,36 @@ public class ViewScheduleWindow extends javax.swing.JFrame {
     private ViewScheduleWindow(Account acc) {
         this.acc = acc;
         initComponents();
+        displaySchedule();
+    }
+    
+    private void displaySchedule(){
+        ArrayList<String> courseIDList = new ArrayList<>();
+        ArrayList<String> courseNameList = new ArrayList<>();
+        ArrayList<String> courseStartList = new ArrayList<>();
+        ArrayList<String> courseEndList = new ArrayList<>();
+        
+        //DISPLAY RELATED MAKLUMAT ABOUT THE COURSE SCHEDULE GUNA 4 ARRAYLIST NI
+        courseIDList.add("TSN2201");
+        courseNameList.add("Computer Networks");
+        courseStartList.add("2020-03-21");
+        courseEndList.add("2020-10-05");
+        
+        courseIDList.add("PSP1123");
+        courseNameList.add("Introduction to Programming");
+        courseStartList.add("2020-03-25");
+        courseEndList.add("2020-04-05");
+        
+        courseIDList.add("MPU5541");
+        courseNameList.add("Human Anthropology");
+        courseStartList.add("2020-03-01");
+        courseEndList.add("2020-10-30");
+        
+        courseIDList.add("PET3352");
+        courseNameList.add("Engineering for Graduates");
+        courseStartList.add("2020-04-21");
+        courseEndList.add("2020-12-05");
+        
     }
 
     /** This method is called from within the constructor to

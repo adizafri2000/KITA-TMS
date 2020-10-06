@@ -26,11 +26,11 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
     private String[] correctAnswers;
     private Account trainee;
     
-    public AttemptAssessmentWindow(DBConnection con,Account trainee){
+    public AttemptAssessmentWindow(DBConnection con,Account trainee,Course course){
         this.con = con;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AttemptAssessmentWindow(trainee).setVisible(true);
+                new AttemptAssessmentWindow(trainee,course).setVisible(true);
             }
         });
     }
@@ -38,8 +38,9 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
     /**
      * Creates new form AttemptAssessment
      */
-    private AttemptAssessmentWindow(Account trainee) {
+    private AttemptAssessmentWindow(Account trainee,Course course) {
         this.trainee = trainee;
+        this.course = course;
         initComponents();
         setRadioButtonActionCommand();
         unfinishedWarningLabel.setVisible(false);

@@ -254,7 +254,7 @@ public class AssessmentWindow extends javax.swing.JFrame {
         startButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 dispose();
-                AttemptAssessmentWindow AAW = new AttemptAssessmentWindow(con,trainee);
+                AttemptAssessmentWindow AAW = new AttemptAssessmentWindow(con,trainee,course);
                 AAW.setCourse(course);
                 AAW.setTrainee(trainee);
             }

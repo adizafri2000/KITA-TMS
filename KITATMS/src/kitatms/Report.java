@@ -61,10 +61,6 @@ public class Report {
         traineeID = con.retrieve(query, "accountID;");
     }
     
-    public void setTraineeList(ArrayList<Account> t){
-        traineeList = t;
-    }
-    
     public Course getCourse(){
         return course;
     }

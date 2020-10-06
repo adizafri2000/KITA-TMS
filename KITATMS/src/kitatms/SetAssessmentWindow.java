@@ -14,12 +14,13 @@ public class SetAssessmentWindow extends javax.swing.JFrame {
     
     static DBConnection con;
     private Account acc;
+    private Course course;
     
-    public SetAssessmentWindow(DBConnection con,Account acc){
+    public SetAssessmentWindow(DBConnection con,Account acc,Course course){
         this.con = con;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SetAssessmentWindow(acc).setVisible(true);
+                new SetAssessmentWindow(acc,course).setVisible(true);
             }
         });
     }
@@ -27,7 +28,8 @@ public class SetAssessmentWindow extends javax.swing.JFrame {
     /**
      * Creates new form AddCourse
      */
-    private SetAssessmentWindow(Account acc) {
+    private SetAssessmentWindow(Account acc,Course course) {
+        this.course =course;
         this.acc = acc;
         initComponents();
     }

@@ -14,12 +14,13 @@ public class EnrollTraineesWindow extends javax.swing.JFrame {
     
     static DBConnection con;
     private Account acc;
+    private Course course;
     
-    public EnrollTraineesWindow(DBConnection con,Account acc){
+    public EnrollTraineesWindow(DBConnection con,Account acc,Course course){
         this.con = con;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EnrollTraineesWindow(acc).setVisible(true);
+                new EnrollTraineesWindow(acc,course).setVisible(true);
             }
         });
         
@@ -28,7 +29,8 @@ public class EnrollTraineesWindow extends javax.swing.JFrame {
     /**
      * Creates new form AddCourse
      */
-    private EnrollTraineesWindow(Account acc) {
+    private EnrollTraineesWindow(Account acc,Course course) {
+        this.course =course;
         this.acc = acc;
         initComponents();
     }
@@ -354,7 +356,7 @@ public class EnrollTraineesWindow extends javax.swing.JFrame {
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
         // TODO add your handling code here:
         dispose();
-        new SetAssessmentWindow(con,acc);
+        new SetAssessmentWindow(con,acc,course);
     }//GEN-LAST:event_nextButtonActionPerformed
 
 

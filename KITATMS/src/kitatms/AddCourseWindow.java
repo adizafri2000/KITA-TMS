@@ -229,9 +229,10 @@ public class AddCourseWindow extends javax.swing.JFrame  {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
-
+        //ADD COURSE ID TO COURSE OBJECT NI
+        Course course = new Course();
         dispose();
-        new EnrollTraineesWindow(con,acc);
+        new EnrollTraineesWindow(con,acc,course);
     }//GEN-LAST:event_nextButtonActionPerformed
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked

@@ -16,15 +16,6 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
     static DBConnection con;
     private static Account acc;
     
-    public TraineeHomeWindow(DBConnection con){
-        this.con = con;
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TraineeHomeWindow(acc).setVisible(true);
-            }
-        });
-    }
-    
     public TraineeHomeWindow(DBConnection con, Account acc){
         this.con = con;
         this.acc = acc;
@@ -305,13 +296,13 @@ public class TraineeHomeWindow extends javax.swing.JFrame {
     private void viewScheduleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewScheduleButtonActionPerformed
         //close this window, channel to viewschedule window
         dispose();
-        new ViewScheduleWindow(con);
+        new ViewScheduleWindow(con,acc);
     }//GEN-LAST:event_viewScheduleButtonActionPerformed
 
     private void viewLearningMaterialsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewLearningMaterialsButtonActionPerformed
         //close this window, channel to View learning materials window
         dispose();
-        new ViewLearningMaterialWindow(con);
+        new ViewLearningMaterialWindow(con,acc);
     }//GEN-LAST:event_viewLearningMaterialsButtonActionPerformed
 
     private void assessmentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assessmentButtonActionPerformed

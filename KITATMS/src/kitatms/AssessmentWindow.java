@@ -195,7 +195,7 @@ public class AssessmentWindow extends javax.swing.JFrame {
     private void homeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeButtonActionPerformed
         // TODO add your handling code here:
         dispose();
-        new TraineeHomeWindow(con);
+        new TraineeHomeWindow(con,trainee);
     }//GEN-LAST:event_homeButtonActionPerformed
 
     private void setupTable(){
@@ -254,7 +254,7 @@ public class AssessmentWindow extends javax.swing.JFrame {
         startButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 dispose();
-                AttemptAssessmentWindow AAW = new AttemptAssessmentWindow(con);
+                AttemptAssessmentWindow AAW = new AttemptAssessmentWindow(con,trainee);
                 AAW.setCourse(course);
                 AAW.setTrainee(trainee);
             }

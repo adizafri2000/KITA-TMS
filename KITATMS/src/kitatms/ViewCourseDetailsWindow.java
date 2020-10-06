@@ -13,12 +13,13 @@ package kitatms;
 public class ViewCourseDetailsWindow extends javax.swing.JFrame {
     
     static DBConnection con;
+    private Account acc;
     
-    public ViewCourseDetailsWindow(DBConnection con){
+    public ViewCourseDetailsWindow(DBConnection con,Account acc){
         this.con = con;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ViewCourseDetailsWindow().setVisible(true);
+                new ViewCourseDetailsWindow(acc).setVisible(true);
             }
         });
     }
@@ -26,7 +27,8 @@ public class ViewCourseDetailsWindow extends javax.swing.JFrame {
     /**
      * Creates new form Viewcoursedetails
      */
-    private ViewCourseDetailsWindow() {
+    private ViewCourseDetailsWindow(Account acc) {
+        this.acc = acc;
         initComponents();
     }
 
@@ -265,44 +267,9 @@ public class ViewCourseDetailsWindow extends javax.swing.JFrame {
     private void homeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeButtonActionPerformed
         // TODO add your handling code here:
         dispose();
-        new TrainerHomeWindow(con);
+        new TrainerHomeWindow(con,acc);
     }//GEN-LAST:event_homeButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            //java.util.logging.Logger.getLogger(ViewCourseDetails.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            //java.util.logging.Logger.getLogger(ViewCourseDetails.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            //java.util.logging.Logger.getLogger(ViewCourseDetails.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            //java.util.logging.Logger.getLogger(ViewCourseDetails.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ViewCourseDetailsWindow().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton homeButton;

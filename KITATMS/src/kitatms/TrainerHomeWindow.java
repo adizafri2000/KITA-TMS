@@ -24,14 +24,6 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
             }
         });
     }
-    public TrainerHomeWindow(DBConnection con){
-        this.con = con;
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TrainerHomeWindow(acc).setVisible(true);
-            }
-        });
-    }
 
     /**
      * Creates new form TrainerHW
@@ -293,20 +285,20 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
     private void newCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newCourseButtonActionPerformed
         //New Course Window
         dispose();
-        new AddCourseWindow(con);
+        new AddCourseWindow(con,acc);
     }//GEN-LAST:event_newCourseButtonActionPerformed
 
     private void viewCourseDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCourseDetailsButtonActionPerformed
         //View Course Details Window
         
         dispose();
-        new ViewCourseDetailsWindow(con);
+        new ViewCourseDetailsWindow(con,acc);
     }//GEN-LAST:event_viewCourseDetailsButtonActionPerformed
 
     private void generateReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateReportButtonActionPerformed
         //Generate Course Report Window
         dispose();
-        new CourseReportWindow(con);
+        new CourseReportWindow(con,acc);
     }//GEN-LAST:event_generateReportButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

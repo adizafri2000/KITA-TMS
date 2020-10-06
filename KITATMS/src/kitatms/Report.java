@@ -30,8 +30,8 @@ import java.util.logging.Logger;
  */
 public class Report {
     private Course course;
-    private Trainer trainer;
-    private ArrayList<Trainee> traineeList;
+    private Account trainer;
+    private ArrayList<Account> traineeList;
     private ArrayList<String> traineeID;
     private DBConnection con;
     private String fileName;
@@ -51,7 +51,7 @@ public class Report {
         course = c;
     }
     
-    public void setTrainer(Trainer t){
+    public void setTrainer(Account t){
         trainer = t;
     }
     
@@ -61,7 +61,7 @@ public class Report {
         traineeID = con.retrieve(query, "accountID;");
     }
     
-    public void setTraineeList(ArrayList<Trainee> t){
+    public void setTraineeList(ArrayList<Account> t){
         traineeList = t;
     }
     
@@ -69,7 +69,7 @@ public class Report {
         return course;
     }
     
-    public Trainer getTrainer(){
+    public Account getTrainer(){
         return trainer;
     }
     
@@ -258,7 +258,7 @@ public class Report {
             document.add(paragraph);
             document.add(new Paragraph("\n\n"));
             
-            font = new Font(Font.FontFamily.TIMES_ROMAN,18,Font.NORMAL);
+            //font = new Font(Font.FontFamily.TIMES_ROMAN,18,Font.NORMAL);
             
             
             //creation of table with cells and headers

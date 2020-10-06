@@ -1,5 +1,10 @@
 package kitatms;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -14,6 +19,7 @@ public class CourseReportWindow extends javax.swing.JFrame {
     
     static DBConnection con;
     private Account acc;
+    private ArrayList<String> courseIDList;
     
     public CourseReportWindow(DBConnection con,Account acc){
         this.con = con;
@@ -31,6 +37,42 @@ public class CourseReportWindow extends javax.swing.JFrame {
     private CourseReportWindow(Account acc) {
         this.acc = acc;
         initComponents();
+        courseIDList = loadCourses();
+    }
+    
+    /**
+     * Retrieves all the courses created by this trainer.
+     * @return 
+     */
+    private ArrayList<String> loadCourses(){
+        try {
+            String query = "select * from course where accountID='"+acc.username+"';";
+            return con.retrieve(query, "courseID");
+        } catch (SQLException ex) {
+            //Logger.getLogger(CourseReportWindow.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Course Report Window: Error in loading courses.");
+        }
+        return new ArrayList<>();
+    }
+    
+    /**
+     * The actual method that generates a course report with a given course ID
+     * @param courseID 
+     */
+    private void createReport(String courseID){
+        try {
+            Report report = new Report();
+            report.setTrainer(acc);
+            Course course = new Course();
+            course.setCourseID(courseID);
+            report.setCourse(course);
+            report.setTraineeID(course);
+            report.generateReport();
+        } catch (SQLException ex) {
+            //Logger.getLogger(CourseReportWindow.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Course Report Window: Error in report creation.");
+        }
+        
     }
 
     /**
@@ -53,7 +95,6 @@ public class CourseReportWindow extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jFileChooser1 = new javax.swing.JFileChooser();
         homeButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -135,11 +176,9 @@ public class CourseReportWindow extends javax.swing.JFrame {
                                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE))))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(143, 143, 143)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(homeButton)
-                            .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(18, Short.MAX_VALUE))
+                        .addGap(505, 505, 505)
+                        .addComponent(homeButton)))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,9 +196,7 @@ public class CourseReportWindow extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jLabel6)
                     .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
                 .addComponent(homeButton))
         );
 
@@ -191,7 +228,6 @@ public class CourseReportWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton homeButton;
-    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

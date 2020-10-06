@@ -269,7 +269,7 @@ public class AddCourseWindow extends javax.swing.JFrame  {
                 }
             }
         if (flag == true){
-            Course course = new Course(courseID, courseName, courseStart, courseEnd);
+            //Course course = new Course(courseID, courseName, courseStart, courseEnd);
             try {
                 flag = con.update("INSERT INTO kitatms.course (courseID,courseName,courseStart,courseEnd) VALUES  ('"+courseID+"','"+courseName+"','"+courseStart+"','"+courseEnd+"');");
             } catch (SQLException ex) {}

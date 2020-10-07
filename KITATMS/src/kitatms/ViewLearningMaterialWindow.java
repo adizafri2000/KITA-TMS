@@ -106,14 +106,7 @@ public class ViewLearningMaterialWindow extends javax.swing.JFrame {
                         viewStatus = "Viewed";
                     else viewStatus = "Not Viewed";
                     
-                    
                     tableModel.addRow(new Object[]{courseID,learningMaterialName,viewStatus,viewButton});
-                    //jTable2.getModel().setValueAt(courseID, row,0);
-                    //jTable2.getModel().setValueAt(learningMaterialName, row,1);
-                    //jTable2.getModel().setValueAt(viewStatus, row,2);
-                    //jTable2.getModel().setValueAt(viewButton, row,3);
-                    
-                    
                     row++;
                 }
                 
@@ -124,8 +117,6 @@ public class ViewLearningMaterialWindow extends javax.swing.JFrame {
                 System.out.println("View Learning Materials Window: Error in buildTable()");
             }
         }
-        
-        
     }
 
     /**

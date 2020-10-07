@@ -1,5 +1,14 @@
 package kitatms;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -14,6 +23,8 @@ public class ViewLearningMaterialWindow extends javax.swing.JFrame {
     
     static DBConnection con;
     private Account acc;
+    private ArrayList<String> courseIDList;
+    private JTable jTable2;
     
     public ViewLearningMaterialWindow(DBConnection con,Account acc){
         this.con = con;
@@ -29,7 +40,92 @@ public class ViewLearningMaterialWindow extends javax.swing.JFrame {
      */
     private ViewLearningMaterialWindow(Account acc) {
         this.acc = acc;
+        System.out.println("View Learning Materials Window, account: "+acc.username);
         initComponents();
+        getCourseIDList();
+        buildTable();
+    }
+    
+    /** Retrieves a list of courses enrolled into for this trainee.*/
+    private void getCourseIDList(){
+        try {
+            String query = "Select * from enrollment where accoutID='"+acc.username+"';";
+            query = "SELECT * FROM kitatms.enrollment where accountID='"+acc.username+"';";
+            courseIDList = con.retrieve(query, "CourseID");
+            
+            for(String s:courseIDList) System.out.printf("Course ID: %s\n",s);
+        } catch (SQLException ex) {
+            //Logger.getLogger(ViewLearningMaterialWindow.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("View Learning Materials Window: Error in getCourseIDList()");
+        }
+    }
+    
+    private void buildTable(){
+        String courseID,learningMaterialName,viewStatus,query;
+        JButton viewButton = new JButton("View Material");
+        ArrayList<String> learningMaterialIDList;
+        int row = 1;
+        
+        DefaultTableModel tableModel = new DefaultTableModel();
+        jTable2 = new JTable(tableModel);
+        jTable1.setModel(tableModel);
+        //jPanel3.add(jTable2);
+        tableModel.addColumn("Course ID");
+        tableModel.addColumn("Learning Material");
+        tableModel.addColumn("View Status");
+        tableModel.addColumn("View");
+        
+        
+        /*
+            One row in the table is in the format:
+                CourseID    |   LearningMaterialName    |   ViewStatus  |   Button for Viewing Material
+                (string)            (string)                (string)        (JButton)
+        */
+        
+        //Iterate through all the courses enrolled by the trainee
+        for(int i=0;i<courseIDList.size();i++){
+            try {
+                
+                //Set the CourseID of column 0
+                courseID = courseIDList.get(i);
+                
+                query = "Select * from learningmaterial where courseID='"+courseID+"';";
+                learningMaterialIDList = con.retrieve(query,"learningMaterialID");
+                
+                for(String s:learningMaterialIDList) System.out.printf("Learning Material ID: %s\n",s);
+                
+                //Iterate through all the Learning Materials uploaded into a course
+                for(int j=0;j<learningMaterialIDList.size();j++){
+                    
+                    //Set the LearningMaterialName of column 1
+                    query = "Select * from learningmaterial where learningMaterialID='"+learningMaterialIDList.get(j)+"';";
+                    learningMaterialName = con.retrieve(query, "learningMaterialName").get(0);
+                    
+                    query = "Select * from view where accountID='"+acc.username+"' and learningmaterialID='"+learningMaterialIDList.get(j)+"';";
+                    if(con.retrieve(query, "viewstatus").size()>0)
+                        viewStatus = "Viewed";
+                    else viewStatus = "Not Viewed";
+                    
+                    
+                    tableModel.addRow(new Object[]{courseID,learningMaterialName,viewStatus,viewButton});
+                    //jTable2.getModel().setValueAt(courseID, row,0);
+                    //jTable2.getModel().setValueAt(learningMaterialName, row,1);
+                    //jTable2.getModel().setValueAt(viewStatus, row,2);
+                    //jTable2.getModel().setValueAt(viewButton, row,3);
+                    
+                    
+                    row++;
+                }
+                
+                
+                
+            } catch (SQLException ex) {
+                //Logger.getLogger(ViewLearningMaterialWindow.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("View Learning Materials Window: Error in buildTable()");
+            }
+        }
+        
+        
     }
 
     /**
@@ -42,12 +138,11 @@ public class ViewLearningMaterialWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jScrollBar2 = new javax.swing.JScrollBar();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
         homeButton = new javax.swing.JButton();
+        windowNameLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,47 +151,7 @@ public class ViewLearningMaterialWindow extends javax.swing.JFrame {
         jPanel2.setMinimumSize(new java.awt.Dimension(544, 17));
         jPanel2.setPreferredSize(new java.awt.Dimension(529, 42));
 
-        jLabel1.setFont(new java.awt.Font("Lucida Bright", 1, 15)); // NOI18N
-        jLabel1.setText("LEARNING MATERIALS");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 396, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(jLabel1)
-                .addContainerGap(326, Short.MAX_VALUE))
-        );
-
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"TSE2101", "Work Ethics", "viewed", "view"},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Course ID", "Learning Material", "View Status", "Dowload Material"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane2.setViewportView(jTable2);
 
         homeButton.setText("Back to home");
         homeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -105,31 +160,66 @@ public class ViewLearningMaterialWindow extends javax.swing.JFrame {
             }
         });
 
+        windowNameLabel.setFont(new java.awt.Font("Lucida Bright", 1, 15)); // NOI18N
+        windowNameLabel.setText("LEARNING MATERIALS");
+
+        jTable1.setModel(jTable1.getModel());
+        jTable1.setRowSelectionAllowed(false);
+        jTable1.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setHeaderValue("Title 1");
+            jTable1.getColumnModel().getColumn(1).setHeaderValue("Title 2");
+            jTable1.getColumnModel().getColumn(2).setHeaderValue("Title 3");
+            jTable1.getColumnModel().getColumn(3).setHeaderValue("Title 4");
+        }
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 521, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 48, Short.MAX_VALUE))
+                        .addComponent(windowNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(homeButton)
-                        .addGap(18, 18, 18)))
-                .addComponent(jScrollBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(31, 31, 31))))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(81, 81, 81)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 101, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
+                .addGap(8, 8, 8)
+                .addComponent(windowNameLabel)
+                .addGap(52, 52, 52)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
                 .addComponent(homeButton)
                 .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -137,22 +227,12 @@ public class ViewLearningMaterialWindow extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 647, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pack();
@@ -167,11 +247,10 @@ public class ViewLearningMaterialWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton homeButton;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollBar jScrollBar2;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel windowNameLabel;
     // End of variables declaration//GEN-END:variables
 }

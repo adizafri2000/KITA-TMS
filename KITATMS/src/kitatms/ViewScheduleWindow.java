@@ -1,6 +1,11 @@
 package kitatms;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -16,6 +21,8 @@ public class ViewScheduleWindow extends javax.swing.JFrame {
     
     static DBConnection con;
     private Account acc;
+    private ArrayList<String> courseIDList;
+    private DefaultTableModel tableModel = new DefaultTableModel();
     
     public ViewScheduleWindow(DBConnection con,Account acc){
         this.con = con;
@@ -29,39 +36,68 @@ public class ViewScheduleWindow extends javax.swing.JFrame {
     /** Creates new form ViewSchedule */
     private ViewScheduleWindow(Account acc) {
         this.acc = acc;
+        System.out.printf("VIEW SCHEDULE WINDOW, USERNAME:%s\n",acc.username);
         initComponents();
-        displaySchedule();
+        buildTable();
+        retrieveCourses();
+        retrieveCourseSchedule();
     }
     
-    private void displaySchedule(){
-        ArrayList<String> courseIDList = new ArrayList<>();
+    private void retrieveCourses(){
+        try {
+            String query = "Select * from enrollment where accountID='"+acc.username+"';";
+            courseIDList = con.retrieve(query, "courseID");
+            
+            for(String s:courseIDList) System.out.println(s);
+            
+        } catch (SQLException ex) {
+            //Logger.getLogger(ViewScheduleWindow.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("View Schedule Window: Error in retrieveCourses()");
+        }
+    }
+    
+    private void retrieveCourseSchedule(){
+        
         ArrayList<String> courseNameList = new ArrayList<>();
         ArrayList<String> courseStartList = new ArrayList<>();
         ArrayList<String> courseEndList = new ArrayList<>();
+        String courseName,courseStart,courseEnd;
+        String courseID,query;
         
-        //DISPLAY RELATED MAKLUMAT ABOUT THE COURSE SCHEDULE GUNA 4 ARRAYLIST NI
-        courseIDList.add("TSN2201");
-        courseNameList.add("Computer Networks");
-        courseStartList.add("2020-03-21");
-        courseEndList.add("2020-10-05");
-        
-        courseIDList.add("PSP1123");
-        courseNameList.add("Introduction to Programming");
-        courseStartList.add("2020-03-25");
-        courseEndList.add("2020-04-05");
-        
-        courseIDList.add("MPU5541");
-        courseNameList.add("Human Anthropology");
-        courseStartList.add("2020-03-01");
-        courseEndList.add("2020-10-30");
-        
-        courseIDList.add("PET3352");
-        courseNameList.add("Engineering for Graduates");
-        courseStartList.add("2020-04-21");
-        courseEndList.add("2020-12-05");
-        
+        for(int i=0;i<courseIDList.size();i++){
+            try {
+                courseID = courseIDList.get(i);
+                
+                query = "Select * from course where courseID='"+courseID+"';";
+                
+                courseNameList.add(con.retrieve(query,"courseName").get(0));
+                courseName = con.retrieve(query,"courseName").get(0);
+                
+                courseStartList.add(con.retrieve(query,"courseStart").get(0));
+                courseStart = con.retrieve(query,"courseStart").get(0);
+                
+                courseEndList.add(con.retrieve(query,"courseEnd").get(0));
+                courseEnd = con.retrieve(query,"courseEnd").get(0);
+                
+                tableModel.addRow(new Object[]{courseID,courseName,courseStart,courseEnd});
+            }
+            catch (SQLException ex) {
+                //Logger.getLogger(ViewScheduleWindow.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("VIEW LEARNING MATERIALS WINDOW: ERROR IN retrieveCourseSchedule()");
+            }
+            System.out.printf("%s (%s): %s to %s\n",courseIDList.get(i),courseNameList.get(i),courseStartList.get(i),courseEndList.get(i));
+            
+        }
     }
 
+    private void buildTable(){
+        jTable1.setModel(tableModel);
+        tableModel.addColumn("Course ID");
+        tableModel.addColumn("Course Name");
+        tableModel.addColumn("Start Date");
+        tableModel.addColumn("End Date");
+    }
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -110,25 +146,14 @@ public class ViewScheduleWindow extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"TSE2101", "Work Ethics", "08-08-2000", "12-08-2020"},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Course ID", "Course name", "Start Date", "End Date"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        jTable1.setModel(jTable1.getModel());
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setHeaderValue("Course ID");
+            jTable1.getColumnModel().getColumn(1).setHeaderValue("Course name");
+            jTable1.getColumnModel().getColumn(2).setHeaderValue("Start Date");
+            jTable1.getColumnModel().getColumn(3).setHeaderValue("End Date");
+        }
 
         homeButton.setBackground(new java.awt.Color(204, 204, 204));
         homeButton.setText("Back to home");

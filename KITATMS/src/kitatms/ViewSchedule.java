@@ -4,8 +4,8 @@ import java.util.*;
 import java.io.*;
 
 public class ViewSchedule{
-    private static String[][] schedule = new String[10][4];
-    private ArrayList<String> courseIDList = new ArrayList<>();
+    private static String[][] schedule = new String[5][4];
+    private static ArrayList<String> courseIDList = new ArrayList<>();
     private ArrayList<String> courseNameList = new ArrayList<>();
     private ArrayList<String> courseStartList = new ArrayList<>();
     private ArrayList<String> courseEndList = new ArrayList<>();
@@ -15,6 +15,11 @@ public class ViewSchedule{
        
         
         //DISPLAY RELATED MAKLUMAT ABOUT THE COURSE SCHEDULE GUNA 4 ARRAYLIST NI
+        courseIDList.add("Course ID");
+        courseNameList.add("Course Name");
+        courseStartList.add("Course Start");
+        courseEndList.add("Course End");
+        
         courseIDList.add("TSN2201");
         courseNameList.add("Computer Networks");
         courseStartList.add("2020-03-21");
@@ -35,56 +40,57 @@ public class ViewSchedule{
         courseStartList.add("2020-04-21");
         courseEndList.add("2020-12-05");
         
-        
-        for(int i=0;i<courseIDList.size();i++){
-            System.out.printf("%s (%s) : %s to %s \n",courseNameList.get(i),courseIDList.get(i),courseStartList.get(0),courseEndList.get(i));
-        }
     }
     
     public void displaySchedule(){
         
-        schedule[0][0] = "Course ID";
+        /*schedule[0][0] = "Course ID";
         schedule[0][1] = "Course Name";
         schedule[0][2] = "Course Start";
-        schedule[0][3] = "Course End";
+        schedule[0][3] = "Course End";*/
         
-        for(int i = 1; i<4; i++){
-            for (int e=0 ; e < courseIDList.size(); e++){
-                schedule[i][0] = courseIDList.get(e);
-                System.out.println(schedule[i][0]);
-            }
+        for(int e=0 ; e < courseIDList.size(); e++){
+            
+                schedule[e][0] = courseIDList.get(e);
+                
+            
         }
-        for(int i = 1; i<4; i++){
-            for (int e=0 ; e < courseNameList.size(); e++){
-                schedule[i][1] = courseNameList.get(e);
-                System.out.println(schedule[i][1]);
-            }
-        }
-        for(int i = 1; i<4; i++){
-            for (int e=0 ; e < courseStartList.size(); e++){
-                schedule[i][2] = courseStartList.get(e);
-                System.out.println(schedule[i][2]);
-            }
-        }
-        for(int i = 1; i<4; i++){
-            for (int e=0 ; e < courseEndList.size(); e++){
-                schedule[i][3] = courseEndList.get(e);
-                System.out.println(schedule[i][3]);
-            }
+        System.out.println();
+        for(int e=0 ; e < courseNameList.size(); e++){
+            
+                schedule[e][1] = courseNameList.get(e);
+                
+            
         }
         
-        /*for(int i = 0; i < 10; i++){
+        for(int e=0 ; e < courseStartList.size(); e++){
+            
+                schedule[e][2] = courseStartList.get(e);
+                
+            
+        }
+       
+        for(int e=0 ; e < courseEndList.size(); e++){
+            
+                schedule[e][3] = courseEndList.get(e);
+                
+            
+        }
+        
+        /*s.setSchedule();
+        s.displaySchedule();
+        
+        for(int i = 0; i < 10; i++){
             for (int j = 0; j < 4; j++){
-                System.out.print(schedule[i][j]);
+                System.out.print(schedule[i][j] + "  |  ");
             }
+            System.out.println();
         }*/
         
     }
     public static void main(String[] args){
         s.setSchedule();
         s.displaySchedule();
-        System.out.print("\n\n\n");
-        
         for(int i = 0; i < 5; i++){
             for (int j = 0; j < 4; j++){
                 System.out.print(schedule[i][j] + "  |  ");

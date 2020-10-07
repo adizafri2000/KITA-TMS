@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -66,10 +67,18 @@ public class ViewLearningMaterialWindow extends javax.swing.JFrame {
         ArrayList<String> learningMaterialIDList;
         int row = 1;
         
+        //COLUMN HEADERS
+        //String columnHeaders[]={"Course ID","Learning Material","View Status","View"};
+        //CREATE OUR TABLE AND SET HEADER
+        //JTable table=new JTable(data,columnHeaders);
+
+
+        
         DefaultTableModel tableModel = new DefaultTableModel();
-        jTable2 = new JTable(tableModel);
         jTable1.setModel(tableModel);
-        //jPanel3.add(jTable2);
+        
+
+        
         tableModel.addColumn("Course ID");
         tableModel.addColumn("Learning Material");
         tableModel.addColumn("View Status");
@@ -106,7 +115,7 @@ public class ViewLearningMaterialWindow extends javax.swing.JFrame {
                         viewStatus = "Viewed";
                     else viewStatus = "Not Viewed";
                     
-                    tableModel.addRow(new Object[]{courseID,learningMaterialName,viewStatus,viewButton});
+                    tableModel.addRow(new Object[]{courseID,learningMaterialName,viewStatus,"View"});
                     row++;
                 }
                 
@@ -117,6 +126,11 @@ public class ViewLearningMaterialWindow extends javax.swing.JFrame {
                 System.out.println("View Learning Materials Window: Error in buildTable()");
             }
         }
+        //SET CUSTOM RENDERER TO TEAMS COLUMN
+        jTable1.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
+
+        //SET CUSTOM EDITOR TO TEAMS COLUMN
+        jTable1.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JTextField()));
     }
 
     /**

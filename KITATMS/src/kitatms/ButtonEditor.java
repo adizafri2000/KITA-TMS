@@ -5,9 +5,14 @@
  */
 package kitatms;
 
+import com.itextpdf.text.DocumentException;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -22,22 +27,73 @@ public class ButtonEditor extends DefaultCellEditor{
     protected JButton btn;
     private String lbl;
     private Boolean clicked;
+    private DBConnection con;
+    private Account acc;
+    private String courseID;
+    
+    //Window 1 is for View Learning Materials, window 2 is for Assessment Window
+    private int window;
 
-    public ButtonEditor(JTextField txt) {
-    super(txt);
+    /**
+     * Window 1 is for View Learning Materials window to open Learning Materials.
+     * Window 2 is for Assessment Window to divert to Attempt Assessment Window.
+     * @param txt
+     * @param window 
+     */
+    public ButtonEditor(JTextField txt, int window,DBConnection con,Account acc,String courseID) {
+        
+        super(txt);
+        this.window = window;
+        this.con = con;
+        this.acc = acc;
+        this.courseID = courseID;
+        Course c = new Course();
+        c.setCourseID(courseID);
+        
+        btn=new JButton();
+        btn.setOpaque(true);
+        
+        //VIEW LEARNING MATERIALS WINDOW: OPEN THE MATERIAL USING A THE DEVICE DEFAULT APPLICATION
+        if(window==1)
+            //WHEN BUTTON IS CLICKED
+            btn.addActionListener(new ActionListener() {
 
-    btn=new JButton();
-    btn.setOpaque(true);
+                @Override
+                public void actionPerformed(ActionEvent e) {
 
-    //WHEN BUTTON IS CLICKED
-    btn.addActionListener(new ActionListener() {
+                        fireEditingStopped();
+                        File file = new File(fileName);
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+                        Desktop desktop = Desktop.getDesktop();
+                        try {
+                            desktop.open(file);
+                        } catch (IOException ex) {
+                            //Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
+                            System.out.println("Error");
+                        }
 
-        fireEditingStopped();
+                        System.out.println("Finished.");
+                        } catch (FileNotFoundException | DocumentException ex) {
+                            //Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
+                            System.out.println("Error");
+                        }
+                    }
+                }
+            );
+        
+        else{
+            //WHEN BUTTON IS CLICKED
+            btn.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    fireEditingStopped();
+                    new AttemptAssessmentWindow(con,acc,c);
+                    }
+                }
+            );
         }
-        });
     }
 
     //OVERRIDE A COUPLE OF METHODS

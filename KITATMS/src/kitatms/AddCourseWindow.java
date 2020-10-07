@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Calendar;
 import java.awt.event.*;
-
+import java.text.DateFormat;  
+import java.text.SimpleDateFormat;  
+import java.util.Date;  
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -132,6 +134,10 @@ public class AddCourseWindow extends javax.swing.JFrame  {
 
         jLabel8.setForeground(new java.awt.Color(255, 0, 51));
 
+        jDateChooser2.setDateFormatString("yyyy-MM-dd");
+
+        jDateChooser3.setDateFormatString("yyyy-MM-dd");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -140,15 +146,8 @@ public class AddCourseWindow extends javax.swing.JFrame  {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(saveButton)
-                        .addGap(35, 35, 35)
-                        .addComponent(nextButton))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -157,7 +156,7 @@ public class AddCourseWindow extends javax.swing.JFrame  {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel4)
                                 .addComponent(jLabel5)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,12 +165,21 @@ public class AddCourseWindow extends javax.swing.JFrame  {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
+                                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel6)
                                 .addGap(18, 18, 18)
-                                .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(26, Short.MAX_VALUE))
+                                .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(saveButton)
+                                .addGap(36, 36, 36)
+                                .addComponent(nextButton))
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,30 +195,31 @@ public class AddCourseWindow extends javax.swing.JFrame  {
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
-                        .addGap(45, 45, 45))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(saveButton)
-                            .addComponent(nextButton))
-                        .addGap(21, 21, 21))))
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jDateChooser3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saveButton)
+                    .addComponent(nextButton))
+                .addGap(21, 21, 21))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 623, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -237,50 +246,55 @@ public class AddCourseWindow extends javax.swing.JFrame  {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
-        java.util.Date courseStart = jDateChooser2.getDate();// = jDateChooser3.getDate();
-        java.util.Date courseEnd = jDateChooser3.getDate();// = jDateChooser4.getDate();
+        Date courseStart = jDateChooser2.getDate();// = jDateChooser3.getDate();
+        Date courseEnd = jDateChooser3.getDate();// = jDateChooser4.getDate();
         String courseID = jTextField1.getText();
         String courseName = jTextField3.getText();  
         
-        System.out.print("testing");
+        
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");  
+        String startDateString = dateFormat.format(courseStart); 
+        String endDateString = dateFormat.format(courseEnd);  
+        
         ArrayList<String> courseIDList = new ArrayList<String>();
         ArrayList<String> dpttak = new ArrayList<String>();
 
-        
-       // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-       // String courseStart = sdf.format(jDateChooser2.getDate());
-       // String courseEnd = sdf.format(jDateChooser3.getDate());
-        
-        
-        
-        //jLabel8.setText(null);
-        //jTextField2.setText(null);
-        
-        boolean flag = true;
-        try {
-            courseIDList = con.retrieve("SELECT * FROM kitatms.course;","courseID"); 
-        }catch (SQLException ex){}
-            for (int i =0; i<courseIDList.size(); i++){
-                if (courseIDList.get(i).equals(courseID)){
-                    jTextField2.setText("Course already exist");
-                    flag = false;
-                }
-            }
-        if (flag == true){
-            //Course course = new Course(courseID, courseName, courseStart, courseEnd);
+        if (courseID.equals("") || courseName.equals("") ||startDateString.equals("") || endDateString.equals("") ){
+                jLabel8.setText("Please fill in all information !");
+        }
+        else{
+            boolean flag = true;
             try {
-                flag = con.update("INSERT INTO kitatms.course (courseID,courseName,courseStart,courseEnd) VALUES  ('"+courseID+"','"+courseName+"','"+courseStart+"','"+courseEnd+"');");
-            } catch (SQLException ex) {}
-            if (flag == false)
-                jLabel8.setText("Database error"); 
-            else
-                jLabel8.setText("Saved successfully"); 
+                courseIDList = con.retrieve("SELECT * FROM kitatms.course;","courseID"); 
+            }catch (SQLException ex){}
+                for (int i =0; i<courseIDList.size(); i++){
+                    System.out.println(courseIDList.get(i));
+                    if (courseIDList.get(i).equals(courseID)){
+                        jTextField2.setText("Course already exist");
+                        flag = false;
+                    }
+                }
+            if (flag == true){
+                //Course course = new Course(courseID, courseName, courseStart, courseEnd);
+                try {
+                    System.out.println(courseID);
+                    System.out.println(courseName);
+                    System.out.println(startDateString);
+                    System.out.println(endDateString);
+                    flag = con.update("INSERT INTO kitatms.course (courseID,courseName,courseStart,courseEnd) VALUES  "
+                            + "('"+courseID+"','"+courseName+"','"+startDateString+"','"+endDateString+"');");
+                } catch (SQLException ex) {}
+                if (flag == false)
+                    jLabel8.setText("Database error"); 
+                else
+                    jLabel8.setText("Saved successfully"); 
+            }
+            if (courseID.length()> 7 ){
+                jTextField2.setText("*max 7 characters");
+            }
         }
-        if (courseID.length()> 7 ){
-            jTextField2.setText("*max 7 characters");
-        }
-        if (courseID.equals("") || courseName.equals("") ||courseStart.equals("") || courseEnd.equals("") ){
-                jLabel8.setText("Please fill in all information !");}
+        
+        
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed

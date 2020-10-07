@@ -24,6 +24,7 @@ public class AddCourseWindow extends javax.swing.JFrame  {
    
     static DBConnection con;
     private Account acc;
+    public Course course = new Course();
     
     public AddCourseWindow(DBConnection con,Account acc){
         this.con = con;
@@ -235,7 +236,8 @@ public class AddCourseWindow extends javax.swing.JFrame  {
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
         //ADD COURSE ID TO COURSE OBJECT NI
-        Course course = new Course();
+        //Course course = new Course();
+        //course.getCourseID();
         dispose();
         new EnrollTraineesWindow(con,acc,course);
     }//GEN-LAST:event_nextButtonActionPerformed
@@ -246,7 +248,7 @@ public class AddCourseWindow extends javax.swing.JFrame  {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");  
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  
         String startDateString="";
         String endDateString="";
         if(jDateChooser2.getDate() != null && jDateChooser3.getDate()!=null){
@@ -267,8 +269,12 @@ public class AddCourseWindow extends javax.swing.JFrame  {
         ArrayList<String> dpttak = new ArrayList<String>();
 
         if (courseID.equals("") || courseName.equals("") ||startDateString.equals("") || endDateString.equals("") ){
-                jLabel8.setText("Please fill in all information !");
+             jLabel8.setText("Please fill in all information !");
         }
+        else if(courseID.length()> 7 ){
+            jLabel8.setText("*max 7 characters");
+        }
+
         else{
             boolean flag = true;
             try {
@@ -288,17 +294,20 @@ public class AddCourseWindow extends javax.swing.JFrame  {
                     System.out.println(courseName);
                     System.out.println(startDateString);
                     System.out.println(endDateString);
-                    flag = con.update("INSERT INTO kitatms.course (courseID,courseName,courseStart,courseEnd) VALUES  "
-                            + "('"+courseID+"','"+courseName+"','"+startDateString+"','"+endDateString+"');");
+                    System.out.println(acc.username);
+                    flag = con.update(  "INSERT INTO kitatms.course (courseID,courseName,courseStart,courseEnd,AccountID) VALUES"+ 
+                                        "('"+courseID+"','"+courseName+"','"+startDateString+"','"+endDateString+"','"+acc.username+"');");
+                    course.setCourseID(courseID);
+                    
+                    
+                    
                 } catch (SQLException ex) {}
                 if (flag == false)
                     jLabel8.setText("Database error"); 
                 else
                     jLabel8.setText("Saved successfully"); 
             }
-            if (courseID.length()> 7 ){
-                jTextField2.setText("*max 7 characters");
-            }
+            
         }
         
         

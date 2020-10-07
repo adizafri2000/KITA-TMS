@@ -1,5 +1,12 @@
 package kitatms;
 
+import javax.swing.JFileChooser;
+import java.io.*; 
+import java.nio.file.Files; 
+import java.nio.file.*; 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,9 +20,13 @@ package kitatms;
 public class UploadLearningMaterialWindow extends javax.swing.JFrame {
 
     static DBConnection con;
+    private Account acc;
+    private Course course;
     
-    public UploadLearningMaterialWindow(DBConnection con){
+    public UploadLearningMaterialWindow(DBConnection con,Account acc,Course course){
         this.con = con;
+        this.course = course;
+        this.acc = acc;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new UploadLearningMaterialWindow().setVisible(true);
@@ -46,7 +57,6 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jToggleButton1 = new javax.swing.JToggleButton();
         jFileChooser2 = new javax.swing.JFileChooser();
         jToggleButton2 = new javax.swing.JToggleButton();
         jToggleButton5 = new javax.swing.JToggleButton();
@@ -85,8 +95,6 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
 
         jLabel2.setText("Please upload learning material : ");
 
-        jToggleButton1.setText("Upload");
-
         jFileChooser2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFileChooser2ActionPerformed(evt);
@@ -103,6 +111,11 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
 
         jToggleButton5.setBackground(new java.awt.Color(204, 204, 204));
         jToggleButton5.setText("Next");
+        jToggleButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton5ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setForeground(new java.awt.Color(204, 204, 204));
         jLabel4.setText("   selectedFileName.pdf   ");
@@ -113,20 +126,19 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jToggleButton1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
                         .addGap(18, 18, 18)
-                        .addComponent(jFileChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(38, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addComponent(jToggleButton2)
-                .addGap(30, 30, 30)
-                .addComponent(jToggleButton5)
+                        .addComponent(jToggleButton2)
+                        .addGap(30, 30, 30)
+                        .addComponent(jToggleButton5))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jFileChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 26, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -135,10 +147,8 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToggleButton1)
-                    .addComponent(jFileChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addComponent(jFileChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jToggleButton5)
                     .addComponent(jToggleButton2)
@@ -170,7 +180,43 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
         // TODO add your handling code here:
+        java.io.File f = null;
+        String filename="";
+        Path temp = null;
+        if (jFileChooser2.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+         f = jFileChooser2.getSelectedFile();
+         filename = jFileChooser2.getSelectedFile().toString();
+
+         System.err.println(f.getPath());
+         System.err.println(filename);
+        }
+        String fromFile = f.getPath();
+        String toFile = "C:\\Users\\zamfirdaus\\Documents\\GitHub\\KITA-TMS\\KITATMS";
+
+        Path source = Paths.get(fromFile);
+        Path target = Paths.get(toFile);
+        
+        try {
+            temp = Files.move(Paths.get(fromFile),Paths.get(toFile));
+        } catch (IOException ex) {
+            //Logger.getLogger(UploadLearningMaterialWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+  
+        if(temp!= null) 
+        { 
+            System.out.println("File renamed and moved successfully"); 
+        } 
+        else
+        { 
+            System.out.println("Failed to move the file"); 
+        } 
     }//GEN-LAST:event_jToggleButton2ActionPerformed
+
+    private void jToggleButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton5ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+        new TrainerHomeWindow(con,acc);
+    }//GEN-LAST:event_jToggleButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,7 +262,6 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton5;
     // End of variables declaration//GEN-END:variables

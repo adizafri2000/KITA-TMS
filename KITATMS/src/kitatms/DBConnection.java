@@ -180,11 +180,12 @@ public class DBConnection {
                 String data = rs.getString(column);         
                 dataList.add(data);
             }
+            System.out.println("No errors during retrieval.");
         }catch(SQLException e){
             System.out.println("Data retrieval failed, returning empty ArrayList.");
         }
         
-        System.out.println("No errors during retrieval.");
+        
         return dataList;
     }
     

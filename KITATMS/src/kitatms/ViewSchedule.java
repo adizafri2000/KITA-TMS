@@ -35,6 +35,10 @@ public class ViewSchedule{
         courseStartList.add("2020-04-21");
         courseEndList.add("2020-12-05");
         
+        
+        for(int i=0;i<courseIDList.size();i++){
+            System.out.printf("%s (%s) : %s to %s \n",courseNameList.get(i),courseIDList.get(i),courseStartList.get(0),courseEndList.get(i));
+        }
     }
     
     public void displaySchedule(){
@@ -44,24 +48,28 @@ public class ViewSchedule{
         schedule[0][2] = "Course Start";
         schedule[0][3] = "Course End";
         
-        for(int i = 1; i<10; i++){
+        for(int i = 1; i<4; i++){
             for (int e=0 ; e < courseIDList.size(); e++){
                 schedule[i][0] = courseIDList.get(e);
+                System.out.println(schedule[i][0]);
             }
         }
-        for(int i = 1; i<10; i++){
+        for(int i = 1; i<4; i++){
             for (int e=0 ; e < courseNameList.size(); e++){
                 schedule[i][1] = courseNameList.get(e);
+                System.out.println(schedule[i][1]);
             }
         }
-        for(int i = 1; i<10; i++){
+        for(int i = 1; i<4; i++){
             for (int e=0 ; e < courseStartList.size(); e++){
                 schedule[i][2] = courseStartList.get(e);
+                System.out.println(schedule[i][2]);
             }
         }
-        for(int i = 1; i<10; i++){
+        for(int i = 1; i<4; i++){
             for (int e=0 ; e < courseEndList.size(); e++){
                 schedule[i][3] = courseEndList.get(e);
+                System.out.println(schedule[i][3]);
             }
         }
         
@@ -75,8 +83,9 @@ public class ViewSchedule{
     public static void main(String[] args){
         s.setSchedule();
         s.displaySchedule();
+        System.out.print("\n\n\n");
         
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < 5; i++){
             for (int j = 0; j < 4; j++){
                 System.out.print(schedule[i][j] + "  |  ");
             }

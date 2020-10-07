@@ -233,7 +233,7 @@ public class DBWindow extends javax.swing.JFrame {
         messageLabel.setText(" ");
         
         String password = String.valueOf(jPasswordField1.getPassword());
-        password = ADIPASSWORD;
+        password = zamPASSWORD;
         jPasswordField1.setText("");
         System.out.printf("Password entered: %s.\n",password);
         con.setPassword(password);

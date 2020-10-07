@@ -246,15 +246,22 @@ public class AddCourseWindow extends javax.swing.JFrame  {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
-        Date courseStart = jDateChooser2.getDate();// = jDateChooser3.getDate();
-        Date courseEnd = jDateChooser3.getDate();// = jDateChooser4.getDate();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");  
+        String startDateString="";
+        String endDateString="";
+        if(jDateChooser2.getDate() != null && jDateChooser3.getDate()!=null){
+            Date courseStart = jDateChooser2.getDate();// = jDateChooser3.getDate();
+            Date courseEnd = jDateChooser3.getDate();// = jDateChooser4.getDate();
+            startDateString = dateFormat.format(courseStart); 
+            endDateString = dateFormat.format(courseEnd);  
+        }
+        
         String courseID = jTextField1.getText();
         String courseName = jTextField3.getText();  
         
         
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");  
-        String startDateString = dateFormat.format(courseStart); 
-        String endDateString = dateFormat.format(courseEnd);  
+        
+        
         
         ArrayList<String> courseIDList = new ArrayList<String>();
         ArrayList<String> dpttak = new ArrayList<String>();

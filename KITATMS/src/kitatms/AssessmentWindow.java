@@ -24,6 +24,7 @@ public class AssessmentWindow extends javax.swing.JFrame {
     static DBConnection con;
     private Account trainee = new Account();
     private ArrayList<String> courseIDList = new ArrayList<>();
+    private JTable table = new JTable();
     
     public AssessmentWindow(DBConnection con,Account acc){
         this.con = con;

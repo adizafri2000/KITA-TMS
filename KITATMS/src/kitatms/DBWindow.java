@@ -18,7 +18,9 @@ import javax.swing.SwingConstants;
  */
 public class DBWindow extends javax.swing.JFrame {
     
-    private String ADIPASSWORD = "z@mFirdaus00";
+    private String ADIPASSWORD = "Pizz@1181101286";
+    private String zamPASSWORD = "z@mFirdaus00";
+    
 
     static DBConnection con;
     /**

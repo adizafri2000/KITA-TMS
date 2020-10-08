@@ -230,8 +230,8 @@ public class DBConnection {
     
     /**
      * This method, in conjunction with setupDB(), creates all the tables involved in
-     * KITA-TMS's database implementation.A total of 8 tables are created after invoking this method:
- Account, Course, Enrollment, Report, LearningMaterial,
+     * KITA-TMS's database implementation.A total of 10 tables are created after invoking this method:
+ Account, Trainer, Trainee, Course, Enrollment, Report, LearningMaterial,
  Assessment, View, Attempt, Report
      * @throws java.sql.SQLException
      */
@@ -242,6 +242,19 @@ public class DBConnection {
 "    accountType int not null,\n" +
 "	accountPassword varchar(15) not null\n" +
 ");";
+                
+                String trainer = "create table trainer(\n" +
+"	trainerName varchar(50) not null,\n" +
+"    accountID varchar(10) not null unique references account(accountID)\n" +
+");";
+                
+                String trainee = "CREATE TABLE `kitatms`.`trainee` (\n" +
+"  `accountID` VARCHAR(10) NOT NULL,\n" +
+"  PRIMARY KEY (`accountID`),\n" +
+"    FOREIGN KEY (`accountID`)\n" +
+"    REFERENCES `kitatms`.`account` (`accountID`)\n" +
+"    ON DELETE NO ACTION\n" +
+"    ON UPDATE NO ACTION);";
                 
                 String course = "create table course(\n" +
 "	courseID varchar(7) primary key not null unique,\n" +
@@ -320,7 +333,7 @@ public class DBConnection {
                 stat.executeUpdate(assessment);
                 stat.executeUpdate(view);
                 stat.executeUpdate(attempt);
-                System.out.println("8 program database tables succesfully created.");
+                System.out.println("10 program database tables succesfully created.");
             
         } catch (SQLException ex) {
             //Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);

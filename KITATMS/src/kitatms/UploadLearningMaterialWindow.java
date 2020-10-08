@@ -29,7 +29,7 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
         this.acc = acc;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UploadLearningMaterialWindow().setVisible(true);
+                new UploadLearningMaterialWindow( acc, course).setVisible(true);
             }
         });
     }
@@ -38,7 +38,9 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
     /**
      * Creates new form AddCourse
      */
-    private UploadLearningMaterialWindow() {
+    private UploadLearningMaterialWindow(Account acc,Course course) {
+        this.course =course;
+        this.acc = acc;
         initComponents();
     }
 
@@ -51,12 +53,12 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jFileChooser1 = new javax.swing.JFileChooser();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jFileChooser1 = new javax.swing.JFileChooser();
         finishButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
@@ -100,7 +102,8 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("jButton1");
+        jButton1.setText("save");
+        jButton1.setToolTipText("");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -122,14 +125,19 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
                         .addGap(16, 16, 16))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(38, Short.MAX_VALUE))))
+                        .addContainerGap(93, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 229, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jFileChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+                .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(finishButton)
                     .addComponent(jButton1))
@@ -140,15 +148,15 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 704, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 704, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE))
         );
 
         pack();
@@ -162,7 +170,36 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        new TrainerHomeWindow();
+        java.io.File f = null;
+        String filename="";
+        Path temp = null;
+        if (jFileChooser1.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+         f = jFileChooser1.getSelectedFile();
+         filename = jFileChooser1.getSelectedFile().toString();
+
+         System.err.println(f.getPath());
+         System.err.println(filename);
+        }
+        String fromFile = f.getPath();
+        String toFile = "C:\\Documents\\GitHub\\KITA-TMS\\KITATMS";
+
+        Path source = Paths.get(fromFile);
+        Path target = Paths.get(toFile);
+        
+        try {
+            temp = Files.move(Paths.get(fromFile),Paths.get(toFile));
+        } catch (IOException ex) {
+            //Logger.getLogger(UploadLearningMaterialWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+  
+        if(temp!= null) 
+        { 
+            System.out.println("File renamed and moved successfully"); 
+        } 
+        else
+        { 
+            System.out.println("Failed to move the file"); 
+        } 
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

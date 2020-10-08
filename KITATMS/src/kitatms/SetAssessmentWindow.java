@@ -347,7 +347,8 @@ public class SetAssessmentWindow extends javax.swing.JFrame {
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
         // TODO add your handling code here:
         dispose();
-        new TrainerHomeWindow(con,  acc);
+        //new TrainerHomeWindow(con,  acc);
+        new UploadLearningMaterialWindow( con, acc, course);
     }//GEN-LAST:event_nextButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed

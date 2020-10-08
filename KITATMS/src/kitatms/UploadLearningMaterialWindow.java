@@ -46,6 +46,7 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
         this.acc = acc;
         initComponents();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -206,7 +207,7 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
          fromFile = f.getPath();
          source = Paths.get(fromFile);
 
-         //System.err.println(f.getPath());
+         System.err.println(f.getPath());
          //System.err.println(filename);
         }
         

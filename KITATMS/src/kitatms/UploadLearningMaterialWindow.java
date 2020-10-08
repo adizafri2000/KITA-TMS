@@ -250,8 +250,15 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
             //temp = Files.move(Paths.get(fromFile),Paths.get(toFile));
             
             System.out.println(filename);
+            String lmID;
+            if(countCourseID<10){
+                lmID = ("M0"+countCourseID+course.getCourseID());
+            }
+            else{
+                lmID = ("M"+countCourseID+course.getCourseID());
+            }
             flag = con.update("INSERT INTO kitatms.learningmaterial (learningMaterialID, learningmaterialName, courseID) VALUES "+
-                                "('"+("M0"+countCourseID+course.getCourseID())+"', '"+f.getName()+"', '"+course.getCourseID()+"');");
+                                "('"+lmID+"', '"+f.getName()+"', '"+course.getCourseID()+"');");
             saveStatus = true;
             
             } //catch (IOException ex) {}

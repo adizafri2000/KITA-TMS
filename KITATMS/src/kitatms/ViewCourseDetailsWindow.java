@@ -45,56 +45,17 @@ public class ViewCourseDetailsWindow extends javax.swing.JFrame {
      * Creates new form Viewcoursedetails
      */
     private ViewCourseDetailsWindow(Account acc) {
-        try {
-            this.acc = acc;
-            courseIDList = loadCourses();
-            initComponents();
-            noCourseLabel.setVisible(false);
-            if(courseIDList.isEmpty()){
-                noCourseLabel.setVisible(true);
-                jTable1.setEnabled(false);
-                jTable1.setVisible(false);
-            }
-            buildTable();
-            fillTable();
-            
-            /*
-            String fileName = "Assignment 1 (2020).pdf";
-            File temp = new File(fileName);
-            Path target = Paths.get("");
-            String s = target.toAbsolutePath().toString() + "\\fileName";
-            target = Paths.get(s);
-            System.out.println("Target relative path is: " + target.toString());
-            
-            Path source = Paths.get("C:\\Users\\adiza\\Documents\\Assignment Zach\\Assignment 1 (2020).pdf");
-            System.out.println("Source relative path is: " + source.toString());
-            Files.copy(source, target,StandardCopyOption.REPLACE_EXISTING);
-            */
-            
-            /*
-            Path source = Paths.get("C:\\Users\\adiza\\Documents\\Assignment Zach\\Assignment 1 (2020).pdf");
-            Path target = Paths.get("");
-            String s = target.toAbsolutePath().toString() + "\\fileName";
-            target = Paths.get(s);
-            System.out.println("Target relative path is: " + target.toString());
-            System.out.println("Source relative path is: " + source.toString());
-            
-            Files.copy(target, source, StandardCopyOption.REPLACE_EXISTING);
-            */
-            //assertThat(source).exists();
-            //assertThat(Files.readAllLines(target)
-              //.equals(Files.readAllLines(source)));
-            Path sourceFile = Paths.get("C:\\Users\\adiza\\Documents\\Assignment Zach\\Assignment 1 (2020).pdf");
-            String fileName = sourceFile.toFile().getName();
-            //Path targetFile = Paths.get("C:\\Users\\adiza\\Documents\\Assignment 1 (2020).pdf");
-            Path target = Paths.get("");
-            String s = target.toAbsolutePath().toString() + "\\"+fileName;
-            target = Paths.get(s);
-            
-            Files.copy(sourceFile, target,StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException ex) {
-            Logger.getLogger(ViewCourseDetailsWindow.class.getName()).log(Level.SEVERE, null, ex);
+        this.acc = acc;
+        courseIDList = loadCourses();
+        initComponents();
+        noCourseLabel.setVisible(false);
+        if(courseIDList.isEmpty()){
+            noCourseLabel.setVisible(true);
+            jTable1.setEnabled(false);
+            jTable1.setVisible(false);
         }
+        buildTable();
+        fillTable();
     }
     
     private ArrayList<String> loadCourses(){

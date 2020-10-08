@@ -300,7 +300,7 @@ public class AddCourseWindow extends javax.swing.JFrame  {
             jLabel8.setText("*max 7 characters for course ID");
         }
         else if(courseStart.after(courseEnd)){
-            jLabel8.setText("Invalid date choosen");
+            jLabel8.setText("Invalid date chosen");
         }
         
 

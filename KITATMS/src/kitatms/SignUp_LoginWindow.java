@@ -263,9 +263,15 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
         String username = usernameTextField.getText();
         String password = String.valueOf(accountpasswordPasswordField.getPassword());
         boolean flag = false;
+        String message = "";
         if(username.equals("")|| username.equals(null) || password.equals("")|| password.equals(null)){
-			jLabel2.setText("Please fill in username and password");
+                        message = "Please fill in username and password";
+			jLabel2.setText(message);
 		}
+        else if(username.length()>10){
+            message = "Max username length is 10";
+            jLabel2.setText(message);
+        }
 	else{
             try {
                     //con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('real',1,'messi');");
@@ -277,10 +283,12 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
                 }
                         
 	    		    if(flag==true){
-	    		    	   jLabel2.setText("You are now registered as a trainer!");
+                                message = "You are now registered as a trainer!";
+	    		    	jLabel2.setText(message);
 			    }
 			    else{
-			    	     jLabel2.setText("Username is taken");
+                                message = "Username is taken";
+			    	jLabel2.setText(message);
 			    }
         }
     }//GEN-LAST:event_trainerSignupButtonActionPerformed

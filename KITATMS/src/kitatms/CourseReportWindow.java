@@ -1,11 +1,15 @@
 package kitatms;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFileChooser;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -242,6 +246,14 @@ public class CourseReportWindow extends javax.swing.JFrame {
     private void generateReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateReportButtonActionPerformed
         String courseID = (String)jComboBox1.getSelectedItem();
         createReport(courseID);
+        String fileName = courseID+"Report.pdf";
+        File file = new File(fileName);
+        Path source = Paths.get(fileName, more);
+        System.out.println(file.getAbsolutePath());
+        JFileChooser jfc = new JFileChooser();
+        
+        
+        
     }//GEN-LAST:event_generateReportButtonActionPerformed
 
 

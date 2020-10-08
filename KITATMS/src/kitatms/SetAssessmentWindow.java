@@ -19,6 +19,7 @@ public class SetAssessmentWindow extends javax.swing.JFrame {
     static DBConnection con;
     private Account acc;
     private Course course;
+    public boolean saveStatus = false;
     
     public SetAssessmentWindow(DBConnection con,Account acc,Course course){
         this.con = con;
@@ -346,9 +347,14 @@ public class SetAssessmentWindow extends javax.swing.JFrame {
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
         // TODO add your handling code here:
-        dispose();
-        //new TrainerHomeWindow(con,  acc);
-        new UploadLearningMaterialWindow( con, acc, course);
+        if(saveStatus==true){
+            dispose();
+            new UploadLearningMaterialWindow( con, acc, course);
+        }
+        else{
+            jLabel9.setText("Fill in and Save first"); 
+        }
+        
     }//GEN-LAST:event_nextButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
@@ -404,7 +410,8 @@ public class SetAssessmentWindow extends javax.swing.JFrame {
                     }
                     System.out.println(acc.username);
                     flag = con.update("INSERT INTO kitatms.assessment (assessmentID, assessmentQuestions, assessmentAnswers,courseID) VALUES"+
-                   "('"+("A"+course.getCourseID())+"','"+question1+"$"+question2+"$"+question3+"$"+question4+"$"+question5+"','"+ans1+"','"+course.getCourseID()+"');");                                     
+                   "('"+("A"+course.getCourseID())+"','"+question1+"$"+question2+"$"+question3+"$"+question4+"$"+question5+"','"+ans1+"','"+course.getCourseID()+"');");  
+                    saveStatus = true;
                     
                 } catch (SQLException ex) {}
             }

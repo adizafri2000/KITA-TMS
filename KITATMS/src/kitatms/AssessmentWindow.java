@@ -279,10 +279,10 @@ public class AssessmentWindow extends javax.swing.JFrame {
     
     private void buildTable(){
         jTable1.setModel(dtm);
-        tableModel.addColumn("Course ID");
-        tableModel.addColumn("Learning Material");
-        tableModel.addColumn("View Status");
-        tableModel.addColumn("View");
+        //tableModel.addColumn("Course ID");
+        //tableModel.addColumn("Learning Material");
+        //tableModel.addColumn("View Status");
+        //tableModel.addColumn("View");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

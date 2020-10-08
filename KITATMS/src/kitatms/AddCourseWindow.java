@@ -25,6 +25,7 @@ public class AddCourseWindow extends javax.swing.JFrame  {
     static DBConnection con;
     private Account acc;
     public Course course = new Course();
+    public boolean saveStatus = false;
     
     public AddCourseWindow(DBConnection con,Account acc){
         this.con = con;
@@ -70,6 +71,7 @@ public class AddCourseWindow extends javax.swing.JFrame  {
         jLabel8 = new javax.swing.JLabel();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jDateChooser3 = new com.toedter.calendar.JDateChooser();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -141,6 +143,14 @@ public class AddCourseWindow extends javax.swing.JFrame  {
 
         jDateChooser3.setDateFormatString("yyyy-MM-dd");
 
+        jButton1.setBackground(new java.awt.Color(204, 204, 204));
+        jButton1.setText("Cancel");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -151,14 +161,17 @@ public class AddCourseWindow extends javax.swing.JFrame  {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
+                        .addGap(49, 49, 49)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(20, 20, 20))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel4)
-                                .addComponent(jLabel5)))
+                                .addComponent(jLabel5))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(19, 19, 19)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -182,7 +195,7 @@ public class AddCourseWindow extends javax.swing.JFrame  {
                                 .addGap(36, 36, 36)
                                 .addComponent(nextButton))
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,10 +205,10 @@ public class AddCourseWindow extends javax.swing.JFrame  {
                 .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,7 +227,8 @@ public class AddCourseWindow extends javax.swing.JFrame  {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveButton)
-                    .addComponent(nextButton))
+                    .addComponent(nextButton)
+                    .addComponent(jButton1))
                 .addGap(21, 21, 21))
         );
 
@@ -240,8 +254,14 @@ public class AddCourseWindow extends javax.swing.JFrame  {
         //ADD COURSE ID TO COURSE OBJECT NI
         //Course course = new Course();
         //course.getCourseID();
-        dispose();
-        new EnrollTraineesWindow(con,acc,course);
+        if(saveStatus==true){
+            dispose();
+            new EnrollTraineesWindow(con,acc,course);
+        }
+        else{
+            jLabel8.setText("Fill in and Save first"); 
+        }
+        
     }//GEN-LAST:event_nextButtonActionPerformed
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
@@ -250,14 +270,17 @@ public class AddCourseWindow extends javax.swing.JFrame  {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
+        jLabel8.setText("");
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  
         String startDateString="";
         String endDateString="";
+        Date courseStart = null;
+        Date courseEnd = null;
         if(jDateChooser2.getDate() != null && jDateChooser3.getDate()!=null){
-            Date courseStart = jDateChooser2.getDate();// = jDateChooser3.getDate();
-            Date courseEnd = jDateChooser3.getDate();// = jDateChooser4.getDate();
+            courseStart = jDateChooser2.getDate();// = jDateChooser3.getDate();
+            courseEnd = jDateChooser3.getDate();// = jDateChooser4.getDate();
             startDateString = dateFormat.format(courseStart); 
-            endDateString = dateFormat.format(courseEnd);  
+            endDateString = dateFormat.format(courseEnd); 
         }
         
         String courseID = jTextField1.getText();
@@ -276,6 +299,10 @@ public class AddCourseWindow extends javax.swing.JFrame  {
         else if(courseID.length()> 7 ){
             jLabel8.setText("*max 7 characters for course ID");
         }
+        else if(courseStart.after(courseEnd)){
+            jLabel8.setText("Invalid date choosen");
+        }
+        
 
         else{
             boolean flag = true;
@@ -300,7 +327,7 @@ public class AddCourseWindow extends javax.swing.JFrame  {
                     flag = con.update(  "INSERT INTO kitatms.course (courseID,courseName,courseStart,courseEnd,AccountID) VALUES"+ 
                                         "('"+courseID+"','"+courseName+"','"+startDateString+"','"+endDateString+"','"+acc.username+"');");
                     course.setCourseID(courseID);
-                    
+                    saveStatus = true;
                     
                     
                 } catch (SQLException ex) {}
@@ -319,8 +346,15 @@ public class AddCourseWindow extends javax.swing.JFrame  {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+        new TrainerHomeWindow(con, acc);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private com.toedter.calendar.JDateChooser jDateChooser3;

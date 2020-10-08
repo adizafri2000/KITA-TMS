@@ -24,6 +24,7 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
     static DBConnection con;
     private Account acc;
     private Course course;
+    public boolean saveStatus = false;
     
     public UploadLearningMaterialWindow(DBConnection con,Account acc,Course course){
         this.con = con;
@@ -178,8 +179,15 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
 
     private void finishButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finishButtonActionPerformed
         // TODO add your handling code here:
-        dispose();
-        new TrainerHomeWindow(con, acc);
+        if(saveStatus == true){
+            dispose();
+            new TrainerHomeWindow(con, acc);
+        }
+        else{
+            jLabel4.setText("Fill in and Save first");
+        }
+        
+        
     }//GEN-LAST:event_finishButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -206,7 +214,7 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
         
         
         if (f==null || jFileChooser1.getSelectedFile() == null) {
-            jLabel4.setText("please choose file");
+            jLabel4.setText("Please choose file");
         }
         else{
             boolean flag = true;
@@ -229,6 +237,7 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
             System.out.println(filename);
             flag = con.update("INSERT INTO kitatms.learningmaterial (learningMaterialID, learningmaterialName, courseID) VALUES "+
                                 "('"+("M0"+countCourseID+course.getCourseID())+"', '"+f.getPath()+"', '"+course.getCourseID()+"');");
+            saveStatus = true;
             
             } //catch (IOException ex) {}
             catch (SQLException ex) {}

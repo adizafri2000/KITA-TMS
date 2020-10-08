@@ -18,6 +18,7 @@ public class EnrollTraineesWindow extends javax.swing.JFrame {
     static DBConnection con;
     private Account acc;
     private Course course;
+    public boolean saveStatus = false;
     
     public EnrollTraineesWindow(DBConnection con,Account acc,Course course){
         this.con = con;
@@ -172,7 +173,7 @@ public class EnrollTraineesWindow extends javax.swing.JFrame {
         jLabel18.setText(""); 
         String traineeID = jTextField2.getText();
         System.out.println(course.getCourseID());
-        
+        String errorMessage = "Invalid Account ID";
         
         
         ArrayList<String> accountIDList = new ArrayList<String>();
@@ -197,23 +198,32 @@ public class EnrollTraineesWindow extends javax.swing.JFrame {
 
                     System.out.println(acc.username);
                     flag = con.update("INSERT INTO kitatms.enrollment (accountID,courseID)VALUES"+
-                                        "('"+traineeID+"','"+course.getCourseID()+"');");                                     
+                                        "('"+traineeID+"','"+course.getCourseID()+"');");  
+                    saveStatus = true;
                     
                 } catch (SQLException ex) {}
-                if (flag == false)
-                    jLabel18.setText("database update fail"); 
+                if (flag == false){
+                    errorMessage = "Trainee already enrolled";
+                    jLabel18.setText("Trainee already enrolled");
+                }
                 else
                     jLabel18.setText("Saved successfully"); 
             }
             if (flag == false)
-                    jLabel18.setText("Invalid Account ID"); 
+                    jLabel18.setText(errorMessage); 
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
         // TODO add your handling code here:
-        dispose();
-        new SetAssessmentWindow(con,acc,course);
+        if(saveStatus == true){
+            dispose();
+            new SetAssessmentWindow(con,acc,course);
+        }
+        else{
+            jLabel18.setText("Fill in and Save first"); 
+        }
+        
     }//GEN-LAST:event_nextButtonActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed

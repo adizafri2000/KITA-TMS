@@ -14,10 +14,18 @@ public class TrainerHomeWindow extends javax.swing.JFrame {
     static DBConnection con;
     private Account acc;
     
+    public TrainerHomeWindow() {
+       java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new TrainerHomeWindow().setVisible(true);
+            }
+        });
+    }
+    
     public TrainerHomeWindow(DBConnection con, Account acc){
         this.con = con;
         this.acc = acc;
-        System.out.println(acc.username);
+        //System.out.println(acc.username);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TrainerHomeWindow(acc).setVisible(true);

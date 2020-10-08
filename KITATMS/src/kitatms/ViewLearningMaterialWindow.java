@@ -130,7 +130,7 @@ public class ViewLearningMaterialWindow extends javax.swing.JFrame {
         jTable1.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
 
         //SET CUSTOM EDITOR TO TEAMS COLUMN
-        jTable1.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JTextField()));
+        //jTable1.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JTextField()));
     }
 
     /**

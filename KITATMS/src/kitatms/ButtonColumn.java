@@ -45,7 +45,7 @@ public class ButtonColumn extends JFrame {
         table.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());;
 
         //SET CUSTOM EDITOR TO TEAMS COLUMN
-        table.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JTextField()));
+        //table.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JTextField())); // adiiiii aku comment out dulu tauuuuuuuuuuuuuuu
 
         //SCROLLPANE,SET SZE,SET CLOSE OPERATION
         JScrollPane pane=new JScrollPane(table);

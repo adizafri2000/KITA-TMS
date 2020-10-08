@@ -62,24 +62,22 @@ public class ButtonEditor extends DefaultCellEditor{
                 public void actionPerformed(ActionEvent e) {
 
                         fireEditingStopped();
+                        String fileName = null;
                         File file = new File(fileName);
 
                         Desktop desktop = Desktop.getDesktop();
                         try {
                             desktop.open(file);
-                        } catch (IOException ex) {
+                        }catch (IOException ex) {
                             //Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
                             System.out.println("Error");
                         }
+                    //Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
+                    //System.out.println("Finished.");
 
-                        System.out.println("Finished.");
-                        } catch (FileNotFoundException | DocumentException ex) {
-                            //Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
-                            System.out.println("Error");
-                        }
-                    }
+                    
                 }
-            );
+            });
         
         else{
             //WHEN BUTTON IS CLICKED

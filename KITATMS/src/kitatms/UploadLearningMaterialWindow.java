@@ -235,7 +235,7 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
             boolean flag = true;
             int countCourseID=1;
             try {
-                courseIDList = con.retrieve("SELECT * FROM kitatms.course;","courseID"); 
+                courseIDList = con.retrieve("SELECT * FROM kitatms.learningmaterial;","courseID"); 
             }catch (SQLException ex){}
             for (int i =0; i<courseIDList.size(); i++){
                     System.out.println(courseIDList.get(i));
@@ -260,6 +260,10 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
             flag = con.update("INSERT INTO kitatms.learningmaterial (learningMaterialID, learningmaterialName, courseID) VALUES "+
                                 "('"+lmID+"', '"+f.getName()+"', '"+course.getCourseID()+"');");
             saveStatus = true;
+            System.out.println(lmID);
+            System.out.println(countCourseID);
+            System.out.println(course.getCourseID());
+            
             
             } //catch (IOException ex) {}
             catch (SQLException ex) {}

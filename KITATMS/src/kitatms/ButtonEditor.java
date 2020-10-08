@@ -30,71 +30,75 @@ public class ButtonEditor extends DefaultCellEditor{
     private DBConnection con;
     private Account acc;
     private String courseID;
+    private Course course;
     
     //Window 1 is for View Learning Materials, window 2 is for Assessment Window
     private int window;
 
     /**
      * Window 1 is for View Learning Materials window to open Learning Materials.
-     * Window 2 is for Assessment Window to divert to Attempt Assessment Window.
      * @param txt
      * @param window 
      */
-    public ButtonEditor(JTextField txt, int window,DBConnection con,Account acc,String courseID) {
+    public ButtonEditor(JTextField txt, DBConnection con,Account acc,String fileName) {
         
         super(txt);
-        this.window = window;
         this.con = con;
         this.acc = acc;
-        this.courseID = courseID;
         Course c = new Course();
         c.setCourseID(courseID);
+        System.out.printf("BUTTON EDITOR CLASS: %s viewing material of %s\n",acc.username,fileName);
         
         btn=new JButton();
         btn.setOpaque(true);
         
-        //VIEW LEARNING MATERIALS WINDOW: OPEN THE MATERIAL USING A THE DEVICE DEFAULT APPLICATION
-        if(window==1)
-            //WHEN BUTTON IS CLICKED
-            btn.addActionListener(new ActionListener() {
+        //WHEN BUTTON IS CLICKED
+        btn.addActionListener(new ActionListener() {
 
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                        fireEditingStopped();
-                        File file = new File(fileName);
-
-                        Desktop desktop = Desktop.getDesktop();
-                        try {
-                            desktop.open(file);
-                        } catch (IOException ex) {
-                            //Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
-                            System.out.println("Error");
-                        }
-
-                        System.out.println("Finished.");
-                        } catch (FileNotFoundException | DocumentException ex) {
-                            //Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
-                            System.out.println("Error");
-                        }
-                    }
-                }
-            );
-        
-        else{
-            //WHEN BUTTON IS CLICKED
-            btn.addActionListener(new ActionListener() {
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
                     fireEditingStopped();
-                    new AttemptAssessmentWindow(con,acc,c);
+                    File file = new File(fileName);
+
+                    Desktop desktop = Desktop.getDesktop();
+                    try {
+                        desktop.open(file);
+                    } catch (IOException ex) {
+                        //Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("Error");
                     }
+
+                    System.out.println("Finished.");
                 }
-            );
-        }
+            }
+        );
+
     }
+    
+    public ButtonEditor(JTextField txt, DBConnection con,Account acc,Course course){
+        super(txt);
+        this.con = con;
+        this.acc = acc;
+        this.course = course;
+        System.out.printf("BUTTON EDITOR CLASS: %s attempting assessment of %s\n",acc.username,course.getCourseID());
+        
+        btn=new JButton();
+        btn.setOpaque(true);
+        
+        //WHEN BUTTON IS CLICKED
+        btn.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                    fireEditingStopped();
+                    new AttemptAssessmentWindow(con,acc,course);
+                }
+            }
+        );
+    }
+        
 
     //OVERRIDE A COUPLE OF METHODS
     @Override
@@ -115,7 +119,7 @@ public class ButtonEditor extends DefaultCellEditor{
         if(clicked)
         {
             //SHOW US SOME MESSAGE
-            JOptionPane.showMessageDialog(btn, lbl+" Clicked");
+            //JOptionPane.showMessageDialog(btn, lbl+" Clicked");
         }
         //SET IT TO FALSE NOW THAT ITS CLICKED
         clicked=false;

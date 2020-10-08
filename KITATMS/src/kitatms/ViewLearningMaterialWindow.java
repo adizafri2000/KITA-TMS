@@ -117,20 +117,21 @@ public class ViewLearningMaterialWindow extends javax.swing.JFrame {
                     
                     tableModel.addRow(new Object[]{courseID,learningMaterialName,viewStatus,"View"});
                     row++;
+                    
+                    
+                    //SET CUSTOM EDITOR TO TEAMS COLUMN
+                    jTable1.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JTextField(),con,acc,learningMaterialName));
                 }
                 
-                
+                //SET CUSTOM RENDERER TO TEAMS COLUMN
+                jTable1.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
                 
             } catch (SQLException ex) {
                 //Logger.getLogger(ViewLearningMaterialWindow.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println("View Learning Materials Window: Error in buildTable()");
             }
         }
-        //SET CUSTOM RENDERER TO TEAMS COLUMN
-        jTable1.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
-
-        //SET CUSTOM EDITOR TO TEAMS COLUMN
-        jTable1.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JTextField()));
+        
     }
 
     /**

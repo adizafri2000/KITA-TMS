@@ -46,11 +46,11 @@ INSERT INTO `kitatms`.`enrollment` (`accountID`, `courseID`) VALUES ('1181101286
 INSERT INTO `kitatms`.`enrollment` (`accountID`, `courseID`) VALUES ('1181100015', 'PSP5521');
 INSERT INTO `kitatms`.`enrollment` (`accountID`, `courseID`) VALUES ('1181100021', 'PSP5521');
 INSERT INTO `kitatms`.`enrollment` (`accountID`, `courseID`) VALUES ('1181101272', 'PSP5521');
-INSERT INTO `kitatms`.`learningmaterial` (`learningmaterialID`, `learningmaterialName`, `courseID`) VALUES ('M01PPZ2290', 'Physical Quantities and Vectors', 'PPZ2290');
-INSERT INTO `kitatms`.`learningmaterial` (`learningmaterialID`, `learningmaterialName`, `courseID`) VALUES ('M02PPZ2290', 'homeworkBlendedLearning', 'PPZ2290');
-INSERT INTO `kitatms`.`learningmaterial` (`learningmaterialID`, `learningmaterialName`, `courseID`) VALUES ('M01PSP5521', '244631_04-PDS0101', 'PSP5521');
-INSERT INTO `kitatms`.`learningmaterial` (`learningmaterialID`, `learningmaterialName`, `courseID`) VALUES ('M02PSP5521', '244678_09-PDS0101', 'PSP5521');
-INSERT INTO `kitatms`.`learningmaterial` (`learningmaterialID`, `learningmaterialName`, `courseID`) VALUES ('M03PSP5521', '249546_Assignment', 'PSP5521');
+INSERT INTO `kitatms`.`learningmaterial` (`learningmaterialID`, `learningmaterialName`, `courseID`) VALUES ('M01PPZ2290', 'Physical Quantities and Vectors.pdf', 'PPZ2290');
+INSERT INTO `kitatms`.`learningmaterial` (`learningmaterialID`, `learningmaterialName`, `courseID`) VALUES ('M02PPZ2290', 'homeworkBlendedLearning.pdf', 'PPZ2290');
+INSERT INTO `kitatms`.`learningmaterial` (`learningmaterialID`, `learningmaterialName`, `courseID`) VALUES ('M01PSP5521', '244631_04-PDS0101.pdf', 'PSP5521');
+INSERT INTO `kitatms`.`learningmaterial` (`learningmaterialID`, `learningmaterialName`, `courseID`) VALUES ('M02PSP5521', '244678_09-PDS0101.pdf', 'PSP5521');
+INSERT INTO `kitatms`.`learningmaterial` (`learningmaterialID`, `learningmaterialName`, `courseID`) VALUES ('M03PSP5521', '249546_Assignment.pdf', 'PSP5521');
 INSERT INTO `kitatms`.`assessment` (`assessmentID`, `assessmentQuestions`, `assessmentAnswers`, `courseID`) VALUES ('APPZ2290', 'Does the Earth have gravity?$Is my car fast?$The formula for acceleration is the difference between final and initial velocity over distance travelled.$Sir Isaac Newton discovered gravity.$500g of feathers is lighter than 500g of obsidian.', 'TTFTF', 'PPZ2290');
 INSERT INTO `kitatms`.`assessment` (`assessmentID`, `assessmentQuestions`, `assessmentAnswers`, `courseID`) VALUES ('APSP5521', '1 bit = 8 bytes.$The hexadecimal numbering system uses base-16.$FIFO algorithm removes the most recently added value to a stack$1101 in binary is equal to 13 in decimal.$ASCII represents letters only, not numbers.', 'FTFTF', 'PSP5521');
 INSERT INTO `kitatms`.`report` (`reportID`, `courseID`) VALUES ('reportPSP5521', 'PSP5521');

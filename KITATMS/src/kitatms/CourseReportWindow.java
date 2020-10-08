@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -36,8 +38,30 @@ public class CourseReportWindow extends javax.swing.JFrame {
      */
     private CourseReportWindow(Account acc) {
         this.acc = acc;
-        initComponents();
         courseIDList = loadCourses();
+        
+        String[] data = new String[courseIDList.size()];
+        
+        for(int i=0;i<courseIDList.size();i++){
+            data[i] = courseIDList.get(i);
+            System.out.println(data[i]);
+        }
+        
+        DefaultComboBoxModel dcbm = new DefaultComboBoxModel(data);
+        
+        initComponents();
+        noCourseLabel.setVisible(false);
+        
+        jComboBox1.setModel(dcbm);
+        
+        if(courseIDList.size()==0){
+            noCourseLabel.setVisible(true);    
+            jComboBox1.setEnabled(false);
+            jComboBox1.setVisible(false);
+            generateReportButton.setEnabled(false);
+            generateReportButton.setVisible(false);
+        }
+        
     }
     
     /**
@@ -60,18 +84,15 @@ public class CourseReportWindow extends javax.swing.JFrame {
      * @param courseID 
      */
     private void createReport(String courseID){
-        try {
-            Report report = new Report();
-            report.setTrainer(acc);
-            Course course = new Course();
-            course.setCourseID(courseID);
-            report.setCourse(course);
-            report.setTraineeID(course);
-            report.generateReport();
-        } catch (SQLException ex) {
-            //Logger.getLogger(CourseReportWindow.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Course Report Window: Error in report creation.");
-        }
+        Report report = new Report(); //Logger.getLogger(CourseReportWindow.class.getName()).log(Level.SEVERE, null, ex);
+        report.setConnection(con);
+        report.setTrainer(acc);
+        Course course = new Course();
+        course.setCourseID(courseID);
+        report.setCourse(course);
+        report.setTraineeID(course);
+        report.setFileName();
+        report.generateReport();
         
     }
 
@@ -89,13 +110,11 @@ public class CourseReportWindow extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
         homeButton = new javax.swing.JButton();
+        generateReportButton = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        noCourseLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -129,16 +148,7 @@ public class CourseReportWindow extends javax.swing.JFrame {
 
         jLabel2.setText("Click generate report to get course report : ");
 
-        jLabel3.setText("Course ID");
-
-        jLabel4.setText("Report");
-
-        jLabel5.setText("TSN2101");
-
         jLabel6.setText("[]");
-
-        jLabel8.setForeground(new java.awt.Color(51, 0, 255));
-        jLabel8.setText("[Generate report]");
 
         homeButton.setBackground(new java.awt.Color(204, 204, 204));
         homeButton.setText("Back to home");
@@ -148,10 +158,28 @@ public class CourseReportWindow extends javax.swing.JFrame {
             }
         });
 
+        generateReportButton.setText("Generate Report");
+        generateReportButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generateReportButtonActionPerformed(evt);
+            }
+        });
+
+        jComboBox1.setModel(jComboBox1.getModel());
+
+        noCourseLabel.setForeground(new java.awt.Color(0, 0, 0));
+        noCourseLabel.setText("You have not created any courses");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(116, 116, 116)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(generateReportButton)
+                .addGap(186, 186, 186))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -159,25 +187,14 @@ public class CourseReportWindow extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel5))
-                                        .addGap(136, 136, 136)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel8)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(jLabel4)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 624, Short.MAX_VALUE)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(505, 505, 505)
-                        .addComponent(homeButton)))
+                        .addComponent(homeButton))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(214, 214, 214)
+                        .addComponent(noCourseLabel)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -185,18 +202,15 @@ public class CourseReportWindow extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addGap(53, 53, 53)
+                .addComponent(jLabel6)
+                .addGap(4, 4, 4)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(3, 3, 3)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
+                    .addComponent(generateReportButton)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
+                .addComponent(noCourseLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                 .addComponent(homeButton))
         );
 
@@ -225,19 +239,22 @@ public class CourseReportWindow extends javax.swing.JFrame {
         new TrainerHomeWindow(con,acc);
     }//GEN-LAST:event_homeButtonActionPerformed
 
+    private void generateReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateReportButtonActionPerformed
+        String courseID = (String)jComboBox1.getSelectedItem();
+        createReport(courseID);
+    }//GEN-LAST:event_generateReportButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton generateReportButton;
     private javax.swing.JButton homeButton;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel noCourseLabel;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,5 +1,13 @@
 package kitatms;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import static kitatms.CourseReportWindow.con;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -14,6 +22,9 @@ public class ViewCourseDetailsWindow extends javax.swing.JFrame {
     
     static DBConnection con;
     private Account acc;
+    private DefaultTableModel tableModel = new DefaultTableModel();
+    private ArrayList<String> courseIDList,traineeIDList,assessmentQuestionList,assessmentAnswerList,learningMaterialList;
+    String courseName,courseStart,courseEnd;
     
     public ViewCourseDetailsWindow(DBConnection con,Account acc){
         this.con = con;
@@ -29,7 +40,134 @@ public class ViewCourseDetailsWindow extends javax.swing.JFrame {
      */
     private ViewCourseDetailsWindow(Account acc) {
         this.acc = acc;
+        courseIDList = loadCourses();
         initComponents();
+        noCourseLabel.setVisible(false);
+        if(courseIDList.isEmpty()){
+            noCourseLabel.setVisible(true);
+            jTable1.setEnabled(false);
+            jTable1.setVisible(false);
+        }
+        buildTable();
+        fillTable();
+    }
+    
+    private ArrayList<String> loadCourses(){
+        try {
+            String query = "select * from course where accountID='"+acc.username+"';";
+            return con.retrieve(query, "courseID");
+        } catch (SQLException ex) {
+            //Logger.getLogger(CourseReportWindow.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Course Report Window: Error in loading courses.");
+        }
+        return new ArrayList<>();
+    }
+    
+    private void buildTable(){
+        jTable1.setModel(tableModel);
+        tableModel.addColumn("Course ID");
+        tableModel.addColumn("Course Name");
+        tableModel.addColumn("Start Date");
+        tableModel.addColumn("End Date");
+        tableModel.addColumn("Learning Materials");
+        tableModel.addColumn("Trainees");
+        tableModel.addColumn("Assessment Questions");
+        tableModel.addColumn("Assessment Answers");
+    }
+    
+    /**
+     * FIlls the JTable with necessary data.
+     * Every course will contain at least 5 rows.
+     * On the 1st row of each course, all data is displayed. ArrayList data take the 1st (.get(0)) item.
+     * On the 2nd row until trainee length, only traineeID, assessmentquestion and assessmentanswers are displayed.
+     * On the 6th row until trainee length, only traineeIDs are displayed.
+     */
+    private void fillTable(){
+        String query;
+        for(int i=0;i<courseIDList.size();i++){
+            try {
+                String courseID = courseIDList.get(i);
+                query = "Select * from course where courseID='"+courseID+"';";
+                
+                courseName = con.retrieve(query,"courseName").get(0);
+                courseStart = con.retrieve(query,"courseStart").get(0);
+                courseEnd = con.retrieve(query,"courseEnd").get(0);
+                
+                query = "Select * from enrollment where courseID='"+courseID+"';";
+                traineeIDList = con.retrieve(query, "accountID");
+                
+                query = "Select * from assessment where courseID='"+courseID+"';";
+                String questions = con.retrieve(query, "assessmentQuestions").get(0);
+                System.out.println(questions);
+                String[] temp = questions.split("\\$");
+                
+                assessmentQuestionList = new ArrayList<>();
+                assessmentAnswerList = new ArrayList<>();
+                
+                System.out.println("Viewing splitted questions:");
+                for(String s:temp){
+                    System.out.println(s);
+                    assessmentQuestionList.add(s);
+                }
+                
+                String answers = con.retrieve(query, "assessmentAnswers").get(0);
+                for(int n=0;n<5;n++){
+                    assessmentAnswerList.add(Character.toString(answers.charAt(n)));
+                }
+                
+                query = "Select * from learningMaterial where courseID='"+courseID+"';";
+                learningMaterialList = con.retrieve(query, "learningMaterialName");
+                
+                int[] arraylength = new int[]{learningMaterialList.size(),traineeIDList.size(),5};
+                int totalRows;
+                
+                totalRows = arraylength[0];
+                for(int l=1;l<arraylength.length;l++){
+                    if(totalRows<arraylength[l]){
+                        totalRows = arraylength[l];
+                    }
+                }
+                
+                if(learningMaterialList.size()!=totalRows){
+                    int left = totalRows - learningMaterialList.size();
+                    for(int q = 0;q<left;q++){
+                        learningMaterialList.add(" ");
+                    }
+                }
+                
+                if(traineeIDList.size()!=totalRows){
+                    int left = totalRows - traineeIDList.size();
+                    for(int q = 0;q<left;q++){
+                        traineeIDList.add(" ");
+                    }
+                }
+                
+                if(5!=totalRows){
+                    int left = totalRows - 5;
+                    for(int q = 0;q<left;q++){
+                        assessmentQuestionList.add(" ");
+                        assessmentAnswerList.add(" ");
+                    }
+                }
+                
+                
+                
+                
+                for(int j=0;j<totalRows;j++){
+                    if(j==0){
+                        tableModel.addRow(new Object[]{courseID,courseName,courseStart,courseEnd,learningMaterialList.get(0),traineeIDList.get(0),assessmentQuestionList.get(0),assessmentAnswerList.get(0)});
+                    }
+                    else{
+                        tableModel.addRow(new Object[]{" "," "," "," ",learningMaterialList.get(j),traineeIDList.get(j),assessmentQuestionList.get(j),assessmentAnswerList.get(j)});
+                    }
+                }
+                
+                
+            } catch (SQLException ex) {
+                //Logger.getLogger(ViewCourseDetailsWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
     }
 
     /**
@@ -48,28 +186,10 @@ public class ViewCourseDetailsWindow extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jScrollBar1 = new javax.swing.JScrollBar();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
         homeButton = new javax.swing.JButton();
+        noCourseLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         jLabel23.setText("jLabel23");
 
@@ -85,7 +205,7 @@ public class ViewCourseDetailsWindow extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 1010, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
                 .addContainerGap())
@@ -101,44 +221,6 @@ public class ViewCourseDetailsWindow extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel5.setText("Course Name");
-
-        jLabel6.setText("Course ID");
-
-        jLabel9.setText("Start Date");
-
-        jLabel10.setText("End Date");
-
-        jLabel11.setText("Trainees");
-
-        jLabel12.setText("1. Mohamad Zamfirdaus Bin Mohd Saberi");
-
-        jLabel13.setText("2. Adi Zafri Bin Mohd Tahir");
-
-        jLabel14.setText("3. Nur Wahafizah Ahmadi");
-
-        jLabel15.setText("4. Hadya Ayeisha Binti Marzuki");
-
-        jLabel16.setText("12-08-2020");
-
-        jLabel17.setText("08-08-2020");
-
-        jLabel18.setText("TSN2101");
-
-        jLabel19.setText("Work Ethics");
-
-        jLabel20.setText("Learning Materials");
-
-        jLabel24.setText("Questions");
-
-        jLabel25.setText("Answers");
-
-        jLabel26.setText("1. Work is tiring");
-
-        jLabel27.setText("True");
-
-        jLabel21.setText("lecture1_WorkEthic.pdf");
-
         homeButton.setBackground(new java.awt.Color(204, 204, 204));
         homeButton.setText("Back to home");
         homeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -147,101 +229,44 @@ public class ViewCourseDetailsWindow extends javax.swing.JFrame {
             }
         });
 
+        noCourseLabel.setForeground(new java.awt.Color(0, 0, 0));
+        noCourseLabel.setText("You have not created any courses. ");
+
+        jTable1.setModel(jTable1.getModel());
+        jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setHeaderValue("Title 1");
+            jTable1.getColumnModel().getColumn(1).setHeaderValue("Title 2");
+            jTable1.getColumnModel().getColumn(2).setHeaderValue("Title 3");
+            jTable1.getColumnModel().getColumn(3).setHeaderValue("Title 4");
+        }
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel19))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel18)
-                                        .addGap(22, 22, 22)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel17))
-                                .addGap(38, 38, 38)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel16))
-                                .addGap(28, 28, 28)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel20)
-                                    .addComponent(jLabel21))
-                                .addGap(27, 27, 27)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel13)
-                                            .addComponent(jLabel12)
-                                            .addComponent(jLabel14)
-                                            .addComponent(jLabel15))))
-                                .addGap(32, 32, 32)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel26)
-                                    .addComponent(jLabel24))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel25)
-                                    .addComponent(jLabel27))
-                                .addGap(27, 27, 27))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 994, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(homeButton)
-                        .addGap(36, 36, 36)))
-                .addComponent(jScrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(23, 23, 23))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(noCourseLabel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel25)
-                    .addComponent(jLabel24)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel9)
-                        .addComponent(jLabel10))
-                    .addComponent(jLabel20))
-                .addGap(4, 4, 4)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel19)
-                    .addComponent(jLabel18)
-                    .addComponent(jLabel17)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel21)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel27)
-                            .addComponent(jLabel26))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel13)
-                        .addGap(13, 13, 13)
-                        .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel15)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
+                .addGap(23, 23, 23)
+                .addComponent(noCourseLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
                 .addComponent(homeButton)
                 .addContainerGap())
         );
@@ -273,33 +298,15 @@ public class ViewCourseDetailsWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton homeButton;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JScrollBar jScrollBar2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel noCourseLabel;
     // End of variables declaration//GEN-END:variables
 }

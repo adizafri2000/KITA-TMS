@@ -36,7 +36,9 @@ public class Report {
     private DBConnection con;
     private String fileName;
     
-    public Report(){}
+    public Report(){
+        traineeID = new ArrayList<>();
+    }
     
     public void setFileName(){
         fileName = course.getCourseID();
@@ -55,10 +57,24 @@ public class Report {
         trainer = t;
     }
     
-    public void setTraineeID(Course c) throws SQLException{
-        String courseID = c.getCourseID();
-        String query = "select * from enrollment where courseID='"+courseID+"';";
-        traineeID = con.retrieve(query, "accountID;");
+    public void setTraineeID(Course c){
+        try {
+            String courseID = c.getCourseID();
+            System.out.println(courseID+" in setTraineeID()");
+            
+            String query = "select * from enrollment where courseID='"+courseID+"';";
+            query = "SELECT * FROM kitatms.enrollment where courseID='"+courseID+"';";
+            traineeID = new ArrayList<>();
+            traineeID = con.retrieve(query, "accountID");
+            
+            for(String s:traineeID){
+                System.out.println(s);
+            }
+            
+        } catch (SQLException ex) {
+            //Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("REPORT CLASS: ERROR IN SETTRAINEEID()");
+        }
     }
     
     public Course getCourse(){
@@ -115,6 +131,9 @@ public class Report {
      */
     private void createDetails(Document d){
         try {
+            for(int i=0;i<29;i++){
+                d.add(new Paragraph("\n"));
+            }
             /*
             Required data:
             1. course name
@@ -124,18 +143,32 @@ public class Report {
             */
             Font font = new Font(Font.FontFamily.TIMES_ROMAN,18,Font.NORMAL);
             
-            Paragraph p = new Paragraph("Course Name\t: "+course.getCourseName(),font);
-            p.setAlignment(Element.ALIGN_LEFT);
-            d.add(p);
+            String courseName,courseStart,courseEnd,query;
             
-            p = new Paragraph("Trainer\t\t: "+course.getTrainer().getTrainerName(),font);
-            d.add(p);
-            
-            p = new Paragraph("Start Date\t: "+course.getCourseName(),font);
-            d.add(p);
-            
-            p = new Paragraph("End Date\t: "+course.getCourseName(),font);
-            d.add(p);
+            query = "select * from course where courseID='"+course.getCourseID()+"';";
+            try {
+                courseName = con.retrieve(query, "courseName").get(0);
+                courseStart = con.retrieve(query, "courseStart").get(0);
+                courseEnd = con.retrieve(query, "courseEnd").get(0);
+
+
+                Paragraph p = new Paragraph("Course Name\t: "+courseName,font);
+                p.setAlignment(Element.ALIGN_LEFT);
+                d.add(p);
+
+                p = new Paragraph("Trainer ID\t\t: "+trainer.username,font);
+                d.add(p);
+
+                p = new Paragraph("Start Date\t: "+courseStart,font);
+                d.add(p);
+
+                p = new Paragraph("End Date\t: "+courseEnd,font);
+                d.add(p);
+            } catch (SQLException ex) {
+                //Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("REPORT CLASS: ERROR IN CREATEDETAILS()");
+            }
+
         } catch (DocumentException ex) {
             //Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -169,17 +202,102 @@ public class Report {
      * </ol>
      */
     private void createContents(Document d){
-        /*
-        Required Data:
-        1. ArrayList of trainees IDs
-        2. Arraylist of assessment attempt marks corresponding to (1)
-        3. Arraylist of course passing dates (2[i]==5)
-        */
-        
-        //Font for page title first
-        Font font = new Font(Font.FontFamily.TIMES_ROMAN,18,Font.UNDERLINE);
-        Paragraph p = new Paragraph("List of Trainees and Dates of Passes (if Applicable)",font);
-        p.setAlignment(Element.ALIGN_LEFT);
+        try {
+            /*
+            Required Data:
+            1. ArrayList of trainees IDs
+            2. Arraylist of assessment attempt marks corresponding to (1)
+            3. Arraylist of course passing dates (2[i]==5)
+            */
+            
+            //Font for page title first
+            Font font = new Font(Font.FontFamily.TIMES_ROMAN,18,Font.UNDERLINE);
+            Paragraph p = new Paragraph("List of Trainees and Dates of Passes (if Applicable)",font);
+            p.setAlignment(Element.ALIGN_LEFT);
+            d.add(p);
+            d.add(new Paragraph("\n\n\n"));
+            
+            //creation of table with cells and headers
+            PdfPTable table = new PdfPTable(4);
+            
+            //testing data
+            //String[] traineeID = new String[]{"1181101286","1181101148","1181101272","1181101256"};
+            ArrayList<String> marks, pass;
+            String query;
+            marks = new ArrayList<>();
+            pass = new ArrayList<>();
+            
+            for(int i=0;i<traineeID.size();i++){
+                String ID = traineeID.get(i);
+                String assessmentID = "A"+course.getCourseID();
+                System.out.printf("Checking if %s attempted %s\n",ID,assessmentID);
+                
+                query = "select * from attempt where accountID='"+ID+"' and assessmentID='"+assessmentID+"';";
+                
+                try {
+                    if (con.retrieve(query,"accountID").isEmpty()){
+                        marks.add("No attempts");
+                        pass.add("-");
+                    }
+                    else{
+                        String mark = con.retrieve(query,"attemptMarks").get(0);
+                        marks.add(mark);
+                        if (mark.equals("5")){
+                            pass.add(con.retrieve(query,"attemptDate").get(0));
+                        }
+                        else{
+                            pass.add("-");
+                        }
+                    }
+                } catch (SQLException ex) {
+                    //Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            
+            //Title of column header
+            PdfPCell c1 = new PdfPCell(new Phrase("No."));
+            table.addCell(c1);
+            
+            c1 = new PdfPCell(new Phrase("ID"));
+            table.addCell(c1);
+            
+            c1 = new PdfPCell(new Phrase("Latest Assessment Marks"));
+            table.addCell(c1);
+            
+            c1 = new PdfPCell(new Phrase("Date of Pass"));
+            table.addCell(c1);
+            
+            table.setHeaderRows(1);
+            
+            /*
+            inserts cells into the table
+            cells are added by rows
+            since there are 3 columns created in this table,
+            added cells will fill in each column of a row sequentially,
+            before proceeding to the next row.
+            */
+            for(int i=0;i<traineeID.size();i++){
+                table.addCell(Integer.toString(i+1));
+                table.addCell(traineeID.get(i));
+                table.addCell(marks.get(i));
+                table.addCell(pass.get(i));
+            }
+            
+            /*
+            table.addCell("Added 1st");
+            table.addCell("Added 2nd");
+            table.addCell("Added 3rd");
+            table.addCell("Added 4th");
+            table.addCell("Added 5th");
+            table.addCell("Added 6th");
+            */
+            
+            d.add(table);
+            
+        } catch (DocumentException ex) {
+            //Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
        
     }

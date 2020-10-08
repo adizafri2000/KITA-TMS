@@ -4,6 +4,8 @@ import javax.swing.JFileChooser;
 import java.io.*; 
 import java.nio.file.Files; 
 import java.nio.file.*; 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -185,7 +187,7 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
         java.io.File f = null;
         String filename="";
         String fromFile ="";
-        String toFile = "C:\\Documents\\GitHub\\KITA-TMS\\KITATMS";
+        //String toFile = "C:\\Documents\\GitHub\\KITA-TMS\\KITATMS";
         Path source = Paths.get(fromFile);
         Path target = null;
         Path temp = null;
@@ -196,31 +198,50 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
          fromFile = f.getPath();
          source = Paths.get(fromFile);
 
-         System.err.println(f.getPath());
-         System.err.println(filename);
+         //System.err.println(f.getPath());
+         //System.err.println(filename);
         }
         
-
+        ArrayList<String> courseIDList = new ArrayList<String>();
         
         
         if (f==null || jFileChooser1.getSelectedFile() == null) {
             jLabel4.setText("please choose file");
         }
         else{
+            boolean flag = true;
+            int countCourseID=1;
             try {
-            temp = Files.move(Paths.get(fromFile),Paths.get(toFile));
-            } catch (IOException ex) {
-                //Logger.getLogger(UploadLearningMaterialWindow.class.getName()).log(Level.SEVERE, null, ex);
+                courseIDList = con.retrieve("SELECT * FROM kitatms.course;","courseID"); 
+            }catch (SQLException ex){}
+            for (int i =0; i<courseIDList.size(); i++){
+                    System.out.println(courseIDList.get(i));
+                    if (courseIDList.get(i).equals(course.getCourseID())){
+                        //jTextField2.setText("Course already exist");
+                        flag = true;
+                        countCourseID++;
+                    }
             }
 
-            if(temp!= null) 
+            try {
+            //temp = Files.move(Paths.get(fromFile),Paths.get(toFile));
+            
+            System.out.println(filename);
+            flag = con.update("INSERT INTO kitatms.learningmaterial (learningMaterialID, learningmaterialName, courseID) VALUES "+
+                                "('"+("M0"+countCourseID+course.getCourseID())+"', '"+f.getPath()+"', '"+course.getCourseID()+"');");
+            
+            } //catch (IOException ex) {}
+            catch (SQLException ex) {}
+
+            if(flag== true) 
             { 
                 System.out.println("File moved successfully"); 
+                jLabel4.setText("File saved successfully"); 
             } 
             else
             { 
-                jLabel4.setText("Failed to move the file"); 
-                System.out.println("Failed to move the file"); 
+                jLabel4.setText("Failed to save the file"); 
+                System.out.println("Failed to save the file"); 
             } 
         }
         

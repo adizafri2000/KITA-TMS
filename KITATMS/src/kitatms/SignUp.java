@@ -9,12 +9,12 @@ import java.sql.SQLException;
 import static kitatms.SignUp_LoginWindow.con;
 
 
-public class SignIn{
+public class SignUp{
         DBConnection con = new DBConnection();
 	private static Scanner x;
         
         
-        public SignIn(DBConnection con){
+        public SignUp(DBConnection con){
             this.con = con;
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {

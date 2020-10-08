@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -76,13 +77,14 @@ public class ViewLearningMaterialWindow extends javax.swing.JFrame {
         
         DefaultTableModel tableModel = new DefaultTableModel();
         jTable1.setModel(tableModel);
-        
+
 
         
         tableModel.addColumn("Course ID");
         tableModel.addColumn("Learning Material");
         tableModel.addColumn("View Status");
         tableModel.addColumn("View");
+
         
         
         /*
@@ -115,27 +117,27 @@ public class ViewLearningMaterialWindow extends javax.swing.JFrame {
                         viewStatus = "Viewed";
                     else viewStatus = "Not Viewed";
                     
-                    tableModel.addRow(new Object[]{courseID,learningMaterialName,viewStatus,"View"});
+                    String label = "View                    \n"+learningMaterialIDList.get(j);
+                    tableModel.addRow(new Object[]{courseID,learningMaterialName,viewStatus,label});
                     row++;
                     
                     
                     //SET CUSTOM EDITOR TO TEAMS COLUMN
-                    jTable1.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JTextField(),con,acc,learningMaterialName));
+                    //jTable1.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JTextField(),con,acc,learningMaterialName));
+                    //jTable1.getCo
+                    
+                    jTable1.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer2());
+                    jTable1.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor2(new JCheckBox(),con));
                 }
                 
                 //SET CUSTOM RENDERER TO TEAMS COLUMN
-                jTable1.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
+                //jTable1.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
                 
             } catch (SQLException ex) {
                 //Logger.getLogger(ViewLearningMaterialWindow.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println("View Learning Materials Window: Error in buildTable()");
             }
         }
-        //SET CUSTOM RENDERER TO TEAMS COLUMN
-        jTable1.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
-
-        //SET CUSTOM EDITOR TO TEAMS COLUMN
-        //jTable1.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JTextField()));
     }
 
     /**

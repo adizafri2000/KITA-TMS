@@ -47,7 +47,7 @@ INSERT INTO `kitatms`.`enrollment` (`accountID`, `courseID`) VALUES ('1181100015
 INSERT INTO `kitatms`.`enrollment` (`accountID`, `courseID`) VALUES ('1181100021', 'PSP5521');
 INSERT INTO `kitatms`.`enrollment` (`accountID`, `courseID`) VALUES ('1181101272', 'PSP5521');
 INSERT INTO `kitatms`.`learningmaterial` (`learningmaterialID`, `learningmaterialName`, `courseID`) VALUES ('M01PPZ2290', 'Physical Quantities and Vectors.pdf', 'PPZ2290');
-INSERT INTO `kitatms`.`learningmaterial` (`learningmaterialID`, `learningmaterialName`, `courseID`) VALUES ('M02PPZ2290', 'homeworkBlendedLearning.pdf', 'PPZ2290');
+INSERT INTO `kitatms`.`learningmaterial` (`learningmaterialID`, `learningmaterialName`, `courseID`) VALUES ('M02PPZ2290', 'homeworkBlendedLearning.docx', 'PPZ2290');
 INSERT INTO `kitatms`.`learningmaterial` (`learningmaterialID`, `learningmaterialName`, `courseID`) VALUES ('M01PSP5521', '244631_04-PDS0101.pdf', 'PSP5521');
 INSERT INTO `kitatms`.`learningmaterial` (`learningmaterialID`, `learningmaterialName`, `courseID`) VALUES ('M02PSP5521', '244678_09-PDS0101.pdf', 'PSP5521');
 INSERT INTO `kitatms`.`learningmaterial` (`learningmaterialID`, `learningmaterialName`, `courseID`) VALUES ('M03PSP5521', '249546_Assignment.pdf', 'PSP5521');

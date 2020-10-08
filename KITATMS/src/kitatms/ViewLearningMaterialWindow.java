@@ -131,7 +131,11 @@ public class ViewLearningMaterialWindow extends javax.swing.JFrame {
                 System.out.println("View Learning Materials Window: Error in buildTable()");
             }
         }
-        
+        //SET CUSTOM RENDERER TO TEAMS COLUMN
+        jTable1.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
+
+        //SET CUSTOM EDITOR TO TEAMS COLUMN
+        //jTable1.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JTextField()));
     }
 
     /**

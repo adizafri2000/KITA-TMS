@@ -119,6 +119,7 @@ public class AddCourseWindow extends javax.swing.JFrame  {
 
         jLabel6.setText("End date : ");
 
+        nextButton.setBackground(new java.awt.Color(204, 204, 204));
         nextButton.setText("Next");
         nextButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,6 +127,7 @@ public class AddCourseWindow extends javax.swing.JFrame  {
             }
         });
 
+        saveButton.setBackground(new java.awt.Color(204, 204, 204));
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -272,7 +274,7 @@ public class AddCourseWindow extends javax.swing.JFrame  {
              jLabel8.setText("Please fill in all information !");
         }
         else if(courseID.length()> 7 ){
-            jLabel8.setText("*max 7 characters");
+            jLabel8.setText("*max 7 characters for course ID");
         }
 
         else{

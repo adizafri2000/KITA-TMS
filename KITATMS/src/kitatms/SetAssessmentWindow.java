@@ -389,7 +389,7 @@ public class SetAssessmentWindow extends javax.swing.JFrame {
         
         ArrayList<String> courseIDList = new ArrayList<String>();
         
-        if (question1.equals("") || question2.equals("") || question3.equals("") || question4.equals("") || question5.equals("")){
+        if (question1.equals("") || question2.equals("") || question3.equals("") || question4.equals("") || question5.equals("") ||ans1.length()!=5){
             jLabel9.setText("Please fill in information needed!");
         }
         else{
@@ -418,7 +418,7 @@ public class SetAssessmentWindow extends javax.swing.JFrame {
             
             
             if (flag == false)
-                jLabel9.setText("database update fail, try again"); 
+                jLabel9.setText("Assessments are uploaded, click Next"); 
             else
                 jLabel9.setText("Saved successfully"); 
         }

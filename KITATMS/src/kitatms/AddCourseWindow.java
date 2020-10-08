@@ -296,8 +296,8 @@ public class AddCourseWindow extends javax.swing.JFrame  {
         if (courseID.equals("") || courseName.equals("") ||startDateString.equals("") || endDateString.equals("") ){
              jLabel8.setText("Please fill in all information !");
         }
-        else if(courseID.length()> 7 ){
-            jLabel8.setText("*max 7 characters for course ID");
+        else if(courseID.length()!= 10 ){
+            jLabel8.setText("10 characters needed for course ID");
         }
         else if(courseStart.after(courseEnd)){
             jLabel8.setText("Invalid date chosen");

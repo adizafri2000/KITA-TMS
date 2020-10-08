@@ -272,7 +272,7 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
             message = "Max username length is 10";
             jLabel2.setText(message);
         }
-	else{
+	else{  
             try {
                     //con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('real',1,'messi');");
                     flag = con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('"+username+"',1,'"+password+"');");

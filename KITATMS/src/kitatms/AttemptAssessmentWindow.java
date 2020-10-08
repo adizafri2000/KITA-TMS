@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -25,12 +26,42 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
     private ButtonGroup[] answerChoice;
     private String[] correctAnswers;
     private Account trainee;
+    private boolean canAttempt,passed;
     
-    public AttemptAssessmentWindow(DBConnection con,Account trainee,Course course){
+    public AttemptAssessmentWindow(DBConnection con,Account trainee,Course course,boolean canAttempt,boolean passed){
         this.con = con;
+        this.trainee = trainee;
+        this.course = course;
+        this.canAttempt = canAttempt;
+        this.passed = passed;
+        
+        if(passed){
+            System.out.printf("%s has passed %s course and cannot attempt its assessment.\n",trainee.username,course.getCourseID());
+        }
+        else{
+            if(canAttempt){
+                System.out.printf("%s has not passed %s course and can attempt its assessment.\n",trainee.username,course.getCourseID());    
+            }
+            else{
+                System.out.printf("%s has not passed %s course and cannot attempt its assessment.e\n",trainee.username,course.getCourseID());
+            }
+        }
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AttemptAssessmentWindow(trainee,course).setVisible(true);
+                if(passed){
+                    JOptionPane.showMessageDialog(null,"You have already passed this course.");
+                    dispose();
+                }
+                else{
+                    if(!canAttempt){
+                        JOptionPane.showMessageDialog(null,"You have not finished studying this course's materials yet.");
+                        dispose();
+                    }
+                    else{
+                        new AttemptAssessmentWindow(trainee,course,canAttempt,passed).setVisible(true);
+                    }
+                }
+                
             }
         });
     }
@@ -38,13 +69,20 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
     /**
      * Creates new form AttemptAssessment
      */
-    private AttemptAssessmentWindow(Account trainee,Course course) {
+    private AttemptAssessmentWindow(Account trainee,Course course,boolean canAttempt,boolean passed) {
         this.trainee = trainee;
         this.course = course;
+        this.canAttempt = canAttempt;
+        this.passed = passed;
         initComponents();
         setRadioButtonActionCommand();
         unfinishedWarningLabel.setVisible(false);
         answerChoice = new ButtonGroup[5];
+
+        for(int i=0;i<5;i++){
+            answerChoice[i] = new ButtonGroup();
+        }
+
         answerChoice[0].add(q1True);
         answerChoice[0].add(q1False);
         answerChoice[1].add(q2True);
@@ -55,6 +93,11 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
         answerChoice[3].add(q4False);
         answerChoice[4].add(q5True);
         answerChoice[4].add(q5False);
+
+
+        setupQuestions();
+            
+        
     }
     
     private void setRadioButtonActionCommand(){
@@ -72,11 +115,6 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
     
     public void setCourse(Course c){
         course = c;
-        try {
-            setupQuestions();
-        } catch (SQLException ex) {
-            //Logger.getLogger(AttemptAssessmentWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     public void setTrainee(Account t){
@@ -88,29 +126,42 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
      * Questions are then displayed in the window.
      * @throws SQLException 
      */
-    private void setupQuestions() throws SQLException{
-        //question retrieval
-        //format: select * from assessment where courseID='courseID';
-        String courseID = course.getCourseID();
-        
-        String questionQuery = "select * from assessment where courseID='"+courseID+"';";
-        String packedQuestions = con.retrieve(questionQuery, "assessmentQuestions").get(0);
-        
-        String[] questions = packedQuestions.split("$");
-        question1Text.setText(questions[0]);
-        question2Text.setText(questions[1]);
-        question3Text.setText(questions[2]);
-        question4Text.setText(questions[3]);
-        question5Text.setText(questions[4]);
-        
-        String answerQuery = "select * from assessment where courseID='"+courseID+"';";
-        String retrievedAnswers = con.retrieve(answerQuery, "assessmentAnswers").get(0);
-        
-        correctAnswers[0] = Character.toString(retrievedAnswers.charAt(0));
-        correctAnswers[1] = Character.toString(retrievedAnswers.charAt(1));
-        correctAnswers[2] = Character.toString(retrievedAnswers.charAt(2));
-        correctAnswers[3] = Character.toString(retrievedAnswers.charAt(3));
-        correctAnswers[4] = Character.toString(retrievedAnswers.charAt(4));
+    private void setupQuestions(){
+        try {
+            //question retrieval
+            //format: select * from assessment where courseID='courseID';
+            String courseID = course.getCourseID();
+            System.out.println(courseID);
+            
+            String questionQuery = "select * from assessment where courseID='"+courseID+"';";
+            String packedQuestions = con.retrieve(questionQuery, "assessmentQuestions").get(0);
+            System.out.println(packedQuestions);
+            
+            String[] questions = new String[5];
+            questions = packedQuestions.split("\\$");
+            for(String s:questions){
+                System.out.println(s);
+            }
+            
+            question1.setText(questions[0]);
+            question2.setText(questions[1]);
+            question3.setText(questions[2]);
+            question4.setText(questions[3]);
+            question5.setText(questions[4]);
+            
+            String answerQuery = "select * from assessment where courseID='"+courseID+"';";
+            String retrievedAnswers = con.retrieve(answerQuery, "assessmentAnswers").get(0);
+            System.out.println(retrievedAnswers);
+            
+            correctAnswers = new String[5];
+            correctAnswers[0] = Character.toString(retrievedAnswers.charAt(0));
+            correctAnswers[1] = Character.toString(retrievedAnswers.charAt(1));
+            correctAnswers[2] = Character.toString(retrievedAnswers.charAt(2));
+            correctAnswers[3] = Character.toString(retrievedAnswers.charAt(3));
+            correctAnswers[4] = Character.toString(retrievedAnswers.charAt(4));
+        } catch (SQLException ex) {
+            //Logger.getLogger(AttemptAssessmentWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -130,17 +181,12 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
         submitButton = new javax.swing.JToggleButton();
         q1True = new javax.swing.JRadioButton();
         q1False = new javax.swing.JRadioButton();
-        question1Text = new javax.swing.JTextField();
-        question2Text = new javax.swing.JTextField();
         q2True = new javax.swing.JRadioButton();
         q2False = new javax.swing.JRadioButton();
-        question3Text = new javax.swing.JTextField();
         q3True = new javax.swing.JRadioButton();
         q3False = new javax.swing.JRadioButton();
-        question4Text = new javax.swing.JTextField();
         q4True = new javax.swing.JRadioButton();
         q4False = new javax.swing.JRadioButton();
-        question5Text = new javax.swing.JTextField();
         q5True = new javax.swing.JRadioButton();
         q5False = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
@@ -150,6 +196,11 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         unfinishedWarningLabel = new javax.swing.JLabel();
+        question1 = new javax.swing.JLabel();
+        question2 = new javax.swing.JLabel();
+        question3 = new javax.swing.JLabel();
+        question4 = new javax.swing.JLabel();
+        question5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -199,14 +250,6 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
         q1False.setText("False");
         q1False.setName("F"); // NOI18N
 
-        question1Text.setEditable(false);
-        question1Text.setText("Work is tiring ");
-        question1Text.setBorder(null);
-
-        question2Text.setEditable(false);
-        question2Text.setText("Work ethics is important");
-        question2Text.setBorder(null);
-
         q2True.setBackground(new java.awt.Color(255, 255, 255));
         q2True.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         q2True.setText("True");
@@ -216,10 +259,6 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
         q2False.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         q2False.setText("False");
         q2False.setName("F"); // NOI18N
-
-        question3Text.setEditable(false);
-        question3Text.setText("Respect each other is a good ethic");
-        question3Text.setBorder(null);
 
         q3True.setBackground(new java.awt.Color(255, 255, 255));
         q3True.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -231,10 +270,6 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
         q3False.setText("False");
         q3False.setName("F"); // NOI18N
 
-        question4Text.setEditable(false);
-        question4Text.setText("Work ethic varies by companies");
-        question4Text.setBorder(null);
-
         q4True.setBackground(new java.awt.Color(255, 255, 255));
         q4True.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         q4True.setText("True");
@@ -244,10 +279,6 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
         q4False.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         q4False.setText("False");
         q4False.setName("F"); // NOI18N
-
-        question5Text.setEditable(false);
-        question5Text.setText("Ethic come first");
-        question5Text.setBorder(null);
 
         q5True.setBackground(new java.awt.Color(255, 255, 255));
         q5True.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -276,10 +307,26 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
         unfinishedWarningLabel.setText("You have not finished answering all questions");
         unfinishedWarningLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        question1.setText("Question 1");
+
+        question2.setText("Question 2");
+
+        question3.setText("Question 3");
+
+        question4.setText("Question 4");
+
+        question5.setText("Question 5");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(unfinishedWarningLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addComponent(submitButton)
+                .addGap(58, 58, 58))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,9 +334,7 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel9)
-                        .addGap(29, 29, 29)
-                        .addComponent(submitButton)
-                        .addGap(22, 22, 22))
+                        .addGap(121, 121, 121))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -297,17 +342,8 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(question2Text, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                                .addComponent(jLabel8))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(question1Text, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel6))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(question3Text, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(q3True)
                                         .addGap(18, 18, 18)
@@ -320,79 +356,87 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
                                         .addComponent(q1True)
                                         .addGap(18, 18, 18)
                                         .addComponent(q1False)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(0, 484, Short.MAX_VALUE))
+                            .addComponent(question3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(question2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(question1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(question5Text, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(q5True)
-                                .addGap(18, 18, 18)
-                                .addComponent(q5False))
-                            .addComponent(question4Text, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(question4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(q4True)
-                                .addGap(18, 18, 18)
-                                .addComponent(q4False)))
-                        .addGap(50, 50, 50))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(unfinishedWarningLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(183, 183, 183))
+                                .addGap(16, 16, 16)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(q4True)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(q4False))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(q5True)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(q5False)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(question5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(submitButton)
-                        .addComponent(jLabel9))
+                    .addComponent(jLabel9)
                     .addComponent(jLabel2))
-                .addGap(22, 22, 22)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(question1Text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(q1True)
-                            .addComponent(q1False))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(question2Text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(q2True)
-                            .addComponent(q2False))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(question3Text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(q3True)
-                            .addComponent(q3False)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(question4Text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(q4True)
-                            .addComponent(q4False))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(question5Text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(q5True)
-                            .addComponent(q5False))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                .addComponent(unfinishedWarningLabel)
-                .addGap(14, 14, 14))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(question1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(q1True)
+                    .addComponent(q1False))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(question2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(q2True)
+                    .addComponent(q2False))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(question3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(q3True)
+                    .addComponent(q3False))
+                .addGap(15, 15, 15)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(question4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(q4True)
+                    .addComponent(q4False))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(question5))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(q5True)
+                    .addComponent(q5False))
+                .addGap(11, 11, 11)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(unfinishedWarningLabel)
+                    .addComponent(submitButton))
+                .addGap(6, 6, 6))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -415,40 +459,59 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
-        boolean completed = false;
+        System.out.println("Submit button clicked!");
+        boolean completed = true;
         String[] submittedAnswers = new String[5];
         for(int i=0;i<5;i++){
             if (answerChoice[i].getSelection()==null){
                 completed = false;
+                System.out.println("Trainee failed to answer all questions.");
                 break;
             }
             else{
                 submittedAnswers[i] = answerChoice[i].getSelection().getActionCommand();
+                System.out.printf("%d. %s\n",i+1,submittedAnswers[i]);
             }
         }
+        System.out.println("Submitted answers calculated");
         
         if (completed){
-            Assessment assessment = new Assessment();
-            assessment.setAnswers(correctAnswers);
-            int marks = assessment.calculateMarks(submittedAnswers);
-            
-            String traineeID = trainee.username;
-            assessment.generateAssessmentID(course);
-            String assessmentID = assessment.getAssessmentID();
-            
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
-            LocalDateTime now = LocalDateTime.now();  
-            String dateNow = dtf.format(now);
-
-            //query format: insert into attempt values(accountID,assessmentID,marks,attempt date);
-            String updateAttemptQuery = "insert into attempt values('"+traineeID+"','"+assessmentID+"',"+marks+",'"+dateNow+"');";
             try {
-                System.out.println("Attempt update status: "+con.update(updateAttemptQuery));
+                unfinishedWarningLabel.setVisible(false);
+                for(String s:submittedAnswers){
+                    System.out.println(s);
+                }
+                
+                Assessment assessment = new Assessment();
+                assessment.setAnswers(correctAnswers);
+                int marks = assessment.calculateMarks(submittedAnswers);
+                
+                String traineeID = trainee.username;
+                assessment.generateAssessmentID(course);
+                String assessmentID = assessment.getAssessmentID();
+                
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+                LocalDateTime now = LocalDateTime.now();
+                String dateNow = dtf.format(now);
+                System.out.printf("%s attempted %s on %s, Marks = %d/5\n",trainee.username,assessmentID,dateNow,marks);
+                
+                String query = "select * from attempt where assessmentID='"+assessmentID+"' and accountID='"+trainee.username+"';";
+                
+                if(con.retrieve(query,"accountID").isEmpty()){
+                    System.out.println("Record does not exist, inserting new record.");
+                    query = "insert into attempt values('"+traineeID+"','"+assessmentID+"',"+marks+",'"+dateNow+"');";
+                    con.update(query);
+                }
+                else{
+                    System.out.println("Record exists, updating record.");
+                    query = "update kitatms.attempt set attemptMarks="+marks+",attemptDate='"+dateNow+"' where accountID='"+trainee.username+"' and assessmentID='"+assessmentID+"';";
+                    con.update(query);
+                }
+                dispose();
             } catch (SQLException ex) {
                 //Logger.getLogger(AttemptAssessmentWindow.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(AttemptAssessmentWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
-            dispose();
-            new AssessmentWindow(con,trainee);
         }
         else{
             unfinishedWarningLabel.setVisible(true);
@@ -478,11 +541,11 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
     private javax.swing.JRadioButton q4True;
     private javax.swing.JRadioButton q5False;
     private javax.swing.JRadioButton q5True;
-    private javax.swing.JTextField question1Text;
-    private javax.swing.JTextField question2Text;
-    private javax.swing.JTextField question3Text;
-    private javax.swing.JTextField question4Text;
-    private javax.swing.JTextField question5Text;
+    private javax.swing.JLabel question1;
+    private javax.swing.JLabel question2;
+    private javax.swing.JLabel question3;
+    private javax.swing.JLabel question4;
+    private javax.swing.JLabel question5;
     private javax.swing.JToggleButton submitButton;
     private javax.swing.JLabel unfinishedWarningLabel;
     // End of variables declaration//GEN-END:variables

@@ -12,8 +12,10 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import static kitatms.ViewLearningMaterialWindow.con;
 
 /**
  *
@@ -44,7 +46,16 @@ public class AssessmentWindow extends javax.swing.JFrame {
         System.out.println("Assessment Window, username: "+trainee.username);
         this.setupCourseIDList();
         initComponents();
-        this.addRow(this.courseIDList.get(0));
+        noEnrollmentLabel.setVisible(false);
+        if(courseIDList.isEmpty()){
+            noEnrollmentLabel.setVisible(true);    
+            jTable1.setEnabled(false);
+            jTable1.setVisible(false);
+        }
+        else{
+            buildTable();
+            fillTable();
+        }
     }
 
     /**
@@ -198,58 +209,96 @@ public class AssessmentWindow extends javax.swing.JFrame {
 
 
     
-    private void addRow(String courseID){
-        //column 1 = course Name
-        //column 2 = course ID
+    private void fillTable(){
+        //column 1 = course ID
+        //column 2 = course Name
         //column 3 = marks (IF ATTEMPTED PREVIOUSLY)
         //column 4 = attempt date (IF ATTEMPTED PREVIOUSLY)
         //column 5 = start button
-        String courseName, attemptDate, marks;
-        courseName = attemptDate = marks = " ";
+        String courseID,courseName,marks,attemptdate,assessmentID,query;
+        int totalLearningMaterials;
         
-        String courseNameQuery = "select * from course where courseID='"+courseID+"';";
-        try {
-            courseName = con.retrieve(courseNameQuery, "courseName").get(0);
-        } catch (SQLException ex) {
-            //Logger.getLogger(AssessmentWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        boolean hasAttempted = true;
-        try {
-            ArrayList<String> checker = con.retrieve("select * from attempt where accountID='"+trainee.username+"';","accountID");
-            if(checker.isEmpty())
-                hasAttempted = false;
-        } catch (SQLException ex) {
-            //Logger.getLogger(AssessmentWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        boolean canAttempt,passed;
+        passed = false;
         
-        if(hasAttempted){
+        for(int i=0;i<courseIDList.size();i++){
             try {
-                marks = con.retrieve("select * from attempt where accountID='"+trainee.username+"';", "attemptMarks").get(0);
-                attemptDate = con.retrieve("select * from attempt where accountID='"+trainee.username+"';", "attemptDate").get(0);
+                courseID = courseIDList.get(i);
+                query = "Select * from course where courseID='"+courseID+"';";
+                courseName = con.retrieve(query,"courseName").get(0);
+                System.out.printf("Course Name: %s\n",courseName);
+                
+                query = "select * from assessment where courseID='"+courseID+"';";
+                assessmentID = con.retrieve(query, "assessmentID").get(0);
+                System.out.printf("Assessment ID: %s\n",assessmentID);
+                
+                query = "select * from learningMaterial where courseID='"+courseID+"';";
+                totalLearningMaterials = con.retrieve(query,"learningMaterialID").size();
+                System.out.printf("Total Learning Materials for %s: %d\n",courseID,totalLearningMaterials);
+                
+                
+                query = "select * from view where courseID like '%"+courseID+"' and accountID='"+trainee.username+"';";
+                query = "SELECT * FROM kitatms.view where learningMaterialID like '%"+courseID+"' and accountID='"+trainee.username+"';";
+                ArrayList<String> debug = con.retrieve(query, "accountID");
+                
+                for(String s:debug){
+                    System.out.println(s);
+                }
+                
+                String label = "Start                    \n"+courseID+trainee.username;
+                if(con.retrieve(query,"accountID").size()==totalLearningMaterials){
+                    canAttempt = true;
+                    System.out.println("Trainee can proceed to course assessment.");
+                }
+                else{ 
+                    canAttempt = false;
+                    System.out.println("Unfinished study of materials.");
+                }
+                
+                if(canAttempt){
+                    query = "select * from attempt where assessmentID='"+assessmentID+"' and accountID='"+trainee.username+"';";
+                    if(!con.retrieve(query,"attemptMarks").isEmpty()){
+                        marks = con.retrieve(query,"attemptMarks").get(0);
+                        attemptdate = con.retrieve(query,"attemptDate").get(0);
+                        if (marks.equals("5")){
+                            passed = true;
+                        }
+                        
+                    }
+                    else{
+                        marks = "-";
+                        attemptdate = "-";
+                    }
+                    
+                    if(!passed){
+                        label+="tf";
+                        dtm.addRow(new Object[]{courseID,courseName,marks,attemptdate,label}); 
+                        jTable1.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer2());
+                        jTable1.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor3(new JCheckBox(),con,canAttempt,passed));
+                    }
+                    else{
+                        label +="ft";
+                        dtm.addRow(new Object[]{courseID,courseName,marks,attemptdate,label});
+                        jTable1.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer2());
+                        jTable1.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor3(new JCheckBox(),con,canAttempt,passed));
+                    }
+                    
+                    
+                }
+                else{
+                    marks = "-";
+                    attemptdate = "-";
+                    label += "ff";
+                    dtm.addRow(new Object[]{courseID,courseName,marks,attemptdate,label});
+                    jTable1.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer2());
+                    jTable1.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor3(new JCheckBox(),con,canAttempt,false));
+                }
+                
             } catch (SQLException ex) {
                 //Logger.getLogger(AssessmentWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
         }
-        else{
-            marks = "-";
-            attemptDate = "-";
-        }
-        //jLabel2.setText(courseName);
-        //jLabel5.setText(courseID);
-        //jLabel6.setText(marks);
-        //jLabel8.setText(attemptDate);
-        
-        Course course = new Course();
-        course.setCourseID(courseID);
-        JButton startButton = new JButton("Start");
-        startButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                dispose();
-                AttemptAssessmentWindow AAW = new AttemptAssessmentWindow(con,trainee,course);
-                AAW.setCourse(course);
-                AAW.setTrainee(trainee);
-            }
-        });
     }
     
     /**
@@ -274,15 +323,15 @@ public class AssessmentWindow extends javax.swing.JFrame {
         //trainee = t;
         System.out.println("Usename: "+trainee.username);
         setupCourseIDList();
-        addRow(courseIDList.get(0));
     }
     
     private void buildTable(){
         jTable1.setModel(dtm);
-        tableModel.addColumn("Course ID");
-        tableModel.addColumn("Learning Material");
-        tableModel.addColumn("View Status");
-        tableModel.addColumn("View");
+        dtm.addColumn("Course ID");
+        dtm.addColumn("Course Name");
+        dtm.addColumn("Marks");
+        dtm.addColumn("Attempt Date");
+        dtm.addColumn(" ");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

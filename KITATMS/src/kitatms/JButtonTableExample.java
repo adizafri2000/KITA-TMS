@@ -168,10 +168,13 @@ class ButtonEditor3 extends DefaultCellEditor {
 
   private boolean isPushed;
   private DBConnection con;
+  private boolean canAttempt,passed;
 
-  public ButtonEditor3(JCheckBox checkBox,DBConnection con) {
+  public ButtonEditor3(JCheckBox checkBox,DBConnection con,boolean canAttempt,boolean passed) {
     super(checkBox);
     this.con = con;
+    this.canAttempt = canAttempt;
+    this.passed = passed;
     button = new JButton();
     button.setOpaque(true);
     button.addActionListener(new ActionListener() {
@@ -198,29 +201,21 @@ class ButtonEditor3 extends DefaultCellEditor {
 
   public Object getCellEditorValue() {
     if (isPushed) {
-          try {
-              //
-              //
-              String lmID = label.substring(label.length()-20,label.length()-10);
-              String tID = label.substring(label.length()-10);
-              String showthis = tID+" viewing "+lmID;
-              JOptionPane.showMessageDialog(button, showthis + ": Ouch!");
-              String query = "select * from learningMaterial where learningMaterialID='"+lmID+"';";
-              String fileName = con.retrieve(query,"learningMaterialName").get(0);
-              File file = new File(fileName);
-              Desktop desktop = Desktop.getDesktop();
-              try {
-                  //query = "select * from view where "
-                  desktop.open(file);
-              } catch (IOException ex) {
-                  //Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
-                  System.out.println("Error");
-              }
-              // System.out.println(label + ": Ouch!");
-          } catch (SQLException ex) {
-              //Logger.getLogger(ButtonEditor2.class.getName()).log(Level.SEVERE, null, ex);
-          }
+        String cID = label.substring(label.length()-19,label.length()-12); //Logger.getLogger(ButtonEditor2.class.getName()).log(Level.SEVERE, null, ex);
         // System.out.println(label + ": Ouch!");
+        String tID = label.substring(label.length()-12,label.length()-2);
+        String showthis = tID+" attempting "+cID;
+        JOptionPane.showMessageDialog(button, showthis + ": Ouch!");
+        
+        canAttempt = label.charAt(label.length()-2)=='f' ? false : true;
+        passed = label.charAt(label.length()-1)=='f' ? false : true;
+        
+        Course course = new Course();
+        course.setCourseID(cID);
+        Account acc = new Account();
+        acc.setUsername(tID);
+        System.out.printf("At ButtonEditor3.getCellEditorValue(): %s from %s course (Can attempt: %s,Has passed: %s)\n",acc.username,course.getCourseID(),canAttempt,passed);
+        new AttemptAssessmentWindow(con,acc,course,canAttempt,passed);
     }
     isPushed = false;
     return new String(label);

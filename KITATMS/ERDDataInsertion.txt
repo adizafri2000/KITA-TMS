@@ -57,7 +57,7 @@ INSERT INTO `kitatms`.`report` (`reportID`, `courseID`) VALUES ('reportPSP5521',
 INSERT INTO `kitatms`.`view` (`learningmaterialID`, `accountID`, `viewstatus`) VALUES ('M01PPZ2290', '1181100014', 'V');
 INSERT INTO `kitatms`.`view` (`learningmaterialID`, `accountID`, `viewstatus`) VALUES ('M02PPZ2290', '1181100014', 'V');
 INSERT INTO `kitatms`.`view` (`learningmaterialID`, `accountID`, `viewstatus`) VALUES ('M01PPZ2290', '1181101286', 'V');
-INSERT INTO `kitatms`.`view` (`learningmaterialID`, `accountID`, `viewstatus`) VALUES ('M01PPZ2290', '1181101286', 'V');
+INSERT INTO `kitatms`.`view` (`learningmaterialID`, `accountID`, `viewstatus`) VALUES ('M02PPZ2290', '1181101286', 'V');
 INSERT INTO `kitatms`.`view` (`learningmaterialID`, `accountID`, `viewstatus`) VALUES ('M01PSP5521', '1181101286', 'V');
 INSERT INTO `kitatms`.`view` (`learningmaterialID`, `accountID`, `viewstatus`) VALUES ('M01PSP5521', '1181100012', 'V');
 INSERT INTO `kitatms`.`view` (`learningmaterialID`, `accountID`, `viewstatus`) VALUES ('M02PSP5521', '1181100012', 'V');

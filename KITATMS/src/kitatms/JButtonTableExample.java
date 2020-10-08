@@ -42,23 +42,12 @@ public class JButtonTableExample extends JFrame {
 
     JTable table = new JTable(dm);
     table.getColumn("Button").setCellRenderer(new ButtonRenderer2());
-    table.getColumn("Button").setCellEditor(
-        new ButtonEditor2(new JCheckBox()));
+    //table.getColumn("Button").setCellEditor(
+      //  new ButtonEditor2(new JCheckBox()));
     JScrollPane scroll = new JScrollPane(table);
     getContentPane().add(scroll);
     setSize(400, 100);
     setVisible(true);
-  }
-
-  public static void main(String[] args) {
-  
-   
-    JButtonTableExample frame = new JButtonTableExample();
-    frame.addWindowListener(new WindowAdapter() {
-      public void windowClosing(WindowEvent e) {
-        System.exit(0);
-      }
-    });
   }
 }
 /**
@@ -129,13 +118,99 @@ class ButtonEditor2 extends DefaultCellEditor {
           try {
               //
               //
-              String ID = label.substring(label.length()-10);
-              //JOptionPane.showMessageDialog(button, ID + ": Ouch!");
-              String query = "select * from learningMaterial where learningMaterialID='"+ID+"';";
+              String lmID = label.substring(label.length()-20,label.length()-10);
+              String tID = label.substring(label.length()-10);
+              String showthis = tID+" viewing "+lmID;
+              //JOptionPane.showMessageDialog(button, showthis + ": Ouch!");
+              String query = "select * from learningMaterial where learningMaterialID='"+lmID+"';";
               String fileName = con.retrieve(query,"learningMaterialName").get(0);
               File file = new File(fileName);
               Desktop desktop = Desktop.getDesktop();
               try {
+                  query = "select * from view where accountID='"+tID+"' and learningMaterialID = '"+lmID+"';";
+                  if(con.retrieve(query, "viewstatus").isEmpty()){
+                      System.out.printf("%s has not viewed %s\n",tID,lmID);
+                      query = "insert into view values('"+lmID+"','"+tID+"','V');";
+                      con.update(query);
+                  }
+                  else{
+                      System.out.printf("%s has already viewed %s\n",tID,lmID);
+                  }
+                  desktop.open(file);
+              } catch (IOException ex) {
+                  //Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
+                  System.out.println("Error");
+              }
+              // System.out.println(label + ": Ouch!");
+          } catch (SQLException ex) {
+              //Logger.getLogger(ButtonEditor2.class.getName()).log(Level.SEVERE, null, ex);
+          }
+        // System.out.println(label + ": Ouch!");
+    }
+    isPushed = false;
+    return new String(label);
+  }
+
+  public boolean stopCellEditing() {
+    isPushed = false;
+    return super.stopCellEditing();
+  }
+
+  protected void fireEditingStopped() {
+    super.fireEditingStopped();
+  }
+}
+
+class ButtonEditor3 extends DefaultCellEditor {
+  protected JButton button;
+
+  private String label;
+
+  private boolean isPushed;
+  private DBConnection con;
+
+  public ButtonEditor3(JCheckBox checkBox,DBConnection con) {
+    super(checkBox);
+    this.con = con;
+    button = new JButton();
+    button.setOpaque(true);
+    button.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        fireEditingStopped();
+      }
+    });
+  }
+
+  public Component getTableCellEditorComponent(JTable table, Object value,
+      boolean isSelected, int row, int column) {
+    if (isSelected) {
+      button.setForeground(table.getSelectionForeground());
+      button.setBackground(table.getSelectionBackground());
+    } else {
+      button.setForeground(table.getForeground());
+      button.setBackground(table.getBackground());
+    }
+    label = (value == null) ? "" : value.toString();
+    button.setText(label);
+    isPushed = true;
+    return button;
+  }
+
+  public Object getCellEditorValue() {
+    if (isPushed) {
+          try {
+              //
+              //
+              String lmID = label.substring(label.length()-20,label.length()-10);
+              String tID = label.substring(label.length()-10);
+              String showthis = tID+" viewing "+lmID;
+              JOptionPane.showMessageDialog(button, showthis + ": Ouch!");
+              String query = "select * from learningMaterial where learningMaterialID='"+lmID+"';";
+              String fileName = con.retrieve(query,"learningMaterialName").get(0);
+              File file = new File(fileName);
+              Desktop desktop = Desktop.getDesktop();
+              try {
+                  //query = "select * from view where "
                   desktop.open(file);
               } catch (IOException ex) {
                   //Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);

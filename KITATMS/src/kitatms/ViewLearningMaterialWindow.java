@@ -117,7 +117,7 @@ public class ViewLearningMaterialWindow extends javax.swing.JFrame {
                         viewStatus = "Viewed";
                     else viewStatus = "Not Viewed";
                     
-                    String label = "View                    \n"+learningMaterialIDList.get(j);
+                    String label = "View                    \n"+learningMaterialIDList.get(j)+acc.username;
                     tableModel.addRow(new Object[]{courseID,learningMaterialName,viewStatus,label});
                     row++;
                     

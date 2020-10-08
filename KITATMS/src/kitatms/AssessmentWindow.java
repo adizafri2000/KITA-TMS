@@ -69,6 +69,7 @@ public class AssessmentWindow extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        noEnrollmentLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -123,6 +124,9 @@ public class AssessmentWindow extends javax.swing.JFrame {
 
         jButton1.setText("Start");
 
+        noEnrollmentLabel.setForeground(new java.awt.Color(0, 0, 0));
+        noEnrollmentLabel.setText("You are currently not enrolled to any courses");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -143,13 +147,16 @@ public class AssessmentWindow extends javax.swing.JFrame {
                                 .addComponent(jLabel4))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(83, 83, 83)
-                                .addComponent(jLabel2)
-                                .addGap(57, 57, 57)
-                                .addComponent(jLabel5)
-                                .addGap(60, 60, 60)
-                                .addComponent(jLabel6)
-                                .addGap(57, 57, 57)
-                                .addComponent(jLabel8)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(noEnrollmentLabel)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(57, 57, 57)
+                                        .addComponent(jLabel5)
+                                        .addGap(60, 60, 60)
+                                        .addComponent(jLabel6)
+                                        .addGap(57, 57, 57)
+                                        .addComponent(jLabel8)))
                                 .addGap(72, 72, 72)
                                 .addComponent(jButton1)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -163,7 +170,9 @@ public class AssessmentWindow extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
-                .addGap(43, 43, 43)
+                .addGap(21, 21, 21)
+                .addComponent(noEnrollmentLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel5)
@@ -305,5 +314,6 @@ public class AssessmentWindow extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollBar jScrollBar1;
+    private javax.swing.JLabel noEnrollmentLabel;
     // End of variables declaration//GEN-END:variables
 }

@@ -24,7 +24,7 @@ public class AssessmentWindow extends javax.swing.JFrame {
     static DBConnection con;
     private Account trainee = new Account();
     private ArrayList<String> courseIDList = new ArrayList<>();
-    private JTable table = new JTable();
+    private DefaultTableModel dtm = new DefaultTableModel();
     
     public AssessmentWindow(DBConnection con,Account acc){
         this.con = con;
@@ -62,14 +62,11 @@ public class AssessmentWindow extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollBar1 = new javax.swing.JScrollBar();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        instructionLabel = new javax.swing.JLabel();
         homeButton = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         noEnrollmentLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -103,8 +100,8 @@ public class AssessmentWindow extends javax.swing.JFrame {
 
         jLabel3.setText("Please complete the course assessment: ");
 
-        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel4.setText("*Click [Start] to attempt assessment");
+        instructionLabel.setForeground(new java.awt.Color(102, 102, 102));
+        instructionLabel.setText("*Click [Start] to attempt assessment");
 
         homeButton.setBackground(new java.awt.Color(204, 204, 204));
         homeButton.setText("Back to home");
@@ -114,18 +111,21 @@ public class AssessmentWindow extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("jLabel2");
-
-        jLabel5.setText("jLabel5");
-
-        jLabel6.setText("jLabel6");
-
-        jLabel8.setText("jLabel8");
-
-        jButton1.setText("Start");
-
         noEnrollmentLabel.setForeground(new java.awt.Color(0, 0, 0));
         noEnrollmentLabel.setText("You are currently not enrolled to any courses");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -133,10 +133,6 @@ public class AssessmentWindow extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(homeButton)
-                        .addGap(30, 30, 30))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -144,22 +140,19 @@ public class AssessmentWindow extends javax.swing.JFrame {
                                 .addComponent(jLabel3))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(31, 31, 31)
-                                .addComponent(jLabel4))
+                                .addComponent(instructionLabel))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(83, 83, 83)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(noEnrollmentLabel)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(57, 57, 57)
-                                        .addComponent(jLabel5)
-                                        .addGap(60, 60, 60)
-                                        .addComponent(jLabel6)
-                                        .addGap(57, 57, 57)
-                                        .addComponent(jLabel8)))
-                                .addGap(72, 72, 72)
-                                .addComponent(jButton1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(193, 193, 193)
+                                .addComponent(noEnrollmentLabel)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(homeButton)
+                        .addGap(30, 30, 30))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jScrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -169,17 +162,12 @@ public class AssessmentWindow extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addGap(21, 21, 21)
+                .addComponent(instructionLabel)
+                .addGap(18, 18, 18)
                 .addComponent(noEnrollmentLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel8)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 179, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
                 .addComponent(homeButton)
                 .addContainerGap())
         );
@@ -208,14 +196,7 @@ public class AssessmentWindow extends javax.swing.JFrame {
         new TraineeHomeWindow(con,trainee);
     }//GEN-LAST:event_homeButtonActionPerformed
 
-    private void setupTable(){
-        setupCourseIDList();
-        JTable table = new JTable();
-        for(int i=0;i<1;i++){
-            addRow(courseIDList.get(i));
-        }
-        
-    }
+
     
     private void addRow(String courseID){
         //column 1 = course Name
@@ -253,10 +234,10 @@ public class AssessmentWindow extends javax.swing.JFrame {
             marks = "-";
             attemptDate = "-";
         }
-        jLabel2.setText(courseName);
-        jLabel5.setText(courseID);
-        jLabel6.setText(marks);
-        jLabel8.setText(attemptDate);
+        //jLabel2.setText(courseName);
+        //jLabel5.setText(courseID);
+        //jLabel6.setText(marks);
+        //jLabel8.setText(attemptDate);
         
         Course course = new Course();
         course.setCourseID(courseID);
@@ -269,10 +250,6 @@ public class AssessmentWindow extends javax.swing.JFrame {
                 AAW.setTrainee(trainee);
             }
         });
-        jButton1 = startButton;
-        
-        //DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
-       // model.addRow(new Object[]{courseName,courseID,marks,attemptDate,startButton});
     }
     
     /**
@@ -299,21 +276,26 @@ public class AssessmentWindow extends javax.swing.JFrame {
         setupCourseIDList();
         addRow(courseIDList.get(0));
     }
+    
+    private void buildTable(){
+        jTable1.setModel(dtm);
+        tableModel.addColumn("Course ID");
+        tableModel.addColumn("Learning Material");
+        tableModel.addColumn("View Status");
+        tableModel.addColumn("View");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton homeButton;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel instructionLabel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollBar jScrollBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel noEnrollmentLabel;
     // End of variables declaration//GEN-END:variables
 }

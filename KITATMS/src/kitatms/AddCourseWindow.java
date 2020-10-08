@@ -271,6 +271,7 @@ public class AddCourseWindow extends javax.swing.JFrame  {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
         jLabel8.setText("");
+        jTextField2.setText("");
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  
         String startDateString="";
         String endDateString="";
@@ -296,8 +297,8 @@ public class AddCourseWindow extends javax.swing.JFrame  {
         if (courseID.equals("") || courseName.equals("") ||startDateString.equals("") || endDateString.equals("") ){
              jLabel8.setText("Please fill in all information !");
         }
-        else if(courseID.length()!= 10 ){
-            jLabel8.setText("10 characters needed for course ID");
+        else if(courseID.length()!= 7 ){
+            jTextField2.setText("7 characters needed");
         }
         else if(courseStart.after(courseEnd)){
             jLabel8.setText("Invalid date chosen");

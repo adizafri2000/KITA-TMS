@@ -1,6 +1,8 @@
 package kitatms;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
@@ -55,6 +57,8 @@ public class CourseReportWindow extends javax.swing.JFrame {
         
         initComponents();
         noCourseLabel.setVisible(false);
+        successLabel.setVisible(false);
+        failedLabel.setVisible(false);
         
         jComboBox1.setModel(dcbm);
         
@@ -64,6 +68,7 @@ public class CourseReportWindow extends javax.swing.JFrame {
             jComboBox1.setVisible(false);
             generateReportButton.setEnabled(false);
             generateReportButton.setVisible(false);
+            noCourseLabel.setVisible(false);
         }
         
     }
@@ -119,6 +124,8 @@ public class CourseReportWindow extends javax.swing.JFrame {
         generateReportButton = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         noCourseLabel = new javax.swing.JLabel();
+        successLabel = new javax.swing.JLabel();
+        failedLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -174,6 +181,12 @@ public class CourseReportWindow extends javax.swing.JFrame {
         noCourseLabel.setForeground(new java.awt.Color(0, 0, 0));
         noCourseLabel.setText("You have not created any courses");
 
+        successLabel.setForeground(new java.awt.Color(51, 255, 51));
+        successLabel.setText("Report file saved successfully");
+
+        failedLabel.setForeground(new java.awt.Color(255, 51, 51));
+        failedLabel.setText("Failed to save report file");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -198,7 +211,11 @@ public class CourseReportWindow extends javax.swing.JFrame {
                         .addComponent(homeButton))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(214, 214, 214)
-                        .addComponent(noCourseLabel)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(noCourseLabel)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(failedLabel)
+                                .addComponent(successLabel)))))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -214,7 +231,11 @@ public class CourseReportWindow extends javax.swing.JFrame {
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
                 .addComponent(noCourseLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addGap(2, 2, 2)
+                .addComponent(failedLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(successLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(homeButton))
         );
 
@@ -248,16 +269,43 @@ public class CourseReportWindow extends javax.swing.JFrame {
         createReport(courseID);
         String fileName = courseID+"Report.pdf";
         File file = new File(fileName);
-        Path source = Paths.get(fileName, more);
+        Path source = Paths.get(file.getAbsolutePath());
         System.out.println(file.getAbsolutePath());
-        JFileChooser jfc = new JFileChooser();
-        
-        
-        
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int returnVal = chooser.showOpenDialog(this);
+        Path target;
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                target = Paths.get(chooser.getSelectedFile().getAbsolutePath());
+                String newPath = target.toString()+"\\"+fileName;
+                target = Paths.get(newPath);
+                
+                System.out.println("You chose to open this directory: " +
+                        target);
+                
+                Path temp = Files.move(source,target);
+                if(temp != null)
+                {
+                    System.out.println("File renamed and moved successfully");
+                    successLabel.setVisible(true);
+                    failedLabel.setVisible(false);
+                }
+                else
+                {
+                    System.out.println("Failed to move the file"); 
+                    failedLabel.setVisible(true);
+                    successLabel.setVisible(false);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(CourseReportWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_generateReportButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel failedLabel;
     private javax.swing.JButton generateReportButton;
     private javax.swing.JButton homeButton;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -268,5 +316,6 @@ public class CourseReportWindow extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel noCourseLabel;
+    private javax.swing.JLabel successLabel;
     // End of variables declaration//GEN-END:variables
 }

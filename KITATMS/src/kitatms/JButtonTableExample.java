@@ -205,7 +205,7 @@ class ButtonEditor3 extends DefaultCellEditor {
         // System.out.println(label + ": Ouch!");
         String tID = label.substring(label.length()-12,label.length()-2);
         String showthis = tID+" attempting "+cID;
-        JOptionPane.showMessageDialog(button, showthis + ": Ouch!");
+        //JOptionPane.showMessageDialog(button, showthis + ": Ouch!");
         
         canAttempt = label.charAt(label.length()-2)=='f' ? false : true;
         passed = label.charAt(label.length()-1)=='f' ? false : true;

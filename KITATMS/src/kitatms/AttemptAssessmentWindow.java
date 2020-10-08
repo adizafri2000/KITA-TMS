@@ -43,7 +43,7 @@ public class AttemptAssessmentWindow extends javax.swing.JFrame {
                 System.out.printf("%s has not passed %s course and can attempt its assessment.\n",trainee.username,course.getCourseID());    
             }
             else{
-                System.out.printf("%s has not passed %s course and cannot attempt its assessment.e\n",trainee.username,course.getCourseID());
+                System.out.printf("%s has not passed %s course and cannot attempt its assessment.\n",trainee.username,course.getCourseID());
             }
         }
         java.awt.EventQueue.invokeLater(new Runnable() {

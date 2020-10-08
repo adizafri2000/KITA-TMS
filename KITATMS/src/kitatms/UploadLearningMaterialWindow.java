@@ -198,17 +198,31 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
         String fromFile ="";
         //String toFile = "C:\\Documents\\GitHub\\KITA-TMS\\KITATMS";
         Path source = Paths.get(fromFile);
-        Path target = null;
+        //Path target = null;
         Path temp = null;
-        if (jFileChooser1.getSelectedFile() != null) {
-         f = jFileChooser1.getSelectedFile();
-         filename = jFileChooser1.getSelectedFile().toString();
-         
-         fromFile = f.getPath();
-         source = Paths.get(fromFile);
+        
+        
+        
 
-         System.err.println(f.getPath());
-         //System.err.println(filename);
+        
+        Path target;
+        if (jFileChooser1.getSelectedFile() != null) {
+            try {
+                f = jFileChooser1.getSelectedFile();
+                filename = jFileChooser1.getSelectedFile().toString();
+                System.out.println("Source file name is "+filename);
+                
+                Path sourceFile = Paths.get(f.getAbsolutePath());
+                System.out.println("Path of source file is "+sourceFile.toString());
+                
+                target = Paths.get("");
+                String s = target.toAbsolutePath().toString() + "\\"+sourceFile.getFileName();
+                target = Paths.get(s);
+                System.out.println("Path of target file is "+target.toString());
+                Files.copy(sourceFile, target,StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException ex) {
+                Logger.getLogger(UploadLearningMaterialWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         ArrayList<String> courseIDList = new ArrayList<String>();
@@ -237,7 +251,7 @@ public class UploadLearningMaterialWindow extends javax.swing.JFrame {
             
             System.out.println(filename);
             flag = con.update("INSERT INTO kitatms.learningmaterial (learningMaterialID, learningmaterialName, courseID) VALUES "+
-                                "('"+("M0"+countCourseID+course.getCourseID())+"', '"+f.getPath()+"', '"+course.getCourseID()+"');");
+                                "('"+("M0"+countCourseID+course.getCourseID())+"', '"+f.getName()+"', '"+course.getCourseID()+"');");
             saveStatus = true;
             
             } //catch (IOException ex) {}

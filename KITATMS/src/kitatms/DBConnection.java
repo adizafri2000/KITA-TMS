@@ -271,7 +271,7 @@ public class DBConnection {
                 
                 String learningmaterial = "create table learningmaterial(\n" +
 "	learningmaterialID varchar(10) primary key not null unique,\n" +
-"    learningmaterialName varchar(50) not null,\n" +
+"    learningmaterialName mediumtext not null,\n" +
 "    courseID varchar(7) not null references course(courseID)\n" +
 ");";
                 

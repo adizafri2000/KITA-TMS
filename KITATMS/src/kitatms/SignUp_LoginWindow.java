@@ -8,6 +8,8 @@ package kitatms;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -285,6 +287,12 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
 	    		    if(flag==true){
                                 message = "You are now registered as a trainer!";
 	    		    	jLabel2.setText(message);
+                                String query = "insert into trainer values('"+username+"');";
+                                try {
+                                    con.update(query);
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(SignUp_LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
+                                }
 			    }
 			    else{
                                 message = "Username is taken";
@@ -311,6 +319,12 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
             }
             if(flag==true){
                 jLabel2.setText("You are now registered as a trainee!");
+                String query = "insert into trainee values('"+username+"');";
+                try {
+                    con.update(query);
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignUp_LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             else{
                  jLabel2.setText("Username is taken");

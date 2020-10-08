@@ -243,10 +243,13 @@ public class DBConnection {
 "	accountPassword varchar(15) not null\n" +
 ");";
                 
-                String trainer = "create table trainer(\n" +
-"	trainerName varchar(50) not null,\n" +
-"    accountID varchar(10) not null unique references account(accountID)\n" +
-");";
+                String trainer = "CREATE TABLE `kitatms`.`trainer` (\n" +
+"  `accountID` VARCHAR(10) NOT NULL,\n" +
+"  PRIMARY KEY (`accountID`),\n" +
+"    FOREIGN KEY (`accountID`)\n" +
+"    REFERENCES `kitatms`.`account` (`accountID`)\n" +
+"    ON DELETE NO ACTION\n" +
+"    ON UPDATE NO ACTION);";
                 
                 String trainee = "CREATE TABLE `kitatms`.`trainee` (\n" +
 "  `accountID` VARCHAR(10) NOT NULL,\n" +
@@ -326,6 +329,8 @@ public class DBConnection {
                 
                 
                 stat.executeUpdate(account);
+                stat.executeUpdate(trainer);
+                stat.executeUpdate(trainee);
                 stat.executeUpdate(course);
                 stat.executeUpdate(enrollment);
                 stat.executeUpdate(report);

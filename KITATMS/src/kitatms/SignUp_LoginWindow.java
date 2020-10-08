@@ -298,7 +298,7 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
         String username = usernameTextField.getText();
         String password = String.valueOf(accountpasswordPasswordField.getPassword());
         boolean flag = false;
-        SignIn sign = new SignIn(con);
+        SignUp sign = new SignUp(con);
         
         if(username.equals("")|| username.equals(null) || password.equals("")|| password.equals(null)){
 			jLabel2.setText("Please fill in username and password");

@@ -307,10 +307,16 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
         String password = String.valueOf(accountpasswordPasswordField.getPassword());
         boolean flag = false;
         SignUp sign = new SignUp(con);
+        String message = "";
         
         if(username.equals("")|| username.equals(null) || password.equals("")|| password.equals(null)){
-			jLabel2.setText("Please fill in username and password");
+			message = "Please fill in username and password";
+			jLabel2.setText(message);
 	}
+        else if(username.length()>10){
+            message = "Max username length is 10";
+            jLabel2.setText(message);
+        }
         else{
             try {
                 flag = con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('"+username+"',2,'"+password+"');");
@@ -318,7 +324,8 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
                 //Logger.getLogger(SignUp_LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
             if(flag==true){
-                jLabel2.setText("You are now registered as a trainee!");
+                message = "You are now registered as a trainee!";
+	    		    	jLabel2.setText(message);
                 String query = "insert into trainee values('"+username+"');";
                 try {
                     con.update(query);
@@ -327,7 +334,8 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
                 }
             }
             else{
-                 jLabel2.setText("Username is taken");
+                 message = "Username is taken";
+		jLabel2.setText(message);
             }
         }
         

@@ -275,6 +275,7 @@ public class CourseReportWindow extends javax.swing.JFrame {
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int returnVal = chooser.showOpenDialog(this);
         Path target;
+        
         if(returnVal == JFileChooser.APPROVE_OPTION) {
             try {
                 target = Paths.get(chooser.getSelectedFile().getAbsolutePath());
@@ -300,6 +301,11 @@ public class CourseReportWindow extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(CourseReportWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        else{
+            System.out.println("Failed to move the file"); 
+                    failedLabel.setVisible(true);
+                    successLabel.setVisible(false);
         }
     }//GEN-LAST:event_generateReportButtonActionPerformed
 

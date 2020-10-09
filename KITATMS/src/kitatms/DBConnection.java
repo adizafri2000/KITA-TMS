@@ -230,7 +230,7 @@ public class DBConnection {
     
     /**
      * This method, in conjunction with setupDB(), creates all the tables involved in
-     * KITA-TMS's database implementation.A total of 10 tables are created after invoking this method:
+     * KITA-TMS's database implementation.A total of 9 tables are created after invoking this method:
  Account, Trainer, Trainee, Course, Enrollment, Report, LearningMaterial,
  Assessment, View, Attempt, Report
      * @throws java.sql.SQLException
@@ -280,11 +280,6 @@ public class DBConnection {
 "    ON DELETE NO ACTION\n" +
 "    ON UPDATE NO ACTION);";
                 
-                String report = "create table report(\n" +
-"	reportID varchar(13) primary key not null unique,\n" +
-"	courseID varchar(7) not null references course(courseID)\n" +
-");";
-                
                 String learningmaterial = "create table learningmaterial(\n" +
 "	learningmaterialID varchar(10) primary key not null unique,\n" +
 "    learningmaterialName mediumtext not null,\n" +
@@ -333,12 +328,11 @@ public class DBConnection {
                 stat.executeUpdate(trainee);
                 stat.executeUpdate(course);
                 stat.executeUpdate(enrollment);
-                stat.executeUpdate(report);
                 stat.executeUpdate(learningmaterial);
                 stat.executeUpdate(assessment);
                 stat.executeUpdate(view);
                 stat.executeUpdate(attempt);
-                System.out.println("10 program database tables succesfully created.");
+                System.out.println("9 program database tables succesfully created.");
             
         } catch (SQLException ex) {
             //Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);

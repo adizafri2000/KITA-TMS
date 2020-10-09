@@ -8,14 +8,6 @@ package kitatms;
 import java.sql.SQLException;
 
 /**
- * !!!!!!! PLEASE BACA NI DULU !!!!!!!!!!!!! Ni akan jadi the real main class,
- * so every other file should be a class file. Whatever lah.\ So in main class,
- * benda ni akan ada apa2 necessary objects created from classes kita, and also
- * windows (GUI) yang kita buat. untuk senangkan testing kat sini, since kita 4
- * orang, each of us ada fx sendiri in this main class. So nak test apa2, just
- * edit in your own functions specified below, and comment out if ada nama fx
- * orang lain in the main(). Check example.
- *
  * @author adiza
  */
 public class KITATMS {
@@ -30,81 +22,16 @@ public class KITATMS {
      */
     public static void main(String[] args) throws SQLException {
         KITATMS program = new KITATMS();
-        program.adiTest();
+        program.start();
         //program.zamTest();
         //program.hadyaTest();
         //program.wahaTest();
     }
 
-    public void adiTest() throws SQLException {
+    public void start() throws SQLException {
 
         // TODO code application logic here
         System.out.println("Adi was here");
         DBWindow dbwindow = new DBWindow(con);
-        //con.s
-    }
-
-    public void zamTest() throws SQLException {
-        con.setPassword("z@mFirdaus00");
-        //con.setPassword("Pizz@1181101286");
-        con.isConnectedDB();
-        con.isConnectedMySQL();
-        //LoginSignUpGUI loginSignUpGUI = new LoginSignUpGUI(con);
-        
-        boolean flag;
-        flag = con.update("INSERT INTO kitatms.account (accountID,accountType,accountPassword) VALUES ('testcat',1,'halu2');");
-        
-    }
-
-    public void hadyaTest() {
-
-    }
-
-    public void wahaTest() {
-
-    }
-    
-    public void validateDatabase(){
-        DBWindow dbvalidation = new DBWindow();
-    }
-    
-    public void signUp(){
-        
-    }
-    
-    public void logIn(){
-        
-    }
-    
-    public void addCourse(){
-        
-    }
-    
-    public void uploadLearningMaterials(){
-        
-    }
-    
-    public void setAssessment(){
-        
-    }
-    
-    public void enrollTrainees(){
-        
-    }
-    
-    public void generateCourseReport(){
-        
-    }
-    
-    public void viewCourseSchedule(){
-        
-    }
-    
-    public void viewLearningMaterial(){
-        
-    }
-    
-    public void attemptCourseAssessment(){
-        
     }
 }

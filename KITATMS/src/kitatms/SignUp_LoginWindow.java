@@ -270,8 +270,8 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
                         message = "Please fill in username and password";
 			jLabel2.setText(message);
 		}
-        else if(username.length()>10){
-            message = "Max username length is 10";
+        else if(username.length()!=10){
+            message = "username length must be 10";
             jLabel2.setText(message);
         }
 	else{  
@@ -313,8 +313,8 @@ public class SignUp_LoginWindow extends javax.swing.JFrame {
 			message = "Please fill in username and password";
 			jLabel2.setText(message);
 	}
-        else if(username.length()>10){
-            message = "Max username length is 10";
+        else if(username.length()!=10){
+            message = "username length must be 10";
             jLabel2.setText(message);
         }
         else{

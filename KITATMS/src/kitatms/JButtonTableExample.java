@@ -214,6 +214,7 @@ class ButtonEditor3 extends DefaultCellEditor {
         course.setCourseID(cID);
         Account acc = new Account();
         acc.setUsername(tID);
+        System.out.println(label.substring(label.length()-19));
         System.out.printf("At ButtonEditor3.getCellEditorValue(): %s from %s course (Can attempt: %s,Has passed: %s)\n",acc.username,course.getCourseID(),canAttempt,passed);
         new AttemptAssessmentWindow(con,acc,course,canAttempt,passed);
     }

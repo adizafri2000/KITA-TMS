@@ -263,23 +263,34 @@ public class AssessmentWindow extends javax.swing.JFrame {
                         if (marks.equals("5")){
                             passed = true;
                         }
-                        
+                        else passed = false;
                     }
                     else{
                         marks = "-";
                         attemptdate = "-";
+                        passed = false;
                     }
                     
                     if(!passed){
+                        
                         label+="tf";
+                        System.out.printf("At Assessment Window, %s attempting %s. Label is %s\n",trainee.username,assessmentID,label);
+                        System.out.println("Conditional statement label: tf");
                         dtm.addRow(new Object[]{courseID,courseName,marks,attemptdate,label}); 
                         jTable1.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer2());
+                        canAttempt = true;
+                        passed = false;
                         jTable1.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor3(new JCheckBox(),con,canAttempt,passed));
                     }
                     else{
                         label +="ft";
+                        System.out.printf("At Assessment Window, %s attempting %s. Label is %s\n",trainee.username,assessmentID,label);
+                        System.out.println("Conditional statement label: ft");
+                        System.out.println("marks = "+marks);
                         dtm.addRow(new Object[]{courseID,courseName,marks,attemptdate,label});
                         jTable1.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer2());
+                        canAttempt = false;
+                        passed = true;
                         jTable1.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor3(new JCheckBox(),con,canAttempt,passed));
                     }
                     
@@ -289,8 +300,12 @@ public class AssessmentWindow extends javax.swing.JFrame {
                     marks = "-";
                     attemptdate = "-";
                     label += "ff";
+                    System.out.printf("At Assessment Window, %s attempting %s. Label is %s\n",trainee.username,assessmentID,label);
+                    System.out.println("Conditional statement label: ff");
                     dtm.addRow(new Object[]{courseID,courseName,marks,attemptdate,label});
                     jTable1.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer2());
+                    canAttempt = false;
+                    passed = false;
                     jTable1.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor3(new JCheckBox(),con,canAttempt,false));
                 }
                 

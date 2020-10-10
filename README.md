@@ -4,5 +4,5 @@ A Training Management System project for a university assignment. This project w
 <b>System Execution Requirements</b>
 <ol>
 <li>JVM</li>
-<li>MySQL Server</li>
+<li>MySQL Server (https://dev.mysql.com/downloads/installer/)</li>
 </ol>
